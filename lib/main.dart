@@ -1,4 +1,5 @@
 import 'package:dossier_locataire/components/navbar.dart';
+import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Dossier locataire', home: const MyHomePage());
+    return MaterialApp(
+      title: 'Dossier locataire',
+      home: const MyHomePage(),
+      theme: ThemeData(
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          primary: Color(0xFF0B74E7),
+          onPrimary: Colors.white,
+          secondary: Colors.black,
+          onSecondary: Colors.white,
+          error: Colors.red[100]!,
+          onError: Colors.red,
+          surface: Colors.white,
+          onSurface: Colors.black,
+        ),
+      ),
+    );
   }
 }
 
@@ -25,137 +42,20 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          spacing: 8,
-          children: [
-            Navbar(),
-            Column(
-              children: [
-                Card(
-                  child: Row(
-                    children: [
-                      Row(
-                        children: [
-                          Column(
-                            children: [
-                              Text("Hey Jolan !"),
-                              Text("Content de vous revoir !"),
-                            ],
-                          ),
-                          Text("👋"),
-                        ],
-                      ),
-                      Text("Vendredi, 6 Décembre 2024"),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Card(
-                      child: Column(
-                        children: [
-                          Text("Pourcentage de mail ouverts"),
-                          Row(children: [Icon(Icons.mail), Text("80%")]),
-                        ],
-                      ),
-                    ),
-                    Card(
-                      child: Row(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              print("share my profile");
-                            },
-                            child: Text("Partager mon dossier"),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              print("found appartment");
-                            },
-                            child: Text("J'ai trouvé un appartement !"),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Card(
-                      child: Column(
-                        children: [
-                          Text("État recherche"),
-                          Row(
-                            children: [Icon(Icons.check), Text("En recherche")],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  children: [
-                    Card(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text("Candidat"),
-                              IconButton(
-                                onPressed: () {
-                                  print("candidate +");
-                                },
-                                icon: Icon(Icons.add),
-                              ),
-                            ],
-                          ),
-                          Text("insert data here"),
-                        ],
-                      ),
-                    ),
-                    Card(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text("Garants"),
-                              IconButton(
-                                onPressed: () {
-                                  print("warrantor +");
-                                },
-                                icon: Icon(Icons.add),
-                              ),
-                            ],
-                          ),
-                          Text("insert data here"),
-                        ],
-                      ),
-                    ),
-                    Card(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text("Mes partages"),
-                              IconButton(
-                                onPressed: () {
-                                  print("share +");
-                                },
-                                icon: Icon(Icons.add),
-                              ),
-                            ],
-                          ),
-                          Text("insert data here"),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.bodyMedium!,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image(
+            image: AssetImage('assets/background_desktop.png'),
+            fit: BoxFit.fill,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            child: Column(spacing: 16, children: [Navbar(), Dashboard()]),
+          ),
+        ],
       ),
     );
   }
