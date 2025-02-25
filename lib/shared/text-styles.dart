@@ -6,6 +6,12 @@ final TextStyle h1 = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+final TextStyle h2 = TextStyle(
+  fontFamily: "Inter",
+  fontSize: 24,
+  fontWeight: FontWeight.bold,
+);
+
 final TextStyle h3 = TextStyle(
   fontFamily: "Inter",
   fontSize: 16,

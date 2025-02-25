@@ -1,3 +1,5 @@
+import 'package:dossier_locataire/components/nav-button.dart';
+import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 
@@ -12,55 +14,47 @@ class _NavbarState extends State<Navbar> {
   int selected = 0;
   bool profileOpen = false;
 
-  ButtonStyle navButtonStyle(int index) => TextButton.styleFrom(
-    padding: EdgeInsets.all(10),
-    backgroundColor:
-        (selected == index)
-            ? Theme.of(context).colorScheme.primary
-            : Colors.white,
-    foregroundColor:
-        (selected == index) ? Colors.white : Color.fromARGB(255, 1, 15, 29),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(100)),
-    ),
-    splashFactory: NoSplash.splashFactory,
-    fixedSize: Size(120, 44),
-  );
-
-  TextButton navButton(int index, String text) => TextButton(
-    style: navButtonStyle(index),
-    onPressed: () {
-      setState(() {
-        selected = index;
-      });
-    },
-    child: Text(text, style: h3),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Image(image: NetworkImage('https://fakeimg.pl/40/')),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(100)),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x40AEAEAE),
-                blurRadius: 8,
-                offset: Offset(0, 8),
-              ),
-            ],
-          ),
+        ShadowContainer(
+          radius: Radius.circular(100),
           child: Row(
             spacing: 4,
             children: [
-              navButton(0, "Dashboard"),
-              navButton(1, "Candidat"),
-              navButton(2, "Garant"),
+              NavButton(
+                isSelected: selected == 0,
+                onPressed: () {
+                  setState(() {
+                    selected = 0;
+                  });
+                  print("dashboard");
+                },
+                child: Text("Dashboard"),
+              ),
+              NavButton(
+                isSelected: selected == 1,
+                onPressed: () {
+                  setState(() {
+                    selected = 1;
+                  });
+                  print("candidate");
+                },
+                child: Text("Candidat"),
+              ),
+              NavButton(
+                isSelected: selected == 2,
+                onPressed: () {
+                  setState(() {
+                    selected = 2;
+                  });
+                  print("warrantor");
+                },
+                child: Text("Garant"),
+              ),
             ],
           ),
         ),

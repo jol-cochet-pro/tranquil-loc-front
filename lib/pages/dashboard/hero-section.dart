@@ -26,6 +26,7 @@ class HeroSection extends StatelessWidget {
             spacing: 4,
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Hey Jolan !", style: h1),

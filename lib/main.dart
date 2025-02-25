@@ -51,9 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
             image: AssetImage('assets/background_desktop.png'),
             fit: BoxFit.fill,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-            child: Column(spacing: 16, children: [Navbar(), Dashboard()]),
+          Positioned(top: 12, left: 24, right: 24, child: Navbar()),
+          Padding(
+            padding: EdgeInsets.only(left: 24, right: 24, top: 74, bottom: 24),
+            child: Dashboard(),
           ),
         ],
       ),
