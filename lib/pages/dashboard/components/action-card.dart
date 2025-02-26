@@ -12,7 +12,7 @@ class ActionCard extends StatelessWidget {
     return Expanded(
       flex: flex,
       child: ShadowContainer(
-        constraints: BoxConstraints.expand(),
+        constraints: BoxConstraints.expand(height: 100),
         padding: EdgeInsets.all(12),
         radius: Radius.circular(10),
         child: child,

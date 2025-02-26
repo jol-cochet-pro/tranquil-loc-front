@@ -34,34 +34,45 @@ class _CallToActionState extends State<CallToAction> {
             ],
           ),
         ),
-        ActionCard(
-          flex: 6,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ActionButton(
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: () {
-                  print("Share profile.");
-                },
-                child: Text("Partager mon dossier"),
+        MediaQuery.of(context).size.width > 1008
+            ? ActionCard(
+              flex: 5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ActionButton(
+                    color: Theme.of(context).colorScheme.primary,
+                    onPressed: () {
+                      print("Share profile.");
+                    },
+                    child: Text("Partager mon dossier"),
+                  ),
+                  ActionButton(
+                    color: Color(0xFF0A9A00),
+                    onPressed: () {
+                      print("Found flat.");
+                    },
+                    child: Text("J'ai trouvé un appartement"),
+                  ),
+                ],
               ),
-              ActionButton(
-                color: Color(0xFF0A9A00),
-                onPressed: () {
-                  print("Found flat.");
-                },
-                child: Text("J'ai trouvé un appartement"),
-              ),
-            ],
-          ),
-        ),
+            )
+            : SizedBox.shrink(),
         ActionCard(
-          flex: 2,
+          flex: 3,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("État recherche"),
-              Row(children: [Icon(Icons.check), Text("En recherche")]),
+              Text("État recherche", style: p1),
+              Expanded(
+                child: Row(
+                  spacing: 24,
+                  children: [
+                    Icon(Icons.task_alt_outlined, color: Color(0xFF0A9A00)),
+                    Text("En recherche", style: h2),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

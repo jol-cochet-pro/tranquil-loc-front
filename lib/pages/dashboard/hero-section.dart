@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 
@@ -6,19 +7,9 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ShadowContainer(
+      radius: Radius.circular(10),
       padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x40AEAEAE),
-            blurRadius: 8,
-            offset: Offset(0, 8),
-          ),
-        ],
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

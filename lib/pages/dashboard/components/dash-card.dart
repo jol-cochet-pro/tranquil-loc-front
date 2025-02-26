@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 class DashCard extends StatelessWidget {
   final String title;
   final void Function() onAdd;
-  final List<TableRow> rows;
+  final List<dynamic> items;
+  final Widget Function(BuildContext, int) itemBuilder;
 
   const DashCard({
     super.key,
     required this.title,
     required this.onAdd,
-    required this.rows,
+    required this.items,
+    required this.itemBuilder,
   });
 
   @override
@@ -20,7 +22,7 @@ class DashCard extends StatelessWidget {
       padding: EdgeInsets.all(10),
       radius: Radius.circular(10),
       child: Column(
-        spacing: 8,
+        spacing: 16,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -43,12 +45,13 @@ class DashCard extends StatelessWidget {
               ),
             ],
           ),
-          ShadowContainer(
-            radius: Radius.circular(10),
-            padding: EdgeInsets.all(10),
-            child: SingleChildScrollView(
-              clipBehavior: Clip.hardEdge,
-              child: Table(children: rows),
+          Expanded(
+            child: ListView.separated(
+              shrinkWrap: true,
+              primary: false,
+              itemCount: items.length,
+              itemBuilder: itemBuilder,
+              separatorBuilder: (context, index) => SizedBox(height: 12),
             ),
           ),
         ],
