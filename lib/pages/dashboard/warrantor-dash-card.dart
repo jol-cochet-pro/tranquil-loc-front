@@ -83,7 +83,7 @@ class WarrantorsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     return DashCard(
-      title: "Garant",
+      title: "Garants",
       onAdd: () {
         print("add Warrantor.");
       },

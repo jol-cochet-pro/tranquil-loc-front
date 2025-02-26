@@ -1,31 +1,19 @@
 import 'package:flutter/widgets.dart';
 
-final TextStyle h1 = TextStyle(
-  fontFamily: "Inter",
-  fontSize: 36,
-  fontWeight: FontWeight.bold,
-);
+final TextStyle h1 = TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
 
-final TextStyle h2 = TextStyle(
-  fontFamily: "Inter",
-  fontSize: 24,
-  fontWeight: FontWeight.bold,
-);
+final TextStyle h2 = TextStyle(fontSize: 24, fontWeight: FontWeight.w600);
 
-final TextStyle h3 = TextStyle(
-  fontFamily: "Inter",
-  fontSize: 16,
-  fontWeight: FontWeight.bold,
-);
+final TextStyle h3 = TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
 final TextStyle p2 = TextStyle(
-  fontFamily: "Inter",
   fontSize: 12,
-  fontWeight: FontWeight.w200,
+  fontWeight: FontWeight.w600,
+  color: Color(0xB3000000),
 );
 
 final TextStyle p1 = TextStyle(
-  fontFamily: "Inter",
   fontSize: 14,
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w600,
+  color: Color(0xB3000000),
 );

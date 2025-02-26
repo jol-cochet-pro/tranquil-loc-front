@@ -16,6 +16,8 @@ class MyApp extends StatelessWidget {
       title: 'Dossier locataire',
       home: const MyHomePage(),
       theme: ThemeData(
+        fontFamily: "Inter",
+        fontFamilyFallback: ["Inter"],
         colorScheme: ColorScheme(
           brightness: Brightness.light,
           primary: Color(0xFF0B74E7),

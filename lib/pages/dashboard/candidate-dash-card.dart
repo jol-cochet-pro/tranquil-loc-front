@@ -83,7 +83,7 @@ class CandidatesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     return DashCard(
-      title: "Candidat",
+      title: "Candidats",
       onAdd: () {
         print("add candidate.");
       },

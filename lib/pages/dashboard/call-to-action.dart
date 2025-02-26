@@ -1,5 +1,6 @@
 import 'package:dossier_locataire/pages/dashboard/components/action-button.dart';
 import 'package:dossier_locataire/pages/dashboard/components/action-card.dart';
+import 'package:dossier_locataire/pages/dashboard/share-dialog.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,10 @@ class _CallToActionState extends State<CallToAction> {
                   ActionButton(
                     color: Theme.of(context).colorScheme.primary,
                     onPressed: () {
-                      print("Share profile.");
+                      showDialog(
+                        context: context,
+                        builder: (context) => ShareDialog(),
+                      );
                     },
                     child: Text("Partager mon dossier"),
                   ),

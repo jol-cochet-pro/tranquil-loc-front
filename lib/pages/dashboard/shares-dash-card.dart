@@ -19,6 +19,17 @@ class Share {
     required this.durationNum,
     required this.durationPeriod,
   });
+
+  String shareDurationToString() {
+    switch (durationPeriod) {
+      case ShareDurationPeriod.day:
+        return durationNum > 1 ? "$durationNum jours" : "$durationNum jour";
+      case ShareDurationPeriod.month:
+        return "$durationNum mois";
+      case ShareDurationPeriod.year:
+        return durationNum > 1 ? "$durationNum années" : "$durationNum année";
+    }
+  }
 }
 
 class SharesCard extends StatelessWidget {
@@ -33,17 +44,6 @@ class SharesCard extends StatelessWidget {
       durationPeriod: ShareDurationPeriod.day,
     ),
   ];
-
-  String shareDurationToString(int num, ShareDurationPeriod period) {
-    switch (period) {
-      case ShareDurationPeriod.day:
-        return num > 1 ? "$num jours" : "$num jour";
-      case ShareDurationPeriod.month:
-        return "$num mois";
-      case ShareDurationPeriod.year:
-        return num > 1 ? "$num années" : "$num année";
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,13 +65,7 @@ class SharesCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: h3,
                 ),
-                Text(
-                  shareDurationToString(
-                    shares[index].durationNum,
-                    shares[index].durationPeriod,
-                  ),
-                  style: p2,
-                ),
+                Text(shares[index].shareDurationToString(), style: p2),
                 Text(shares[index].description, style: p2),
                 IconButton(
                   onPressed: () {
