@@ -1,9 +1,9 @@
-import 'package:dossier_locataire/components/navbar.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(const MyApp());
+  initializeDateFormatting("fr_FR").then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,9 +12,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting("fr_FR", null);
     return MaterialApp(
       title: 'Dossier locataire',
-      home: const MyHomePage(),
+      initialRoute: "/dashboard",
+      routes: {
+        "/dashboard": (_) => const Dashboard(),
+        "/garants": (_) => const Dashboard(),
+        "/occupants": (_) => const Dashboard(),
+      },
       theme: ThemeData(
         fontFamily: "Inter",
         fontFamilyFallback: ["Inter"],
@@ -29,36 +35,6 @@ class MyApp extends StatelessWidget {
           surface: Colors.white,
           onSurface: Colors.black,
         ),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: Theme.of(context).textTheme.bodyMedium!,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image(
-            image: AssetImage('assets/background_desktop.png'),
-            fit: BoxFit.fill,
-          ),
-          Positioned(top: 12, left: 24, right: 24, child: Navbar()),
-          Padding(
-            padding: EdgeInsets.only(left: 24, right: 24, top: 74, bottom: 24),
-            child: Dashboard(),
-          ),
-        ],
       ),
     );
   }

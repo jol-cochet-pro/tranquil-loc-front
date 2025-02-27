@@ -11,7 +11,7 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
-  int selected = 0;
+  static int selected = 0;
   bool profileOpen = false;
 
   @override
@@ -31,7 +31,7 @@ class _NavbarState extends State<Navbar> {
                   setState(() {
                     selected = 0;
                   });
-                  print("dashboard");
+                  Navigator.pushNamed(context, "/dashboard");
                 },
                 child: Text("Dashboard"),
               ),
@@ -41,9 +41,9 @@ class _NavbarState extends State<Navbar> {
                   setState(() {
                     selected = 1;
                   });
-                  print("occupant");
+                  Navigator.pushNamed(context, "/occupants");
                 },
-                child: Text("Occupant"),
+                child: Text("Occupants"),
               ),
               NavButton(
                 isSelected: selected == 2,
@@ -51,9 +51,9 @@ class _NavbarState extends State<Navbar> {
                   setState(() {
                     selected = 2;
                   });
-                  print("warrantor");
+                  Navigator.pushNamed(context, "/garants");
                 },
-                child: Text("Garant"),
+                child: Text("Garants"),
               ),
             ],
           ),

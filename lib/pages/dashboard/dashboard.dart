@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/dashboard/call-to-action.dart';
 import 'package:dossier_locataire/pages/dashboard/dash-cards.dart';
 import 'package:dossier_locataire/pages/dashboard/hero-section.dart';
@@ -13,11 +14,16 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 24,
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [HeroSection(), CallToAction(), DashCards()],
+    return PageLayout(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(
+          spacing: 24,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [HeroSection(), CallToAction(), DashCards()],
+        ),
+      ),
     );
   }
 }
