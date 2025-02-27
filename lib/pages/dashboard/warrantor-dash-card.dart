@@ -84,6 +84,7 @@ class WarrantorsCard extends StatelessWidget {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     return DashCard(
       title: "Garants",
+      emptyInfo: "Pas de garants enregistrés...",
       onAdd: () {
         print("add Warrantor.");
       },

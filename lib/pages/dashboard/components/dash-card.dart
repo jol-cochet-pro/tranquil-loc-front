@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class DashCard extends StatelessWidget {
   final String title;
+  final String emptyInfo;
   final void Function() onAdd;
   final List<dynamic> items;
   final Widget Function(BuildContext, int) itemBuilder;
@@ -14,6 +15,7 @@ class DashCard extends StatelessWidget {
     required this.onAdd,
     required this.items,
     required this.itemBuilder,
+    required this.emptyInfo,
   });
 
   @override
@@ -47,13 +49,17 @@ class DashCard extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: ListView.separated(
-              shrinkWrap: true,
-              primary: false,
-              itemCount: items.length,
-              itemBuilder: itemBuilder,
-              separatorBuilder: (context, index) => SizedBox(height: 12),
-            ),
+            child:
+                items.isNotEmpty
+                    ? ListView.separated(
+                      shrinkWrap: true,
+                      primary: false,
+                      itemCount: items.length,
+                      itemBuilder: itemBuilder,
+                      separatorBuilder:
+                          (context, index) => SizedBox(height: 12),
+                    )
+                    : Center(child: Text(emptyInfo, style: p1)),
           ),
         ],
       ),

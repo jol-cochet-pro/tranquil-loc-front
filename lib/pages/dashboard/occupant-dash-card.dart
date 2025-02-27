@@ -31,50 +31,50 @@ class Occupant {
 
 class OccupantsCard extends StatelessWidget {
   final List<Occupant> occupants = [
-    Occupant(
-      id: "1",
-      firstname: "Jolan",
-      lastname: "Cochet",
-      dateOfBirth: DateTime(2003, 3, 27),
-      hasIncomeFilled: true,
-      hasPersonalInfoFilled: false,
-      hasEmailFilled: true,
-      hasPhoneFilled: true,
-      hasAllDocumentsFilled: false,
-    ),
-    Occupant(
-      id: "2",
-      firstname: "Mael",
-      lastname: "Pendilhas",
-      dateOfBirth: DateTime(2003, 3, 27),
-      hasIncomeFilled: true,
-      hasPersonalInfoFilled: false,
-      hasEmailFilled: true,
-      hasPhoneFilled: true,
-      hasAllDocumentsFilled: false,
-    ),
-    Occupant(
-      id: "2",
-      firstname: "Eliot",
-      lastname: "Blondeel",
-      dateOfBirth: DateTime(2003, 3, 27),
-      hasIncomeFilled: true,
-      hasPersonalInfoFilled: false,
-      hasEmailFilled: true,
-      hasPhoneFilled: true,
-      hasAllDocumentsFilled: false,
-    ),
-    Occupant(
-      id: "2",
-      firstname: "Kakou",
-      lastname: "Kakou",
-      dateOfBirth: DateTime(2003, 3, 27),
-      hasIncomeFilled: true,
-      hasPersonalInfoFilled: false,
-      hasEmailFilled: true,
-      hasPhoneFilled: true,
-      hasAllDocumentsFilled: false,
-    ),
+    // Occupant(
+    //   id: "1",
+    //   firstname: "Jolan",
+    //   lastname: "Cochet",
+    //   dateOfBirth: DateTime(2003, 3, 27),
+    //   hasIncomeFilled: true,
+    //   hasPersonalInfoFilled: false,
+    //   hasEmailFilled: true,
+    //   hasPhoneFilled: true,
+    //   hasAllDocumentsFilled: false,
+    // ),
+    // Occupant(
+    //   id: "2",
+    //   firstname: "Mael",
+    //   lastname: "Pendilhas",
+    //   dateOfBirth: DateTime(2003, 3, 27),
+    //   hasIncomeFilled: true,
+    //   hasPersonalInfoFilled: false,
+    //   hasEmailFilled: true,
+    //   hasPhoneFilled: true,
+    //   hasAllDocumentsFilled: false,
+    // ),
+    // Occupant(
+    //   id: "2",
+    //   firstname: "Eliot",
+    //   lastname: "Blondeel",
+    //   dateOfBirth: DateTime(2003, 3, 27),
+    //   hasIncomeFilled: true,
+    //   hasPersonalInfoFilled: false,
+    //   hasEmailFilled: true,
+    //   hasPhoneFilled: true,
+    //   hasAllDocumentsFilled: false,
+    // ),
+    // Occupant(
+    //   id: "2",
+    //   firstname: "Kakou",
+    //   lastname: "Kakou",
+    //   dateOfBirth: DateTime(2003, 3, 27),
+    //   hasIncomeFilled: true,
+    //   hasPersonalInfoFilled: false,
+    //   hasEmailFilled: true,
+    //   hasPhoneFilled: true,
+    //   hasAllDocumentsFilled: false,
+    // ),
   ];
 
   OccupantsCard({super.key});
@@ -84,6 +84,7 @@ class OccupantsCard extends StatelessWidget {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     return DashCard(
       title: "Futur occupants",
+      emptyInfo: "Pas de futur occupants enregistrés...",
       onAdd: () {
         print("add occupant.");
       },

@@ -51,6 +51,7 @@ class SharesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DashCard(
       title: "Mes partages",
+      emptyInfo: "Pas de partages enregistrés...",
       onAdd: () {
         print("add shares.");
       },

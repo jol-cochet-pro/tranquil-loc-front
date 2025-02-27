@@ -1,4 +1,6 @@
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
+import 'package:dossier_locataire/pages/occupants/occupants.dart';
+import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -12,14 +14,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting("fr_FR", null);
     return MaterialApp(
       title: 'Dossier locataire',
       initialRoute: "/dashboard",
       routes: {
         "/dashboard": (_) => const Dashboard(),
-        "/garants": (_) => const Dashboard(),
-        "/occupants": (_) => const Dashboard(),
+        "/garants": (_) => const Warrantors(),
+        "/occupants": (_) => const Occupants(),
       },
       theme: ThemeData(
         fontFamily: "Inter",
