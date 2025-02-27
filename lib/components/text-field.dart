@@ -31,7 +31,12 @@ class CustomTextField extends StatelessWidget {
           children: [
             label != null ? Text(label!, style: p1) : SizedBox.shrink(),
             isRequired
-                ? Text("*", style: TextStyle(color: Color(0xFFDF1A1A)))
+                ? Text(
+                  "*",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onError,
+                  ),
+                )
                 : SizedBox.shrink(),
           ],
         ),
@@ -43,10 +48,6 @@ class CustomTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Color(0xFFCBD5E1)),
-            errorStyle: TextStyle(color: Color(0xFFDF1A1A)),
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFFDF1A1A)),
-            ),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: Color.fromARGB(143, 203, 213, 225)),
             ),

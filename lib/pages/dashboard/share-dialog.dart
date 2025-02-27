@@ -53,6 +53,7 @@ class _ShareDialogState extends State<ShareDialog> {
     occupantPermission: SharePermission.none,
     warrantorPermission: SharePermission.none,
   );
+  String permissionError = "";
 
   @override
   Widget build(BuildContext context) {
@@ -252,6 +253,12 @@ class _ShareDialogState extends State<ShareDialog> {
                       ],
                     ),
                   ),
+                  Text(
+                    permissionError,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
                   Row(
                     spacing: 8,
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -267,6 +274,20 @@ class _ShareDialogState extends State<ShareDialog> {
                       CustomButton(
                         type: ButtonType.primary,
                         onPressed: () {
+                          setState(() {
+                            permissionError = "";
+                          });
+                          if (shareCreation.warrantorPermission ==
+                                  SharePermission.none &&
+                              shareCreation.occupantPermission ==
+                                  SharePermission.none) {
+                            setState(() {
+                              permissionError =
+                                  "Vous devez avoir au moins une permission pour partager votre dossier.";
+                            });
+                            formKey.currentState!.validate();
+                            return;
+                          }
                           if (formKey.currentState!.validate()) {
                             print("information sent.");
                           }
