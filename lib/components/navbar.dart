@@ -41,9 +41,9 @@ class _NavbarState extends State<Navbar> {
                   setState(() {
                     selected = 1;
                   });
-                  print("candidate");
+                  print("occupant");
                 },
-                child: Text("Candidat"),
+                child: Text("Occupant"),
               ),
               NavButton(
                 isSelected: selected == 2,
@@ -117,7 +117,7 @@ class _NavbarState extends State<Navbar> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Jolan Cochet", style: h3),
-                      Text("Candidat", style: p2),
+                      Text("Occupant", style: p2),
                     ],
                   ),
                   Icon(

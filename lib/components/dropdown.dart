@@ -1,0 +1,54 @@
+import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class CustomDropDown<T> extends StatelessWidget {
+  final List<DropdownMenuEntry<T>> items;
+  final T? defaultValue;
+  final String? label;
+  final bool isRequired;
+  final void Function(T?) onSelected;
+  final String? Function(T?)? validator;
+
+  const CustomDropDown({
+    super.key,
+    required this.items,
+    required this.isRequired,
+    required this.onSelected,
+    required this.defaultValue,
+    this.label,
+    this.validator,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      spacing: 4,
+      children: [
+        Row(
+          children: [
+            label != null ? Text(label!, style: p1) : SizedBox.shrink(),
+            isRequired
+                ? Text("*", style: TextStyle(color: Color(0xFFDF1A1A)))
+                : SizedBox.shrink(),
+          ],
+        ),
+        DropdownMenu<T>(
+          requestFocusOnTap: false,
+          initialSelection: defaultValue,
+          dropdownMenuEntries: items,
+          onSelected: onSelected,
+          menuStyle: const MenuStyle(alignment: Alignment.bottomLeft),
+          expandedInsets: EdgeInsets.zero,
+          inputDecorationTheme: InputDecorationTheme(
+            hintStyle: TextStyle(color: Color(0xFFCBD5E1)),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFFCBD5E1)),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

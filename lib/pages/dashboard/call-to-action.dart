@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/pages/dashboard/components/action-button.dart';
+import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/pages/dashboard/components/action-card.dart';
 import 'package:dossier_locataire/pages/dashboard/share-dialog.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
@@ -41,21 +41,23 @@ class _CallToActionState extends State<CallToAction> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ActionButton(
-                    color: Theme.of(context).colorScheme.primary,
+                  CustomButton(
+                    type: ButtonType.primary,
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) => ShareDialog(),
                       );
                     },
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                     child: Text("Partager mon dossier"),
                   ),
-                  ActionButton(
-                    color: Color(0xFF0A9A00),
+                  CustomButton(
+                    type: ButtonType.success,
                     onPressed: () {
                       print("Found flat.");
                     },
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                     child: Text("J'ai trouvé un appartement"),
                   ),
                 ],

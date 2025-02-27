@@ -43,8 +43,12 @@ class CustomTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Color(0xFFCBD5E1)),
+            errorStyle: TextStyle(color: Color(0xFFDF1A1A)),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFFDF1A1A)),
+            ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFFCBD5E1), width: 1),
+              borderSide: BorderSide(color: Color.fromARGB(143, 203, 213, 225)),
             ),
           ),
           validator: validator,

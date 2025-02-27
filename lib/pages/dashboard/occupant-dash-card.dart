@@ -5,7 +5,7 @@ import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class Candidate {
+class Occupant {
   final String id;
   final String firstname;
   final String lastname;
@@ -16,7 +16,7 @@ class Candidate {
   final bool hasPhoneFilled;
   final bool hasAllDocumentsFilled;
 
-  Candidate({
+  Occupant({
     required this.id,
     required this.firstname,
     required this.lastname,
@@ -29,9 +29,9 @@ class Candidate {
   });
 }
 
-class CandidatesCard extends StatelessWidget {
-  final List<Candidate> candidates = [
-    Candidate(
+class OccupantsCard extends StatelessWidget {
+  final List<Occupant> occupants = [
+    Occupant(
       id: "1",
       firstname: "Jolan",
       lastname: "Cochet",
@@ -42,10 +42,10 @@ class CandidatesCard extends StatelessWidget {
       hasPhoneFilled: true,
       hasAllDocumentsFilled: false,
     ),
-    Candidate(
+    Occupant(
       id: "2",
       firstname: "Mael",
-      lastname: "Pendhillas",
+      lastname: "Pendilhas",
       dateOfBirth: DateTime(2003, 3, 27),
       hasIncomeFilled: true,
       hasPersonalInfoFilled: false,
@@ -53,7 +53,7 @@ class CandidatesCard extends StatelessWidget {
       hasPhoneFilled: true,
       hasAllDocumentsFilled: false,
     ),
-    Candidate(
+    Occupant(
       id: "2",
       firstname: "Eliot",
       lastname: "Blondeel",
@@ -64,7 +64,7 @@ class CandidatesCard extends StatelessWidget {
       hasPhoneFilled: true,
       hasAllDocumentsFilled: false,
     ),
-    Candidate(
+    Occupant(
       id: "2",
       firstname: "Kakou",
       lastname: "Kakou",
@@ -77,17 +77,17 @@ class CandidatesCard extends StatelessWidget {
     ),
   ];
 
-  CandidatesCard({super.key});
+  OccupantsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     return DashCard(
-      title: "Candidats",
+      title: "Futur occupants",
       onAdd: () {
-        print("add candidate.");
+        print("add occupant.");
       },
-      items: candidates,
+      items: occupants,
       itemBuilder:
           (context, index) => ShadowContainer(
             radius: Radius.circular(10),
@@ -95,51 +95,54 @@ class CandidatesCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${candidates[index].firstname} ${candidates[index].lastname}",
-                      overflow: TextOverflow.ellipsis,
-                      style: h3,
-                    ),
-                    Text(
-                      formatter.format(candidates[index].dateOfBirth),
-                      overflow: TextOverflow.ellipsis,
-                      style: p2,
-                    ),
-                  ],
+                SizedBox(
+                  width: 150,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${occupants[index].firstname} ${occupants[index].lastname}",
+                        overflow: TextOverflow.ellipsis,
+                        style: h3,
+                      ),
+                      Text(
+                        formatter.format(occupants[index].dateOfBirth),
+                        overflow: TextOverflow.ellipsis,
+                        style: p2,
+                      ),
+                    ],
+                  ),
                 ),
                 DashStateCell(
                   first: StateStatus(
                     iconData: Icons.euro_outlined,
-                    isCompleted: candidates[index].hasIncomeFilled,
+                    isCompleted: occupants[index].hasIncomeFilled,
                   ),
                   second: StateStatus(
                     iconData: Icons.person_outline,
-                    isCompleted: candidates[index].hasPersonalInfoFilled,
+                    isCompleted: occupants[index].hasPersonalInfoFilled,
                   ),
                 ),
                 DashStateCell(
                   first: StateStatus(
                     iconData: Icons.drafts_outlined,
-                    isCompleted: candidates[index].hasEmailFilled,
+                    isCompleted: occupants[index].hasEmailFilled,
                   ),
                   second: StateStatus(
                     iconData: Icons.call_outlined,
-                    isCompleted: candidates[index].hasPhoneFilled,
+                    isCompleted: occupants[index].hasPhoneFilled,
                   ),
                 ),
                 DashStateCell(
                   first: StateStatus(
                     iconData: Icons.folder_outlined,
-                    isCompleted: candidates[index].hasAllDocumentsFilled,
+                    isCompleted: occupants[index].hasAllDocumentsFilled,
                   ),
                 ),
                 IconButton(
                   onPressed: () {
-                    print("id of the candidate: ${candidates[index].id}");
+                    print("id of the occupant: ${occupants[index].id}");
                   },
                   icon: Icon(Icons.settings_outlined),
                   style: ButtonStyle(

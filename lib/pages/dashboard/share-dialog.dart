@@ -1,23 +1,38 @@
+import 'package:dossier_locataire/components/button.dart';
+import 'package:dossier_locataire/components/dropdown.dart';
+import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
+import 'package:dossier_locataire/pages/dashboard/components/share-perm-cell.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/validator.dart';
 import 'package:flutter/material.dart';
 
-enum ShareDurationPeriod { month, day, year }
+enum ShareDurationPeriod {
+  day("jours"),
+  month("mois"),
+  year("années");
+
+  const ShareDurationPeriod(this.value);
+  final String value;
+}
+
+enum SharePermission { write, readFile, readInfo, none }
 
 class ShareCreation {
-  String id;
   String description;
   String email;
   int durationNum;
   ShareDurationPeriod durationPeriod;
+  SharePermission warrantorPermission;
+  SharePermission occupantPermission;
 
   ShareCreation({
-    required this.id,
     required this.description,
     required this.email,
     required this.durationNum,
     required this.durationPeriod,
+    required this.warrantorPermission,
+    required this.occupantPermission,
   });
 }
 
@@ -30,7 +45,14 @@ class ShareDialog extends StatefulWidget {
 
 class _ShareDialogState extends State<ShareDialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late ShareCreation shareCreation;
+  final ShareCreation shareCreation = ShareCreation(
+    description: "",
+    email: "",
+    durationNum: -1,
+    durationPeriod: ShareDurationPeriod.day,
+    occupantPermission: SharePermission.none,
+    warrantorPermission: SharePermission.none,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +78,8 @@ class _ShareDialogState extends State<ShareDialog> {
             Form(
               key: formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 16,
                 children: [
                   CustomTextField(
                     onSaved: (newValue) {
@@ -90,43 +114,167 @@ class _ShareDialogState extends State<ShareDialog> {
                     isRequired: true,
                     type: TextFieldType.text,
                   ),
-                  Column(
+                  Row(
+                    spacing: 8,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("Durée du partage"),
-                      Row(
-                        children: [
-                          CustomTextField(
-                            onSaved: (newValue) {
-                              if (newValue == null || newValue == "") {
-                                shareCreation.durationNum = -1;
-                              } else {
-                                shareCreation.durationNum = int.parse(newValue);
-                              }
-                            },
-                            validator: (value) {
-                              if (value == null || value == "") {
-                                return null;
-                              }
-                              if (int.tryParse(value) == null) {
-                                return "La durée doit être un nombre";
-                              }
-                              return null;
-                            },
-                            hint: "3",
-                            isRequired: false,
-                            type: TextFieldType.number,
-                          ),
-                        ],
+                      Expanded(
+                        flex: 2,
+                        child: CustomTextField(
+                          onSaved: (newValue) {
+                            if (newValue == null || newValue == "") {
+                              shareCreation.durationNum = -1;
+                            } else {
+                              shareCreation.durationNum = int.parse(newValue);
+                            }
+                          },
+                          validator: (value) {
+                            if (value == null || value == "") {
+                              return "La durée doit ne peut pas être vide.";
+                            }
+                            if (int.tryParse(value) == null) {
+                              return "La durée doit être un nombre.";
+                            }
+                            if (int.parse(value) > 150) {
+                              return "La durée doit être inférieure ou égale à 150.";
+                            }
+                            if (int.parse(value) < 1) {
+                              return "La durée doit être supérieur ou égale à 1.";
+                            }
+                            return null;
+                          },
+                          label: "Durée du partage",
+                          hint: "3",
+                          isRequired: false,
+                          type: TextFieldType.number,
+                        ),
+                      ),
+                      Flexible(
+                        child: CustomDropDown(
+                          defaultValue: ShareDurationPeriod.day,
+                          onSelected:
+                              (value) => {
+                                shareCreation.durationPeriod = value!,
+                              },
+                          items:
+                              ShareDurationPeriod.values.map((el) {
+                                return DropdownMenuEntry(
+                                  value: el,
+                                  label: el.value,
+                                );
+                              }).toList(),
+                          isRequired: false,
+                        ),
                       ),
                     ],
                   ),
-                  TextButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        print("information sent.");
-                      }
-                    },
-                    child: Text("Partager mon dossier"),
+                  Text("Permissions: ", style: h3),
+                  ShadowContainer(
+                    padding: EdgeInsets.all(10),
+                    radius: Radius.circular(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(width: 100, child: Text("Garants", style: h3)),
+                        SharePermCell(
+                          label: "Lecture infos",
+                          permission: SharePermission.readInfo,
+                          value: shareCreation.warrantorPermission,
+                          onChange: (newValue) {
+                            setState(() {
+                              shareCreation.warrantorPermission = newValue;
+                            });
+                          },
+                        ),
+                        SharePermCell(
+                          label: "Lecture fichiers",
+                          permission: SharePermission.readFile,
+                          value: shareCreation.warrantorPermission,
+                          onChange: (newValue) {
+                            setState(() {
+                              shareCreation.warrantorPermission = newValue;
+                            });
+                          },
+                        ),
+                        SharePermCell(
+                          label: "Écriture",
+                          permission: SharePermission.write,
+                          value: shareCreation.warrantorPermission,
+                          onChange: (newValue) {
+                            setState(() {
+                              shareCreation.warrantorPermission = newValue;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  ShadowContainer(
+                    padding: EdgeInsets.all(10),
+                    radius: Radius.circular(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          child: Text("Occupants", style: h3),
+                        ),
+                        SharePermCell(
+                          label: "Lecture infos",
+                          permission: SharePermission.readInfo,
+                          value: shareCreation.occupantPermission,
+                          onChange: (newValue) {
+                            setState(() {
+                              shareCreation.occupantPermission = newValue;
+                            });
+                          },
+                        ),
+                        SharePermCell(
+                          label: "Lecture fichiers",
+                          permission: SharePermission.readFile,
+                          value: shareCreation.occupantPermission,
+                          onChange: (newValue) {
+                            setState(() {
+                              shareCreation.occupantPermission = newValue;
+                            });
+                          },
+                        ),
+                        SharePermCell(
+                          label: "Écriture",
+                          permission: SharePermission.write,
+                          value: shareCreation.occupantPermission,
+                          onChange: (newValue) {
+                            setState(() {
+                              shareCreation.occupantPermission = newValue;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    spacing: 8,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CustomButton(
+                        type: ButtonType.secondary,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        padding: EdgeInsets.all(16),
+                        child: Text("Annulé"),
+                      ),
+                      CustomButton(
+                        type: ButtonType.primary,
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            print("information sent.");
+                          }
+                        },
+                        padding: EdgeInsets.all(16),
+                        child: Text("Partager mon dossier"),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -3,7 +3,7 @@ import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 
-enum ShareDurationPeriod { month, day, year }
+enum ShareDurationPeriod { day, week, month }
 
 class Share {
   final String id;
@@ -24,10 +24,12 @@ class Share {
     switch (durationPeriod) {
       case ShareDurationPeriod.day:
         return durationNum > 1 ? "$durationNum jours" : "$durationNum jour";
+      case ShareDurationPeriod.week:
+        return durationNum > 1
+            ? "$durationNum semaines"
+            : "$durationNum semaine";
       case ShareDurationPeriod.month:
         return "$durationNum mois";
-      case ShareDurationPeriod.year:
-        return durationNum > 1 ? "$durationNum années" : "$durationNum année";
     }
   }
 }
@@ -65,7 +67,13 @@ class SharesCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: h3,
                 ),
-                Text(shares[index].shareDurationToString(), style: p2),
+                Row(
+                  spacing: 4,
+                  children: [
+                    Icon(Icons.hourglass_empty_outlined),
+                    Text(shares[index].shareDurationToString(), style: p2),
+                  ],
+                ),
                 Text(shares[index].description, style: p2),
                 IconButton(
                   onPressed: () {

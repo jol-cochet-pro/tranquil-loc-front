@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/pages/dashboard/candidate-dash-card.dart';
+import 'package:dossier_locataire/pages/dashboard/occupant-dash-card.dart';
 import 'package:dossier_locataire/pages/dashboard/shares-dash-card.dart';
 import 'package:dossier_locataire/pages/dashboard/warrantor-dash-card.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class DashCards extends StatelessWidget {
       crossAxisSpacing: 24,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      children: [CandidatesCard(), WarrantorsCard(), SharesCard()],
+      children: [OccupantsCard(), WarrantorsCard(), SharesCard()],
     );
   }
 }

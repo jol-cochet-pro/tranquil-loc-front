@@ -95,21 +95,24 @@ class WarrantorsCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${warrantors[index].firstname} ${warrantors[index].lastname}",
-                      overflow: TextOverflow.ellipsis,
-                      style: h3,
-                    ),
-                    Text(
-                      formatter.format(warrantors[index].dateOfBirth),
-                      overflow: TextOverflow.ellipsis,
-                      style: p2,
-                    ),
-                  ],
+                SizedBox(
+                  width: 150,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${warrantors[index].firstname} ${warrantors[index].lastname}",
+                        overflow: TextOverflow.ellipsis,
+                        style: h3,
+                      ),
+                      Text(
+                        formatter.format(warrantors[index].dateOfBirth),
+                        overflow: TextOverflow.ellipsis,
+                        style: p2,
+                      ),
+                    ],
+                  ),
                 ),
                 DashStateCell(
                   first: StateStatus(
