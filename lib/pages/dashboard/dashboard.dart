@@ -13,13 +13,11 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        spacing: 24,
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [HeroSection(), CallToAction(), DashCards()],
-      ),
+    return Column(
+      spacing: 24,
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [HeroSection(), CallToAction(), DashCards()],
     );
   }
 }

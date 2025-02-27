@@ -23,6 +23,7 @@ class DashCard extends StatelessWidget {
       radius: Radius.circular(10),
       child: Column(
         spacing: 16,
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
