@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class PageLayout extends StatelessWidget {
   final Widget child;
+  final bool? hideNavbar;
 
-  const PageLayout({super.key, required this.child});
+  const PageLayout({super.key, required this.child, this.hideNavbar});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,9 @@ class PageLayout extends StatelessWidget {
             image: AssetImage('assets/background_desktop.png'),
             fit: BoxFit.fill,
           ),
-          Positioned(top: 12, left: 24, right: 24, child: Navbar()),
+          hideNavbar == null || !hideNavbar!
+              ? Positioned(top: 12, left: 24, right: 24, child: Navbar())
+              : SizedBox.shrink(),
           Padding(
             padding: EdgeInsets.only(left: 24, right: 24, top: 74, bottom: 24),
             child: child,

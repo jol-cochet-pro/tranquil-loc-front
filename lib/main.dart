@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/pages/auth/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
@@ -16,8 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dossier locataire',
-      initialRoute: "/occupants",
+      initialRoute: "/auth/login",
       routes: {
+        "/auth/login": (_) => const Login(),
         "/dashboard": (_) => const Dashboard(),
         "/garants": (_) => const Warrantors(),
         "/occupants": (_) => const Occupants(),
