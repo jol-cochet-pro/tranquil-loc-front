@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/components/icon-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-state-cell.dart';
@@ -141,21 +142,11 @@ class OccupantsCard extends StatelessWidget {
                     isCompleted: occupants[index].hasAllDocumentsFilled,
                   ),
                 ),
-                IconButton(
+                CustomIconButton(
                   onPressed: () {
                     print("id of the occupant: ${occupants[index].id}");
                   },
-                  icon: Icon(Icons.settings_outlined),
-                  style: ButtonStyle(
-                    side: WidgetStatePropertyAll(
-                      BorderSide(color: Color(0xFFF1F5F9)),
-                    ),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                    ),
-                  ),
+                  icon: Icons.settings_outlined,
                 ),
               ],
             ),

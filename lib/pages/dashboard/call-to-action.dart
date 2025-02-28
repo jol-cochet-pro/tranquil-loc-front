@@ -1,4 +1,5 @@
 import 'package:dossier_locataire/components/button.dart';
+import 'package:dossier_locataire/components/icon-ok-not-ok.dart';
 import 'package:dossier_locataire/pages/dashboard/components/action-card.dart';
 import 'package:dossier_locataire/pages/dashboard/share-dialog.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
@@ -74,7 +75,7 @@ class _CallToActionState extends State<CallToAction> {
                 child: Row(
                   spacing: 24,
                   children: [
-                    Icon(Icons.task_alt_outlined, color: Color(0xFF0A9A00)),
+                    IconOkNoOk(isOk: true),
                     Text("En recherche", style: h2),
                   ],
                 ),

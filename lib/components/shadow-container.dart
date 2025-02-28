@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ShadowContainer extends StatelessWidget {
-  final Widget child;
   final Radius radius;
-  final BoxConstraints? constraints;
   final EdgeInsetsGeometry? padding;
+  final BoxConstraints? constraints;
+  final Widget child;
 
   const ShadowContainer({
     super.key,
-    required this.child,
     required this.radius,
-    this.constraints,
     this.padding,
+    this.constraints,
+    required this.child,
   });
 
   @override
@@ -29,6 +29,7 @@ class ShadowContainer extends StatelessWidget {
             offset: Offset(0, 8),
           ),
         ],
+        border: Border.all(color: Color(0xFFE5E7EB)),
       ),
       child: child,
     );

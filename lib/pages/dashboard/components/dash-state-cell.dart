@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/components/icon-ok-not-ok.dart';
 import 'package:flutter/material.dart';
 
 class StateStatus {
@@ -24,17 +25,7 @@ class DashStateCell extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(first.iconData, size: 20),
-            first.isCompleted
-                ? Icon(
-                  Icons.task_alt_outlined,
-                  size: 20,
-                  color: Color(0xFF0A9A00),
-                )
-                : Icon(
-                  Icons.cancel_outlined,
-                  size: 20,
-                  color: Color(0xFFDF1A1A),
-                ),
+            IconOkNoOk(isOk: first.isCompleted),
           ],
         ),
         second != null
@@ -43,17 +34,7 @@ class DashStateCell extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(second!.iconData, size: 20),
-                second!.isCompleted
-                    ? Icon(
-                      Icons.task_alt_outlined,
-                      size: 20,
-                      color: Color(0xFF0A9A00),
-                    )
-                    : Icon(
-                      Icons.cancel_outlined,
-                      size: 20,
-                      color: Color(0xFFDF1A1A),
-                    ),
+                IconOkNoOk(isOk: second!.isCompleted),
               ],
             )
             : SizedBox.shrink(),

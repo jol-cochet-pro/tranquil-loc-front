@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dossier locataire',
-      initialRoute: "/dashboard",
+      initialRoute: "/occupants",
       routes: {
         "/dashboard": (_) => const Dashboard(),
         "/garants": (_) => const Warrantors(),

@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/components/icon-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
@@ -32,20 +33,7 @@ class DashCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(title, style: h2),
-              IconButton(
-                onPressed: onAdd,
-                icon: Icon(Icons.add),
-                style: ButtonStyle(
-                  side: WidgetStatePropertyAll(
-                    BorderSide(color: Color(0xFFF1F5F9)),
-                  ),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
-                ),
-              ),
+              CustomIconButton(onPressed: onAdd, icon: Icons.add),
             ],
           ),
           Expanded(
