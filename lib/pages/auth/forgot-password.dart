@@ -57,7 +57,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     print("ici");
                   },
                   hint: locale.email_hint,
-                  isRequired: false,
+                  isRequired: true,
                   type: TextFieldType.text,
                 ),
                 Center(

@@ -67,7 +67,7 @@ class _RegisterState extends State<Register> {
                     return null;
                   },
                   hint: locale.email_hint,
-                  isRequired: false,
+                  isRequired: true,
                   type: TextFieldType.text,
                 ),
                 CustomTextField(
@@ -90,7 +90,7 @@ class _RegisterState extends State<Register> {
                     return null;
                   },
                   hint: "●●●●●●●●",
-                  isRequired: false,
+                  isRequired: true,
                   type: TextFieldType.password,
                 ),
                 CustomTextField(
@@ -106,7 +106,7 @@ class _RegisterState extends State<Register> {
                   },
                   onSaved: (_) {},
                   hint: "●●●●●●●●",
-                  isRequired: false,
+                  isRequired: true,
                   type: TextFieldType.password,
                 ),
                 Center(

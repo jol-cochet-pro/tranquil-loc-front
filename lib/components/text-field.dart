@@ -42,18 +42,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
       spacing: 4,
       children: [
         Row(
+          spacing: 4,
           children: [
-            widget.label != null
-                ? Text(widget.label!, style: p1)
-                : SizedBox.shrink(),
-            widget.isRequired
-                ? Text(
-                  "*",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onError,
-                  ),
-                )
-                : SizedBox.shrink(),
+            if (widget.label != null) Text(widget.label!, style: p1),
+            if (widget.isRequired)
+              Text(
+                "*",
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
           ],
         ),
         Stack(

@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
                     return null;
                   },
                   hint: locale.email_hint,
-                  isRequired: false,
+                  isRequired: true,
                   type: TextFieldType.text,
                   helpLabel: locale.no_account,
                   onHelpTap: () {
@@ -83,7 +83,7 @@ class _LoginState extends State<Login> {
                     return null;
                   },
                   hint: "●●●●●●●●",
-                  isRequired: false,
+                  isRequired: true,
                   type: TextFieldType.password,
                   helpLabel: locale.forgotten_password,
                   onHelpTap: () {
