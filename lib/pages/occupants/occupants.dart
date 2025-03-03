@@ -5,6 +5,7 @@ import 'package:dossier_locataire/pages/occupants/components/occupant-card.dart'
 import 'package:dossier_locataire/shared/scroll-controller.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ProSituation {
   cdd,
@@ -47,24 +48,24 @@ class Occupant {
     required this.documents,
   });
 
-  String getProSituation() {
+  String getProSituation(AppLocalizations locale) {
     switch (proSituation) {
       case ProSituation.cdd:
-        return "CDD";
+        return locale.cdd;
       case ProSituation.cdi:
-        return "CDI";
+        return locale.cdi;
       case ProSituation.retired:
-        return "Retraité";
+        return locale.retired;
       case ProSituation.coopStudent:
-        return "Alternant";
+        return locale.coopStudent;
       case ProSituation.unemployed:
-        return "Chômeur";
+        return locale.unemployed;
       case ProSituation.student:
-        return "Étudiant";
+        return locale.student;
       case ProSituation.official:
-        return "Fonctionnaire";
+        return locale.official;
       case ProSituation.freelance:
-        return "Indépendant";
+        return locale.freelance;
     }
   }
 
@@ -107,76 +108,77 @@ class _OccupantsState extends State<Occupants> {
         ),
       ],
     ),
-    Occupant(
-      id: "1",
-      firstname: "Jolan",
-      lastname: "Cochet",
-      dateOfBirth: DateTime(2003, 3, 27),
-      income: 1000,
-      proSituation: ProSituation.cdd,
-      email: "jolan.cochet@gmail.com",
-      phone: "+33695243465",
-      documents: [
-        Document(name: "Carte d'identité", url: null),
-        Document(
-          name: "Bulletins de salaires",
-          url: "https://pdfobject.com/pdf/sample.pdf",
-        ),
-        Document(name: "Justificatif de domicile", url: null),
-        Document(
-          name: "Avis d'imposition",
-          url: "https://pdfobject.com/pdf/sample.pdf",
-        ),
-      ],
-    ),
-    Occupant(
-      id: "1",
-      firstname: "Jolan",
-      lastname: "Cochet",
-      dateOfBirth: DateTime(2003, 3, 27),
-      income: 1000,
-      proSituation: ProSituation.cdd,
-      email: "jolan.cochet@gmail.com",
-      phone: "+33695243465",
-      documents: [
-        Document(name: "Carte d'identité", url: null),
-        Document(
-          name: "Bulletins de salaires",
-          url: "https://pdfobject.com/pdf/sample.pdf",
-        ),
-        Document(name: "Justificatif de domicile", url: null),
-        Document(
-          name: "Avis d'imposition",
-          url: "https://pdfobject.com/pdf/sample.pdf",
-        ),
-      ],
-    ),
-    Occupant(
-      id: "1",
-      firstname: "Jolan",
-      lastname: "Cochet",
-      dateOfBirth: DateTime(2003, 3, 27),
-      income: 1000,
-      proSituation: ProSituation.cdd,
-      email: "jolan.cochet@gmail.com",
-      phone: "+33695243465",
-      documents: [
-        Document(name: "Carte d'identité", url: null),
-        Document(
-          name: "Bulletins de salaires",
-          url: "https://pdfobject.com/pdf/sample.pdf",
-        ),
-        Document(name: "Justificatif de domicile", url: null),
-        Document(
-          name: "Avis d'imposition",
-          url: "https://pdfobject.com/pdf/sample.pdf",
-        ),
-      ],
-    ),
+    // Occupant(
+    //   id: "1",
+    //   firstname: "Jolan",
+    //   lastname: "Cochet",
+    //   dateOfBirth: DateTime(2003, 3, 27),
+    //   income: 1000,
+    //   proSituation: ProSituation.cdd,
+    //   email: "jolan.cochet@gmail.com",
+    //   phone: "+33695243465",
+    //   documents: [
+    //     Document(name: "Carte d'identité", url: null),
+    //     Document(
+    //       name: "Bulletins de salaires",
+    //       url: "https://pdfobject.com/pdf/sample.pdf",
+    //     ),
+    //     Document(name: "Justificatif de domicile", url: null),
+    //     Document(
+    //       name: "Avis d'imposition",
+    //       url: "https://pdfobject.com/pdf/sample.pdf",
+    //     ),
+    //   ],
+    // ),
+    // Occupant(
+    //   id: "1",
+    //   firstname: "Jolan",
+    //   lastname: "Cochet",
+    //   dateOfBirth: DateTime(2003, 3, 27),
+    //   income: 1000,
+    //   proSituation: ProSituation.cdd,
+    //   email: "jolan.cochet@gmail.com",
+    //   phone: "+33695243465",
+    //   documents: [
+    //     Document(name: "Carte d'identité", url: null),
+    //     Document(
+    //       name: "Bulletins de salaires",
+    //       url: "https://pdfobject.com/pdf/sample.pdf",
+    //     ),
+    //     Document(name: "Justificatif de domicile", url: null),
+    //     Document(
+    //       name: "Avis d'imposition",
+    //       url: "https://pdfobject.com/pdf/sample.pdf",
+    //     ),
+    //   ],
+    // ),
+    // Occupant(
+    //   id: "1",
+    //   firstname: "Jolan",
+    //   lastname: "Cochet",
+    //   dateOfBirth: DateTime(2003, 3, 27),
+    //   income: 1000,
+    //   proSituation: ProSituation.cdd,
+    //   email: "jolan.cochet@gmail.com",
+    //   phone: "+33695243465",
+    //   documents: [
+    //     Document(name: "Carte d'identité", url: null),
+    //     Document(
+    //       name: "Bulletins de salaires",
+    //       url: "https://pdfobject.com/pdf/sample.pdf",
+    //     ),
+    //     Document(name: "Justificatif de domicile", url: null),
+    //     Document(
+    //       name: "Avis d'imposition",
+    //       url: "https://pdfobject.com/pdf/sample.pdf",
+    //     ),
+    //   ],
+    // ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return PageLayout(
       child: Column(
         spacing: 24,
@@ -190,14 +192,14 @@ class _OccupantsState extends State<Occupants> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Futur occupants", style: h1),
+                Text(locale.future_occupants, style: h1),
                 CustomButton(
                   onPressed: () {
                     print("add occupant.");
                   },
                   type: ButtonType.primary,
                   padding: EdgeInsets.all(16),
-                  child: Text("Ajouter un futur occupant"),
+                  child: Text(locale.add_future_occupant),
                 ),
               ],
             ),
@@ -225,7 +227,7 @@ class _OccupantsState extends State<Occupants> {
                         child: Column(
                           children: [
                             Image(image: AssetImage("assets/empty_list.png")),
-                            Text("Pas de candidats enregistrés...", style: p1),
+                            Text(locale.no_future_occupants_saved, style: p1),
                           ],
                         ),
                       ),

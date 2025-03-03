@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        Locale('fr'), // French
+        Locale('es'), // French
       ],
 
       theme: ThemeData(

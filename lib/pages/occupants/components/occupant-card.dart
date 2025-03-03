@@ -6,6 +6,7 @@ import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../occupants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OccupantCard extends StatelessWidget {
   final Occupant occupant;
@@ -16,6 +17,7 @@ class OccupantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat("dd/MM/yyy");
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return ShadowContainer(
       constraints: BoxConstraints.loose(Size(500, double.infinity)),
       radius: Radius.circular(10),
@@ -48,28 +50,28 @@ class OccupantCard extends StatelessWidget {
           OccupantInfoCard(
             first: OccupantInfo(
               icon: Icons.euro_outlined,
-              name: "Revenus mensuel",
-              info: "${occupant.income}€ / mois",
+              name: locale.monthly_income,
+              info: "${occupant.income}€ / ${locale.months}",
             ),
             second: OccupantInfo(
               icon: Icons.person_outline,
-              name: "Situation",
-              info: occupant.getProSituation(),
+              name: locale.situation,
+              info: occupant.getProSituation(locale),
             ),
-            title: "Situation professionnelle",
+            title: locale.pro_situation,
           ),
           OccupantInfoCard(
             first: OccupantInfo(
               icon: Icons.email_outlined,
-              name: "Email",
+              name: locale.email,
               info: occupant.email,
             ),
             second: OccupantInfo(
               icon: Icons.phone_outlined,
-              name: "Téléphone",
+              name: locale.phone,
               info: occupant.phone,
             ),
-            title: "Coordonnées",
+            title: locale.contact_details,
           ),
           Expanded(
             child: Column(
@@ -77,7 +79,7 @@ class OccupantCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Documents:", style: h3),
+                Text("${locale.documents}:", style: h3),
                 Expanded(
                   child: ShadowContainer(
                     padding: EdgeInsets.all(10),
@@ -107,7 +109,7 @@ class OccupantCard extends StatelessWidget {
             children: [
               IconOkNoOk(isOk: occupant.getIsCompleted()),
               Text(
-                occupant.getIsCompleted() ? "Complet" : "Incomplet",
+                occupant.getIsCompleted() ? locale.complete : locale.incomplete,
                 style: TextStyle(
                   color:
                       occupant.getIsCompleted()
