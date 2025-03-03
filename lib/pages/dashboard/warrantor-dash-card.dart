@@ -5,6 +5,7 @@ import 'package:dossier_locataire/pages/dashboard/components/dash-state-cell.dar
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Warrantor {
   final String id;
@@ -83,9 +84,10 @@ class WarrantorsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return DashCard(
-      title: "Garants",
-      emptyInfo: "Pas de garants enregistrés...",
+      title: locale.warrantors,
+      emptyInfo: locale.no_warrantors_saved,
       onAdd: () {
         print("add Warrantor.");
       },

@@ -2,6 +2,7 @@ import 'package:dossier_locataire/components/nav-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -17,6 +18,7 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -34,7 +36,7 @@ class _NavbarState extends State<Navbar> {
                   });
                   Navigator.pushNamed(context, "/dashboard");
                 },
-                child: Text("Dashboard"),
+                child: Text(locale.dashboard),
               ),
               NavButton(
                 isSelected: selected == 1,
@@ -44,7 +46,7 @@ class _NavbarState extends State<Navbar> {
                   });
                   Navigator.pushNamed(context, "/occupants");
                 },
-                child: Text("Occupants"),
+                child: Text(locale.occupants),
               ),
               NavButton(
                 isSelected: selected == 2,
@@ -54,7 +56,7 @@ class _NavbarState extends State<Navbar> {
                   });
                   Navigator.pushNamed(context, "/garants");
                 },
-                child: Text("Garants"),
+                child: Text(locale.warrantors),
               ),
             ],
           ),
@@ -79,20 +81,20 @@ class _NavbarState extends State<Navbar> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8,
                     children: [
-                      Text("Mon compte", style: p1),
+                      Text(locale.my_account, style: p1),
                       Divider(height: 1, color: colorScheme.outline),
                       Row(
                         spacing: 8,
                         children: [
                           Icon(Icons.person_outline, size: 16),
-                          Text("Mon profile", style: p2),
+                          Text(locale.my_profile, style: p2),
                         ],
                       ),
                       Row(
                         spacing: 8,
                         children: [
                           Icon(Icons.settings_outlined, size: 16),
-                          Text("Paramètres", style: p2),
+                          Text(locale.settings, style: p2),
                         ],
                       ),
                       Divider(height: 1, color: colorScheme.outline),
@@ -100,7 +102,7 @@ class _NavbarState extends State<Navbar> {
                         spacing: 8,
                         children: [
                           Icon(Icons.exit_to_app, size: 16),
-                          Text("Deconnexion", style: p2),
+                          Text(locale.logout, style: p2),
                         ],
                       ),
                     ],
@@ -115,7 +117,7 @@ class _NavbarState extends State<Navbar> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Jolan Cochet", style: h3),
-                      Text("Occupant", style: p2),
+                      Text(locale.occupant, style: p2),
                     ],
                   ),
                   Icon(

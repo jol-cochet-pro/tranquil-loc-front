@@ -4,6 +4,7 @@ import 'package:dossier_locataire/pages/dashboard/components/action-card.dart';
 import 'package:dossier_locataire/pages/dashboard/share-dialog.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CallToAction extends StatefulWidget {
   const CallToAction({super.key});
@@ -15,6 +16,7 @@ class CallToAction extends StatefulWidget {
 class _CallToActionState extends State<CallToAction> {
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return Row(
       spacing: 12,
       children: [
@@ -23,7 +25,7 @@ class _CallToActionState extends State<CallToAction> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Pourcentage de mail ouverts", style: p1),
+              Text(locale.mail_openned_percentage, style: p1),
               Expanded(
                 child: Row(
                   spacing: 24,
@@ -51,7 +53,7 @@ class _CallToActionState extends State<CallToAction> {
                       );
                     },
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                    child: Text("Partager mon dossier"),
+                    child: Text(locale.share_my_folder),
                   ),
                   CustomButton(
                     type: ButtonType.success,
@@ -59,7 +61,7 @@ class _CallToActionState extends State<CallToAction> {
                       print("Found flat.");
                     },
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                    child: Text("J'ai trouvé un appartement"),
+                    child: Text(locale.found_appartement),
                   ),
                 ],
               ),
@@ -70,13 +72,13 @@ class _CallToActionState extends State<CallToAction> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("État recherche", style: p1),
+              Text(locale.search_state, style: p1),
               Expanded(
                 child: Row(
                   spacing: 24,
                   children: [
                     IconOkNoOk(isOk: true),
-                    Text("En recherche", style: h2),
+                    Text(locale.searching, style: h2),
                   ],
                 ),
               ),

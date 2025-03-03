@@ -4,17 +4,11 @@ import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/pages/dashboard/components/share-perm-cell.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
-import 'package:dossier_locataire/shared/validator.dart';
+import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum ShareDurationPeriod {
-  day("jours"),
-  month("mois"),
-  year("années");
-
-  const ShareDurationPeriod(this.value);
-  final String value;
-}
+enum ShareDurationPeriod { day, month, year }
 
 enum SharePermission { write, readFile, readInfo, none }
 
@@ -55,8 +49,23 @@ class _ShareDialogState extends State<ShareDialog> {
   );
   String permissionError = "";
 
+  String shareDurationPeriodToString(
+    ShareDurationPeriod period,
+    AppLocalizations locale,
+  ) {
+    switch (period) {
+      case ShareDurationPeriod.day:
+        return locale.days;
+      case ShareDurationPeriod.month:
+        return locale.months;
+      case ShareDurationPeriod.year:
+        return locale.years;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return Dialog(
       child: Container(
         padding: EdgeInsets.all(32),
@@ -69,11 +78,8 @@ class _ShareDialogState extends State<ShareDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Partager", style: h1),
-                Text(
-                  "Ici vous pouvez ajouter des partages pour faire en sorteque votre dossier soit vu par d’autre personnes. (changer ce texte)",
-                  style: p1,
-                ),
+                Text(locale.share, style: h1),
+                Text(locale.share_dialog_description, style: p1),
               ],
             ),
             Form(
@@ -88,12 +94,12 @@ class _ShareDialogState extends State<ShareDialog> {
                     },
                     validator: (value) {
                       if (value == null || value == "") {
-                        return "La description ne peut pas être vide.";
+                        return locale.cant_be_empty(locale.the_description);
                       }
                       return null;
                     },
-                    label: "Description",
-                    hint: "Jean",
+                    label: locale.description,
+                    hint: locale.description_hint,
                     isRequired: true,
                     type: TextFieldType.text,
                   ),
@@ -101,14 +107,14 @@ class _ShareDialogState extends State<ShareDialog> {
                     onSaved: (newValue) {
                       shareCreation.email = newValue!;
                     },
-                    label: "Email",
-                    hint: "jean@dupont.fr",
+                    label: locale.email,
+                    hint: locale.email_hint,
                     validator: (value) {
                       if (value == null || value == "") {
-                        return "L'email ne peut pas être vide.";
+                        return locale.cant_be_empty(locale.the_email);
                       }
                       if (!value.isEmail()) {
-                        return "L'email doit être bien formatté.";
+                        return locale.must_be_well_formatted(locale.the_email);
                       }
                       return null;
                     },
@@ -131,20 +137,28 @@ class _ShareDialogState extends State<ShareDialog> {
                           },
                           validator: (value) {
                             if (value == null || value == "") {
-                              return "La durée doit ne peut pas être vide.";
+                              return locale.cant_be_empty(locale.the_duration);
                             }
                             if (int.tryParse(value) == null) {
-                              return "La durée doit être un nombre.";
+                              return locale.must_be_a_number(
+                                locale.the_duration,
+                              );
                             }
                             if (int.parse(value) > 150) {
-                              return "La durée doit être inférieure ou égale à 150.";
+                              return locale.must_be_inferior_or_equal_than(
+                                150,
+                                locale.the_duration,
+                              );
                             }
                             if (int.parse(value) < 1) {
-                              return "La durée doit être supérieur ou égale à 1.";
+                              return locale.must_be_superior_or_equal_than(
+                                1,
+                                locale.the_duration,
+                              );
                             }
                             return null;
                           },
-                          label: "Durée du partage",
+                          label: locale.duration_of_share,
                           hint: "3",
                           isRequired: false,
                           type: TextFieldType.number,
@@ -161,7 +175,10 @@ class _ShareDialogState extends State<ShareDialog> {
                               ShareDurationPeriod.values.map((el) {
                                 return DropdownMenuEntry(
                                   value: el,
-                                  label: el.value,
+                                  label: shareDurationPeriodToString(
+                                    el,
+                                    locale,
+                                  ),
                                 );
                               }).toList(),
                           isRequired: false,
@@ -169,16 +186,19 @@ class _ShareDialogState extends State<ShareDialog> {
                       ),
                     ],
                   ),
-                  Text("Permissions: ", style: h3),
+                  Text("${locale.permissions}: ", style: h3),
                   ShadowContainer(
                     padding: EdgeInsets.all(10),
                     radius: Radius.circular(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(width: 100, child: Text("Garants", style: h3)),
+                        SizedBox(
+                          width: 100,
+                          child: Text(locale.warrantors, style: h3),
+                        ),
                         SharePermCell(
-                          label: "Lecture infos",
+                          label: locale.read_infos,
                           permission: SharePermission.readInfo,
                           value: shareCreation.warrantorPermission,
                           onChange: (newValue) {
@@ -188,7 +208,7 @@ class _ShareDialogState extends State<ShareDialog> {
                           },
                         ),
                         SharePermCell(
-                          label: "Lecture fichiers",
+                          label: locale.read_files,
                           permission: SharePermission.readFile,
                           value: shareCreation.warrantorPermission,
                           onChange: (newValue) {
@@ -198,7 +218,7 @@ class _ShareDialogState extends State<ShareDialog> {
                           },
                         ),
                         SharePermCell(
-                          label: "Écriture",
+                          label: locale.write,
                           permission: SharePermission.write,
                           value: shareCreation.warrantorPermission,
                           onChange: (newValue) {
@@ -218,10 +238,10 @@ class _ShareDialogState extends State<ShareDialog> {
                       children: [
                         SizedBox(
                           width: 100,
-                          child: Text("Occupants", style: h3),
+                          child: Text(locale.occupants, style: h3),
                         ),
                         SharePermCell(
-                          label: "Lecture infos",
+                          label: locale.read_infos,
                           permission: SharePermission.readInfo,
                           value: shareCreation.occupantPermission,
                           onChange: (newValue) {
@@ -231,7 +251,7 @@ class _ShareDialogState extends State<ShareDialog> {
                           },
                         ),
                         SharePermCell(
-                          label: "Lecture fichiers",
+                          label: locale.read_files,
                           permission: SharePermission.readFile,
                           value: shareCreation.occupantPermission,
                           onChange: (newValue) {
@@ -241,7 +261,7 @@ class _ShareDialogState extends State<ShareDialog> {
                           },
                         ),
                         SharePermCell(
-                          label: "Écriture",
+                          label: locale.write,
                           permission: SharePermission.write,
                           value: shareCreation.occupantPermission,
                           onChange: (newValue) {
@@ -269,7 +289,7 @@ class _ShareDialogState extends State<ShareDialog> {
                           Navigator.pop(context);
                         },
                         padding: EdgeInsets.all(16),
-                        child: Text("Annulé"),
+                        child: Text(locale.canceled),
                       ),
                       CustomButton(
                         type: ButtonType.primary,
@@ -283,7 +303,7 @@ class _ShareDialogState extends State<ShareDialog> {
                                   SharePermission.none) {
                             setState(() {
                               permissionError =
-                                  "Vous devez avoir au moins une permission pour partager votre dossier.";
+                                  locale.must_have_at_least_one_perm;
                             });
                             formKey.currentState!.validate();
                             return;
@@ -293,7 +313,7 @@ class _ShareDialogState extends State<ShareDialog> {
                           }
                         },
                         padding: EdgeInsets.all(16),
-                        child: Text("Partager mon dossier"),
+                        child: Text(locale.share_my_folder),
                       ),
                     ],
                   ),

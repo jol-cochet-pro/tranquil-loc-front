@@ -3,6 +3,7 @@ import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ShareDurationPeriod { day, week, month }
 
@@ -21,16 +22,15 @@ class Share {
     required this.durationPeriod,
   });
 
-  String shareDurationToString() {
+  String shareDurationToString(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     switch (durationPeriod) {
       case ShareDurationPeriod.day:
-        return durationNum > 1 ? "$durationNum jours" : "$durationNum jour";
+        return locale.n_days(durationNum);
       case ShareDurationPeriod.week:
-        return durationNum > 1
-            ? "$durationNum semaines"
-            : "$durationNum semaine";
+        return locale.n_weeks(durationNum);
       case ShareDurationPeriod.month:
-        return "$durationNum mois";
+        return locale.n_months(durationNum);
     }
   }
 }
@@ -50,9 +50,10 @@ class SharesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return DashCard(
-      title: "Mes partages",
-      emptyInfo: "Pas de partages enregistrés...",
+      title: locale.my_shares,
+      emptyInfo: locale.no_shares_saved,
       onAdd: () {
         print("add shares.");
       },
@@ -73,7 +74,10 @@ class SharesCard extends StatelessWidget {
                   spacing: 4,
                   children: [
                     Icon(Icons.hourglass_empty_outlined),
-                    Text(shares[index].shareDurationToString(), style: p2),
+                    Text(
+                      shares[index].shareDurationToString(context),
+                      style: p2,
+                    ),
                   ],
                 ),
                 Text(shares[index].description, style: p2),

@@ -5,6 +5,7 @@ import 'package:dossier_locataire/pages/dashboard/components/dash-state-cell.dar
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Occupant {
   final String id;
@@ -83,9 +84,10 @@ class OccupantsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return DashCard(
-      title: "Futur occupants",
-      emptyInfo: "Pas de futur occupants enregistrés...",
+      title: locale.future_occupants,
+      emptyInfo: locale.no_future_occupants_saved,
       onAdd: () {
         print("add occupant.");
       },

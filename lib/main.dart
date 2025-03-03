@@ -4,6 +4,8 @@ import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   initializeDateFormatting("fr_FR").then((_) => runApp(const MyApp()));
@@ -40,6 +42,16 @@ class MyApp extends StatelessWidget {
         "/garants": (_) => const Warrantors(),
         "/occupants": (_) => const Occupants(),
       },
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('fr'), // French
+      ],
+
       theme: ThemeData(
         fontFamily: "Inter",
         fontFamilyFallback: ["Inter"],
