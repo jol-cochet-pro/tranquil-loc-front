@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "255481462173",
+    "project_id": "dossier-loc",
+    "storage_bucket": "dossier-loc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255481462173:android:c4c2d8220bda0aaf0fc374",
+        "android_client_info": {
+          "package_name": "com.example.dossier_locataire"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVrQsLy0m1AyrAxsPbKZ0ybzEEW05tyWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

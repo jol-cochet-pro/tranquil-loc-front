@@ -79,6 +79,8 @@ class Occupant {
 class Occupants extends StatefulWidget {
   const Occupants({super.key});
 
+  static const route = '/occupants';
+
   @override
   State<Occupants> createState() => _OccupantsState();
 }

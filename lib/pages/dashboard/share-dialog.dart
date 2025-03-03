@@ -7,6 +7,7 @@ import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 enum ShareDurationPeriod { day, month, year }
 
@@ -285,9 +286,7 @@ class _ShareDialogState extends State<ShareDialog> {
                     children: [
                       CustomButton(
                         type: ButtonType.secondary,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: () => context.pop(),
                         padding: EdgeInsets.all(16),
                         child: Text(locale.canceled),
                       ),

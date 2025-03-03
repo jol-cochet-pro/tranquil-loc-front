@@ -5,19 +5,20 @@ import 'package:flutter/services.dart';
 enum TextFieldType { text, number, password }
 
 class CustomTextField extends StatefulWidget {
-  final void Function(String?) onSaved;
+  final void Function(String?)? onSaved;
   final void Function(String?)? onChanged;
   final String? label;
   final String hint;
   final String? helpLabel;
   final GestureTapCallback? onHelpTap;
   final bool isRequired;
+  final String? errorText;
   final TextFieldType type;
   final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
-    required this.onSaved,
+    this.onSaved,
     required this.hint,
     required this.isRequired,
     required this.type,
@@ -26,6 +27,7 @@ class CustomTextField extends StatefulWidget {
     this.helpLabel,
     this.onHelpTap,
     this.onChanged,
+    this.errorText,
   });
 
   @override
@@ -67,6 +69,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       : [],
               decoration: InputDecoration(
                 hintText: widget.hint,
+                errorText:
+                    widget.errorText != null && widget.errorText!.isNotEmpty
+                        ? widget.errorText
+                        : null,
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: colorScheme.outline),
                 ),

@@ -1,14 +1,20 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
+import 'package:dossier_locataire/pages/auth/login.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
+@RoutePage()
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
+
+  static const route = "/auth/forgot-password";
 
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();
@@ -78,9 +84,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         child: Text(locale.send_mail),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, "/auth/login");
-                        },
+                        onTap: () => context.go(Login.route),
                         child: Text(
                           locale.i_remember,
                           style: TextStyle(color: colorScheme.primary),

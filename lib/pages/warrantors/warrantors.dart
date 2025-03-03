@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class Warrantors extends StatelessWidget {
   const Warrantors({super.key});
 
-  @override
+  static const route = '/warrantors';
+
   Widget build(BuildContext context) {
     return PageLayout(child: Text("warrantor"));
   }

@@ -1,0 +1,22 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "dossier-loc",
+          "appId": "1:255481462173:android:c4c2d8220bda0aaf0fc374",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "dossier-loc",
+          "configurations": {
+            "android": "1:255481462173:android:c4c2d8220bda0aaf0fc374",
+            "web": "1:255481462173:web:1bf98a3a7ce556de0fc374"
+          }
+        }
+      }
+    }
+  }
+}

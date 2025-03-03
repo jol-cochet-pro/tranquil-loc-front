@@ -1,11 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
+import 'package:dossier_locataire/pages/auth/login.dart';
+import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterUser {
   String email;
@@ -14,17 +19,45 @@ class RegisterUser {
   RegisterUser({required this.email, required this.password});
 }
 
+@RoutePage()
 class Register extends StatefulWidget {
   const Register({super.key});
+
+  static const route = '/auth/register';
 
   @override
   State<Register> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-  String currentPassword = "";
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RegisterUser user = RegisterUser(email: "", password: "");
+  RegisterUser userError = RegisterUser(email: "", password: "");
+
+  void submit(AppLocalizations locale) async {
+    setState(() => userError = RegisterUser(email: "", password: ""));
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: user.email,
+        password: user.password,
+      );
+      context.go(Dashboard.route);
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case 'weak-password':
+          setState(() => userError.password = locale.password_is_weak);
+          break;
+        case 'email-already-in-use':
+          setState(() => userError.email = locale.email_already_used);
+          break;
+        case 'invalid-email':
+          setState(
+            () => userError.email = locale.must_be_well_formatted(locale.email),
+          );
+          break;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +87,7 @@ class _RegisterState extends State<Register> {
                 ),
                 CustomTextField(
                   label: locale.email,
-                  onSaved: (newValue) {
-                    user.email = newValue!;
-                  },
+                  onChanged: (newValue) => user.email = newValue!,
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_email);
@@ -69,17 +100,11 @@ class _RegisterState extends State<Register> {
                   hint: locale.email_hint,
                   isRequired: true,
                   type: TextFieldType.text,
+                  errorText: userError.email,
                 ),
                 CustomTextField(
                   label: locale.password,
-                  onSaved: (newValue) {
-                    user.password = newValue!;
-                  },
-                  onChanged: (newValue) {
-                    setState(() {
-                      currentPassword = newValue!;
-                    });
-                  },
+                  onChanged: (newValue) => user.password = newValue!,
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_password);
@@ -92,6 +117,7 @@ class _RegisterState extends State<Register> {
                   hint: "●●●●●●●●",
                   isRequired: true,
                   type: TextFieldType.password,
+                  errorText: userError.password,
                 ),
                 CustomTextField(
                   label: locale.confirm_password,
@@ -99,12 +125,12 @@ class _RegisterState extends State<Register> {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_confirm_password);
                     }
-                    if (value != currentPassword) {
+                    if (value != user.password) {
                       return locale.confirm_password_must_match;
                     }
                     return null;
                   },
-                  onSaved: (_) {},
+                  onChanged: (_) {},
                   hint: "●●●●●●●●",
                   isRequired: true,
                   type: TextFieldType.password,
@@ -116,7 +142,7 @@ class _RegisterState extends State<Register> {
                       CustomButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            print("yapppiiii");
+                            submit(locale);
                           }
                         },
                         padding: EdgeInsets.symmetric(
@@ -127,9 +153,7 @@ class _RegisterState extends State<Register> {
                         child: Text(locale.lets_go),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, "/auth/login");
-                        },
+                        onTap: () => context.go(Login.route),
                         child: Text(
                           locale.already_has_account,
                           style: TextStyle(color: colorScheme.primary),

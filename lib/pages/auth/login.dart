@@ -2,10 +2,15 @@ import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
+import 'package:dossier_locataire/pages/auth/forgot-password.dart';
+import 'package:dossier_locataire/pages/auth/register.dart';
+import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginUser {
   String email;
@@ -17,6 +22,8 @@ class LoginUser {
 class Login extends StatefulWidget {
   const Login({super.key});
 
+  static const route = "/auth/login";
+
   @override
   State<Login> createState() => _LoginState();
 }
@@ -24,6 +31,36 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final LoginUser user = LoginUser(email: "", password: "");
+  final LoginUser userError = LoginUser(email: "", password: "");
+
+  void submit(AppLocalizations locale) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: user.email,
+        password: user.password,
+      );
+      context.go(Dashboard.route);
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case 'user-disabled':
+          setState(() => userError.email = locale.account_deactivated);
+          break;
+        case 'invalid-credential':
+        case 'user-not-found':
+          setState(() {
+            userError.email = locale.invalid_email_or_password;
+            userError.password = locale.invalid_email_or_password;
+          });
+          break;
+        case 'invalid-email':
+          setState(
+            () => userError.email = locale.must_be_well_formatted(locale.email),
+          );
+          break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
@@ -51,9 +88,8 @@ class _LoginState extends State<Login> {
                 ),
                 CustomTextField(
                   label: locale.email,
-                  onSaved: (newValue) {
-                    user.email = newValue!;
-                  },
+                  onChanged:
+                      (newValue) => setState(() => user.email = newValue!),
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_email);
@@ -67,15 +103,13 @@ class _LoginState extends State<Login> {
                   isRequired: true,
                   type: TextFieldType.text,
                   helpLabel: locale.no_account,
-                  onHelpTap: () {
-                    Navigator.pushNamed(context, "/auth/register");
-                  },
+                  onHelpTap: () => context.go(Register.route),
+                  errorText: userError.email,
                 ),
                 CustomTextField(
                   label: locale.password,
-                  onSaved: (newValue) {
-                    user.password = newValue!;
-                  },
+                  onChanged:
+                      (newValue) => setState(() => user.password = newValue!),
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_password);
@@ -86,15 +120,14 @@ class _LoginState extends State<Login> {
                   isRequired: true,
                   type: TextFieldType.password,
                   helpLabel: locale.forgotten_password,
-                  onHelpTap: () {
-                    Navigator.pushNamed(context, "/auth/forgot-password");
-                  },
+                  onHelpTap: () => context.go(ForgotPassword.route),
+                  errorText: userError.password,
                 ),
                 Center(
                   child: CustomButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        print("yappi");
+                        submit(locale);
                       }
                     },
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),

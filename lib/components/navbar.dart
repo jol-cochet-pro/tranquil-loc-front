@@ -1,8 +1,14 @@
 import 'package:dossier_locataire/components/nav-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
+import 'package:dossier_locataire/pages/auth/login.dart';
+import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
+import 'package:dossier_locataire/pages/occupants/occupants.dart';
+import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -34,7 +40,7 @@ class _NavbarState extends State<Navbar> {
                   setState(() {
                     selected = 0;
                   });
-                  Navigator.pushNamed(context, "/dashboard");
+                  context.go(Dashboard.route);
                 },
                 child: Text(locale.dashboard),
               ),
@@ -44,7 +50,7 @@ class _NavbarState extends State<Navbar> {
                   setState(() {
                     selected = 1;
                   });
-                  Navigator.pushNamed(context, "/occupants");
+                  context.go(Occupants.route);
                 },
                 child: Text(locale.occupants),
               ),
@@ -54,7 +60,7 @@ class _NavbarState extends State<Navbar> {
                   setState(() {
                     selected = 2;
                   });
-                  Navigator.pushNamed(context, "/garants");
+                  context.go(Warrantors.route);
                 },
                 child: Text(locale.warrantors),
               ),
@@ -83,27 +89,30 @@ class _NavbarState extends State<Navbar> {
                     children: [
                       Text(locale.my_account, style: p1),
                       Divider(height: 1, color: colorScheme.outline),
-                      Row(
-                        spacing: 8,
-                        children: [
-                          Icon(Icons.person_outline, size: 16),
-                          Text(locale.my_profile, style: p2),
-                        ],
+                      TextButton.icon(
+                        label: Text(locale.my_profile, style: p2),
+                        icon: Icon(Icons.person_outline, size: 16),
+                        onPressed: () {
+                          print("my profile");
+                        },
                       ),
-                      Row(
-                        spacing: 8,
-                        children: [
-                          Icon(Icons.settings_outlined, size: 16),
-                          Text(locale.settings, style: p2),
-                        ],
+                      TextButton.icon(
+                        label: Text(locale.settings, style: p2),
+                        icon: Icon(Icons.settings_outlined, size: 16),
+                        onPressed: () {
+                          print("my profile");
+                        },
                       ),
                       Divider(height: 1, color: colorScheme.outline),
-                      Row(
-                        spacing: 8,
-                        children: [
-                          Icon(Icons.exit_to_app, size: 16),
-                          Text(locale.logout, style: p2),
-                        ],
+                      TextButton.icon(
+                        label: Text(locale.logout, style: p2),
+                        icon: Icon(Icons.exit_to_app, size: 16),
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut().then(
+                            (_) => context.go(Login.route),
+                          );
+                          ;
+                        },
                       ),
                     ],
                   ),
@@ -128,16 +137,8 @@ class _NavbarState extends State<Navbar> {
                   ),
                 ],
               ),
-              onClose: () {
-                setState(() {
-                  profileOpen = false;
-                });
-              },
-              onOpen: () {
-                setState(() {
-                  profileOpen = true;
-                });
-              },
+              onClose: () => setState(() => profileOpen = false),
+              onOpen: () => setState(() => profileOpen = true),
             ),
           ],
         ),
