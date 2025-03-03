@@ -9,23 +9,31 @@ class PageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: Theme.of(context).textTheme.bodyMedium!,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image(
-            image: AssetImage('assets/background_desktop.png'),
-            fit: BoxFit.fill,
-          ),
-          hideNavbar == null || !hideNavbar!
-              ? Positioned(top: 12, left: 24, right: 24, child: Navbar())
-              : SizedBox.shrink(),
-          Padding(
-            padding: EdgeInsets.only(left: 24, right: 24, top: 74, bottom: 24),
-            child: child,
-          ),
-        ],
+    final bool isVisiblenav = hideNavbar == null || !hideNavbar!;
+    return Material(
+      child: DefaultTextStyle(
+        style: Theme.of(context).textTheme.bodyMedium!,
+        child: Stack(
+          fit: isVisiblenav ? StackFit.expand : StackFit.passthrough,
+          children: [
+            Image(
+              image: AssetImage('assets/background_desktop.png'),
+              fit: BoxFit.fill,
+            ),
+            isVisiblenav
+                ? Positioned(top: 12, left: 24, right: 24, child: Navbar())
+                : SizedBox.shrink(),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 24,
+                right: 24,
+                top: isVisiblenav ? 74 : 24,
+                bottom: 24,
+              ),
+              child: child,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -2,12 +2,14 @@ import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-enum TextFieldType { text, number }
+enum TextFieldType { text, number, password }
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final void Function(String?) onSaved;
   final String? label;
   final String hint;
+  final String? helpLabel;
+  final GestureTapCallback? onHelpTap;
   final bool isRequired;
   final TextFieldType type;
   final String? Function(String?)? validator;
@@ -20,17 +22,28 @@ class CustomTextField extends StatelessWidget {
     required this.type,
     this.label,
     this.validator,
+    this.helpLabel,
+    this.onHelpTap,
   });
 
   @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool showPassword = false;
+  @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4,
       children: [
         Row(
           children: [
-            label != null ? Text(label!, style: p1) : SizedBox.shrink(),
-            isRequired
+            widget.label != null
+                ? Text(widget.label!, style: p1)
+                : SizedBox.shrink(),
+            widget.isRequired
                 ? Text(
                   "*",
                   style: TextStyle(
@@ -40,21 +53,68 @@ class CustomTextField extends StatelessWidget {
                 : SizedBox.shrink(),
           ],
         ),
-        TextFormField(
-          inputFormatters:
-              type == TextFieldType.number
-                  ? [FilteringTextInputFormatter.digitsOnly]
-                  : [],
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(color: Color(0xFFCBD5E1)),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(143, 203, 213, 225)),
+        Stack(
+          children: [
+            TextFormField(
+              obscureText:
+                  widget.type == TextFieldType.password && !showPassword,
+              enableSuggestions:
+                  widget.type == TextFieldType.password && !showPassword,
+              autocorrect:
+                  widget.type == TextFieldType.password && !showPassword,
+              inputFormatters:
+                  widget.type == TextFieldType.number
+                      ? [FilteringTextInputFormatter.digitsOnly]
+                      : [],
+              decoration: InputDecoration(
+                hintText: widget.hint,
+                hintStyle: TextStyle(color: Color(0xFFCBD5E1)),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFCBD5E1)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFCBD5E1)),
+                ),
+              ),
+              validator: widget.validator,
+              onSaved: widget.onSaved,
             ),
-          ),
-          validator: validator,
-          onSaved: onSaved,
+            widget.type == TextFieldType.password
+                ? Positioned.fill(
+                  right: 12,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showPassword = !showPassword;
+                        });
+                      },
+                      child:
+                          showPassword
+                              ? Icon(
+                                Icons.visibility_off,
+                                color: Color(0xFFCBD5E1),
+                              )
+                              : Icon(
+                                Icons.visibility,
+                                color: Color(0xFFCBD5E1),
+                              ),
+                    ),
+                  ),
+                )
+                : SizedBox.shrink(),
+          ],
         ),
+        widget.helpLabel != null
+            ? GestureDetector(
+              onTap: widget.onHelpTap != null ? widget.onHelpTap! : () {},
+              child: Text(
+                widget.helpLabel!,
+                style: TextStyle(color: Color(0xFF0B74E7)),
+              ),
+            )
+            : SizedBox.shrink(),
       ],
     );
   }
