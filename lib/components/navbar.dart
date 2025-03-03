@@ -16,6 +16,7 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -69,9 +70,6 @@ class _NavbarState extends State<Navbar> {
                 splashFactory: NoSplash.splashFactory,
                 overlayColor: WidgetStatePropertyAll<Color>(Colors.transparent),
               ),
-              menuStyle: MenuStyle(
-                shadowColor: WidgetStatePropertyAll<Color>(Color(0x40AEAEAE)),
-              ),
               alignmentOffset: Offset(8, 8),
               menuChildren: [
                 Container(
@@ -82,7 +80,7 @@ class _NavbarState extends State<Navbar> {
                     spacing: 8,
                     children: [
                       Text("Mon compte", style: p1),
-                      Divider(height: 1, color: Color(0xFFF1F5F9)),
+                      Divider(height: 1, color: colorScheme.outline),
                       Row(
                         spacing: 8,
                         children: [
@@ -97,7 +95,7 @@ class _NavbarState extends State<Navbar> {
                           Text("Paramètres", style: p2),
                         ],
                       ),
-                      Divider(height: 1, color: Color(0xFFF1F5F9)),
+                      Divider(height: 1, color: colorScheme.outline),
                       Row(
                         spacing: 8,
                         children: [
@@ -124,6 +122,7 @@ class _NavbarState extends State<Navbar> {
                     !profileOpen
                         ? Icons.keyboard_arrow_down
                         : Icons.keyboard_arrow_up,
+                    color: Colors.black,
                   ),
                 ],
               ),

@@ -34,6 +34,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   bool showPassword = false;
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4,
@@ -68,53 +69,56 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       : [],
               decoration: InputDecoration(
                 hintText: widget.hint,
-                hintStyle: TextStyle(color: Color(0xFFCBD5E1)),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFCBD5E1)),
+                  borderSide: BorderSide(color: colorScheme.outline),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFCBD5E1)),
+                  borderSide: BorderSide(color: colorScheme.primary),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: colorScheme.error),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: colorScheme.error),
                 ),
               ),
               validator: widget.validator,
               onSaved: widget.onSaved,
             ),
-            widget.type == TextFieldType.password
-                ? Positioned.fill(
-                  right: 12,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showPassword = !showPassword;
-                        });
-                      },
-                      child:
-                          showPassword
-                              ? Icon(
-                                Icons.visibility_off,
-                                color: Color(0xFFCBD5E1),
-                              )
-                              : Icon(
-                                Icons.visibility,
-                                color: Color(0xFFCBD5E1),
-                              ),
-                    ),
+            if (widget.type == TextFieldType.password)
+              Positioned.fill(
+                right: 12,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                    child:
+                        showPassword
+                            ? Icon(
+                              Icons.visibility_off,
+                              color: colorScheme.onSurfaceVariant,
+                            )
+                            : Icon(
+                              Icons.visibility,
+                              color: colorScheme.onSurfaceVariant,
+                            ),
                   ),
-                )
-                : SizedBox.shrink(),
+                ),
+              ),
           ],
         ),
-        widget.helpLabel != null
-            ? GestureDetector(
-              onTap: widget.onHelpTap != null ? widget.onHelpTap! : () {},
-              child: Text(
-                widget.helpLabel!,
-                style: TextStyle(color: Color(0xFF0B74E7)),
-              ),
-            )
-            : SizedBox.shrink(),
+        if (widget.helpLabel != null)
+          GestureDetector(
+            onTap: widget.onHelpTap != null ? widget.onHelpTap! : () {},
+            child: Text(
+              widget.helpLabel!,
+              style: TextStyle(color: colorScheme.primary),
+            ),
+          ),
       ],
     );
   }

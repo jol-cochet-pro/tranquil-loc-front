@@ -16,7 +16,7 @@ class CustomIconButton extends StatelessWidget {
       onPressed: onPressed,
       icon: Icon(icon),
       style: ButtonStyle(
-        side: WidgetStatePropertyAll(BorderSide(color: Color(0xFFF1F5F9))),
+        foregroundColor: WidgetStatePropertyAll(Colors.black),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),

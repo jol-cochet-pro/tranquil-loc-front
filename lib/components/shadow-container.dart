@@ -16,6 +16,7 @@ class ShadowContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: padding,
       constraints: constraints,
@@ -24,12 +25,11 @@ class ShadowContainer extends StatelessWidget {
         borderRadius: BorderRadius.all(radius),
         boxShadow: [
           BoxShadow(
-            color: Color(0x40AEAEAE),
+            color: colorScheme.shadow,
             blurRadius: 8,
             offset: Offset(0, 8),
           ),
         ],
-        border: Border.all(color: Color(0xFFE5E7EB)),
       ),
       child: child,
     );

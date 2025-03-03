@@ -14,7 +14,8 @@ class OccupantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateFormat formatter = DateFormat("dd/MM/yyy");
+    final DateFormat formatter = DateFormat("dd/MM/yyy");
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return ShadowContainer(
       constraints: BoxConstraints.loose(Size(500, double.infinity)),
       radius: Radius.circular(10),
@@ -110,8 +111,8 @@ class OccupantCard extends StatelessWidget {
                 style: TextStyle(
                   color:
                       occupant.getIsCompleted()
-                          ? Color(0xFF0A9A00)
-                          : Color(0xFFDF1A1A),
+                          ? colorScheme.tertiary
+                          : colorScheme.error,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),

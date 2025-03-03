@@ -15,6 +15,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = ColorScheme(
+      brightness: Brightness.light,
+      primary: Color(0xFF007BFF),
+      onPrimary: Colors.white,
+      secondary: Colors.white,
+      onSecondary: Colors.black,
+      tertiary: Color(0xFF0A9A00),
+      onTertiary: Colors.white,
+      surface: Colors.white,
+      onSurface: Colors.black,
+      error: Color(0xFFFF5252),
+      onError: Colors.white,
+      outline: Color(0xFFB0BEC5),
+      onSurfaceVariant: Color(0xFFB0BEC5),
+      shadow: Color(0x40AEAEAE),
+    );
     return MaterialApp(
       title: 'Dossier locataire',
       initialRoute: "/auth/login",
@@ -27,17 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Inter",
         fontFamilyFallback: ["Inter"],
-        colorScheme: ColorScheme(
-          brightness: Brightness.light,
-          primary: Color(0xFF0B74E7),
-          onPrimary: Colors.white,
-          secondary: Colors.white,
-          onSecondary: Colors.black,
-          error: Color(0xFFDF1A1A),
-          onError: Color(0xFFDF1A1A),
-          surface: Colors.white,
-          onSurface: Colors.black,
-        ),
+        colorScheme: colorScheme,
       ),
     );
   }

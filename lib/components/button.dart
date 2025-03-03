@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
       case ButtonType.secondary:
         return colorScheme.secondary;
       case ButtonType.success:
-        return Color(0xFF0A9A00);
+        return colorScheme.tertiary;
     }
   }
 

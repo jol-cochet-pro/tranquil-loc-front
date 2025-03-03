@@ -8,16 +8,17 @@ class IconOkNoOk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return isOk
         ? Icon(
           Icons.task_alt_outlined,
           size: size ?? 20,
-          color: Color(0xFF0A9A00),
+          color: colorScheme.tertiary,
         )
         : Icon(
           Icons.cancel_outlined,
           size: size ?? 20,
-          color: Color(0xFFDF1A1A),
+          color: colorScheme.error,
         );
   }
 }

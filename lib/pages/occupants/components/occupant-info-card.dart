@@ -28,6 +28,7 @@ class OccupantInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Expanded(
       child: Column(
         spacing: 4,
@@ -66,7 +67,10 @@ class OccupantInfoCard extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12),
-                    child: VerticalDivider(width: 1, color: Color(0xFFCBD5E1)),
+                    child: VerticalDivider(
+                      width: 1,
+                      color: colorScheme.outline,
+                    ),
                   ),
                   Expanded(
                     child: Column(

@@ -1,6 +1,5 @@
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CustomDropDown<T> extends StatelessWidget {
   final List<DropdownMenuEntry<T>> items;
@@ -22,6 +21,7 @@ class CustomDropDown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Column(
       mainAxisSize: MainAxisSize.min,
       spacing: 4,
@@ -30,7 +30,7 @@ class CustomDropDown<T> extends StatelessWidget {
           children: [
             label != null ? Text(label!, style: p1) : SizedBox.shrink(),
             isRequired
-                ? Text("*", style: TextStyle(color: Color(0xFFDF1A1A)))
+                ? Text("*", style: TextStyle(color: colorScheme.error))
                 : SizedBox.shrink(),
           ],
         ),
@@ -42,9 +42,17 @@ class CustomDropDown<T> extends StatelessWidget {
           menuStyle: const MenuStyle(alignment: Alignment.bottomLeft),
           expandedInsets: EdgeInsets.zero,
           inputDecorationTheme: InputDecorationTheme(
-            hintStyle: TextStyle(color: Color(0xFFCBD5E1)),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFFCBD5E1)),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: colorScheme.outline),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: colorScheme.primary),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: colorScheme.error),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: colorScheme.error),
             ),
           ),
         ),
