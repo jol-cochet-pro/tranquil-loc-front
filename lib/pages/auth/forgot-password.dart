@@ -7,11 +7,12 @@ import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class ForgotPassword extends StatelessWidget {
+  const ForgotPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final AppLocalizations locale = AppLocalizations.of(context)!;
     return PageLayout(
       hideNavbar: true,
@@ -29,15 +30,12 @@ class Login extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(locale.login, style: h1),
-                  Text(locale.happy_to_see_you, style: p1),
+                  Text(locale.mistake_happens, style: h1),
+                  Text(locale.an_email_will_be_sent, style: p1),
                 ],
               ),
               CustomTextField(
                 label: locale.email,
-                onSaved: (_) {
-                  print("ici");
-                },
                 validator: (value) {
                   if (value == null || value == "") {
                     return locale.cant_be_empty(locale.the_email);
@@ -47,35 +45,38 @@ class Login extends StatelessWidget {
                   }
                   return null;
                 },
-                hint: locale.email_hint,
-                isRequired: false,
-                type: TextFieldType.text,
-                helpLabel: locale.no_account,
-                onHelpTap: () {
-                  print("cheh");
-                },
-              ),
-              CustomTextField(
-                label: locale.password,
                 onSaved: (_) {
                   print("ici");
                 },
-                hint: "●●●●●●●●",
+                hint: locale.email_hint,
                 isRequired: false,
-                type: TextFieldType.password,
-                helpLabel: locale.forgotten_password,
-                onHelpTap: () {
-                  Navigator.pushNamed(context, "/auth/forgot-password");
-                },
+                type: TextFieldType.text,
               ),
               Center(
-                child: CustomButton(
-                  onPressed: () {
-                    print("c'est parti!");
-                  },
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                  type: ButtonType.primary,
-                  child: Text(locale.lets_go),
+                child: Column(
+                  spacing: 8,
+                  children: [
+                    CustomButton(
+                      onPressed: () {
+                        print("send mail");
+                      },
+                      padding: EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 32,
+                      ),
+                      type: ButtonType.primary,
+                      child: Text(locale.send_mail),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/auth/login");
+                      },
+                      child: Text(
+                        locale.i_remember,
+                        style: TextStyle(color: colorScheme.primary),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

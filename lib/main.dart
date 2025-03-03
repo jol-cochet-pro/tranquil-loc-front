@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/pages/auth/forgot-password.dart';
 import 'package:dossier_locataire/pages/auth/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       title: 'Dossier locataire',
       initialRoute: "/auth/login",
       routes: {
+        "/auth/forgot-password": (_) => const ForgotPassword(),
         "/auth/login": (_) => const Login(),
         "/dashboard": (_) => const Dashboard(),
         "/garants": (_) => const Warrantors(),
@@ -49,7 +51,8 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        Locale('es'), // French
+        Locale('fr'), // French
+        Locale('en'), // English
       ],
 
       theme: ThemeData(
