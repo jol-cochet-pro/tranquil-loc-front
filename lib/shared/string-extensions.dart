@@ -5,3 +5,11 @@ extension EmailValidator on String {
     ).hasMatch(this);
   }
 }
+
+extension PasswordValidator on String {
+  bool isStrongPassword() {
+    return RegExp(
+      r'^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.;:]){1,}).{8,}$',
+    ).hasMatch(this);
+  }
+}

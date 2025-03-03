@@ -6,6 +6,7 @@ enum TextFieldType { text, number, password }
 
 class CustomTextField extends StatefulWidget {
   final void Function(String?) onSaved;
+  final void Function(String?)? onChanged;
   final String? label;
   final String hint;
   final String? helpLabel;
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.helpLabel,
     this.onHelpTap,
+    this.onChanged,
   });
 
   @override
@@ -81,32 +83,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 focusedErrorBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: colorScheme.error),
                 ),
+                errorMaxLines: 100,
               ),
               validator: widget.validator,
               onSaved: widget.onSaved,
+              onChanged: widget.onChanged,
             ),
             if (widget.type == TextFieldType.password)
-              Positioned.fill(
+              Positioned(
                 right: 12,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    child:
-                        showPassword
-                            ? Icon(
-                              Icons.visibility_off,
-                              color: colorScheme.onSurfaceVariant,
-                            )
-                            : Icon(
-                              Icons.visibility,
-                              color: colorScheme.onSurfaceVariant,
-                            ),
-                  ),
+                top: 12,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showPassword = !showPassword;
+                    });
+                  },
+                  child:
+                      showPassword
+                          ? Icon(
+                            Icons.visibility_off,
+                            color: colorScheme.onSurfaceVariant,
+                          )
+                          : Icon(
+                            Icons.visibility,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                 ),
               ),
           ],

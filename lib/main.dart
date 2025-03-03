@@ -1,5 +1,6 @@
 import 'package:dossier_locataire/pages/auth/forgot-password.dart';
 import 'package:dossier_locataire/pages/auth/login.dart';
+import 'package:dossier_locataire/pages/auth/register.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'Dossier locataire',
       initialRoute: "/auth/login",
       routes: {
+        "/auth/register": (_) => const Register(),
         "/auth/forgot-password": (_) => const ForgotPassword(),
         "/auth/login": (_) => const Login(),
         "/dashboard": (_) => const Dashboard(),
