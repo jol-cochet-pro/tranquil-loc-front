@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
@@ -6,11 +5,18 @@ import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/auth/login.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/types/form-errors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
-@RoutePage()
+class ResetEmail {
+  String email;
+
+  ResetEmail({required this.email});
+}
+
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
 
@@ -22,6 +28,27 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final ResetEmail resetEmail = ResetEmail(email: "");
+  final FormErrors errors = FormErrors();
+
+  void submit(AppLocalizations locale) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: resetEmail.email,
+      );
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case 'auth/invalid-email':
+          setState(
+            () =>
+                errors["email"] = locale.must_be_well_formatted(
+                  locale.the_email,
+                ),
+          );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -59,12 +86,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     }
                     return null;
                   },
-                  onSaved: (_) {
-                    print("ici");
-                  },
+                  onChanged:
+                      (newValue) =>
+                          setState(() => resetEmail.email = newValue!),
                   hint: locale.email_hint,
                   isRequired: true,
                   type: TextFieldType.text,
+                  errorText: errors["email"],
                 ),
                 Center(
                   child: Column(
@@ -73,7 +101,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       CustomButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            print("yappi");
+                            submit(locale);
                           }
                         },
                         padding: EdgeInsets.symmetric(

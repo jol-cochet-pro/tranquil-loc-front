@@ -7,6 +7,7 @@ import 'package:dossier_locataire/pages/auth/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/types/form-errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -32,10 +33,10 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RegisterUser user = RegisterUser(email: "", password: "");
-  RegisterUser userError = RegisterUser(email: "", password: "");
+  final FormErrors userError = FormErrors();
 
   void submit(AppLocalizations locale) async {
-    setState(() => userError = RegisterUser(email: "", password: ""));
+    setState(() => userError.clear());
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: user.email,
@@ -45,14 +46,17 @@ class _RegisterState extends State<Register> {
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case 'weak-password':
-          setState(() => userError.password = locale.password_is_weak);
+          setState(() => userError["password"] = locale.password_is_weak);
           break;
         case 'email-already-in-use':
-          setState(() => userError.email = locale.email_already_used);
+          setState(() => userError["email"] = locale.email_already_used);
           break;
         case 'invalid-email':
           setState(
-            () => userError.email = locale.must_be_well_formatted(locale.email),
+            () =>
+                userError["email"] = locale.must_be_well_formatted(
+                  locale.email,
+                ),
           );
           break;
       }
@@ -100,7 +104,7 @@ class _RegisterState extends State<Register> {
                   hint: locale.email_hint,
                   isRequired: true,
                   type: TextFieldType.text,
-                  errorText: userError.email,
+                  errorText: userError["email"],
                 ),
                 CustomTextField(
                   label: locale.password,
@@ -117,7 +121,7 @@ class _RegisterState extends State<Register> {
                   hint: "●●●●●●●●",
                   isRequired: true,
                   type: TextFieldType.password,
-                  errorText: userError.password,
+                  errorText: userError["password"],
                 ),
                 CustomTextField(
                   label: locale.confirm_password,

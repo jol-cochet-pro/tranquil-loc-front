@@ -7,6 +7,7 @@ import 'package:dossier_locataire/pages/auth/register.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/types/form-errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,9 +32,10 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final LoginUser user = LoginUser(email: "", password: "");
-  final LoginUser userError = LoginUser(email: "", password: "");
+  final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {
+    setState(() => errors.clear());
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: user.email,
@@ -43,18 +45,18 @@ class _LoginState extends State<Login> {
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case 'user-disabled':
-          setState(() => userError.email = locale.account_deactivated);
+          setState(() => errors["email"] = locale.account_deactivated);
           break;
         case 'invalid-credential':
         case 'user-not-found':
           setState(() {
-            userError.email = locale.invalid_email_or_password;
-            userError.password = locale.invalid_email_or_password;
+            errors["email"] = locale.invalid_email_or_password;
+            errors["password"] = locale.invalid_email_or_password;
           });
           break;
         case 'invalid-email':
           setState(
-            () => userError.email = locale.must_be_well_formatted(locale.email),
+            () => errors["email"] = locale.must_be_well_formatted(locale.email),
           );
           break;
       }
@@ -104,7 +106,7 @@ class _LoginState extends State<Login> {
                   type: TextFieldType.text,
                   helpLabel: locale.no_account,
                   onHelpTap: () => context.go(Register.route),
-                  errorText: userError.email,
+                  errorText: errors["email"],
                 ),
                 CustomTextField(
                   label: locale.password,
@@ -121,7 +123,7 @@ class _LoginState extends State<Login> {
                   type: TextFieldType.password,
                   helpLabel: locale.forgotten_password,
                   onHelpTap: () => context.go(ForgotPassword.route),
-                  errorText: userError.password,
+                  errorText: errors["password"],
                 ),
                 Center(
                   child: CustomButton(
