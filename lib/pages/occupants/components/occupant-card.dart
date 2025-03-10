@@ -1,5 +1,5 @@
 import 'package:dossier_locataire/components/icon-button.dart';
-import 'package:dossier_locataire/components/icon-ok-not-ok.dart';
+import 'package:dossier_locataire/components/icon-with-state.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/pages/occupants/components/occupant-info-card.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
@@ -91,7 +91,12 @@ class OccupantCard extends StatelessWidget {
                             return Row(
                               spacing: 4,
                               children: [
-                                IconOkNoOk(isOk: document.url != null),
+                                IconWithState(
+                                  state:
+                                      document.url != null
+                                          ? IconState.valid
+                                          : IconState.wrong,
+                                ),
                                 Text(document.name, style: p2),
                               ],
                             );
@@ -107,7 +112,12 @@ class OccupantCard extends StatelessWidget {
             spacing: 4,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconOkNoOk(isOk: occupant.getIsCompleted()),
+              IconWithState(
+                state:
+                    occupant.getIsCompleted()
+                        ? IconState.valid
+                        : IconState.wrong,
+              ),
               Text(
                 occupant.getIsCompleted() ? locale.complete : locale.incomplete,
                 style: TextStyle(

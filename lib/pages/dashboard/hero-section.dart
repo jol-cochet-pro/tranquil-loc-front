@@ -1,16 +1,19 @@
 import 'package:dossier_locataire/components/shadow-container.dart';
+import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HeroSection extends StatelessWidget {
-  const HeroSection({super.key});
+  final AsyncSnapshot<DashboardData> snapshot;
+
+  const HeroSection({super.key, required this.snapshot});
 
   @override
   Widget build(BuildContext context) {
-    final DateFormat formatter = DateFormat('EEEE, dd MMMM yyyy', "fr_FR");
     final AppLocalizations locale = AppLocalizations.of(context)!;
+    final DateFormat formatter = DateFormat('EEEE, dd MMMM yyyy');
     final String date = formatter.format(DateTime.now());
     return ShadowContainer(
       radius: Radius.circular(10),
@@ -25,7 +28,10 @@ class HeroSection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(locale.hey_username("Jolan"), style: h1),
+                  Text(
+                    locale.hey_username(snapshot.data!.firstname),
+                    style: h1,
+                  ),
                   Text(locale.happy_to_see_you, style: p1),
                 ],
               ),

@@ -1,19 +1,17 @@
 import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/icon-ok-not-ok.dart';
+import 'package:dossier_locataire/components/icon-with-state.dart';
 import 'package:dossier_locataire/pages/dashboard/components/action-card.dart';
+import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/dashboard/share-dialog.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class CallToAction extends StatefulWidget {
-  const CallToAction({super.key});
+class CallToAction extends StatelessWidget {
+  final AsyncSnapshot<DashboardData> snapshot;
 
-  @override
-  State<CallToAction> createState() => _CallToActionState();
-}
+  const CallToAction({super.key, required this.snapshot});
 
-class _CallToActionState extends State<CallToAction> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
@@ -31,7 +29,7 @@ class _CallToActionState extends State<CallToAction> {
                   spacing: 24,
                   children: [
                     Icon(Icons.mark_email_read_outlined),
-                    Text("80%", style: h2),
+                    Text("${snapshot.data!.opennedMail}%", style: h2),
                   ],
                 ),
               ),
@@ -76,10 +74,16 @@ class _CallToActionState extends State<CallToAction> {
               Expanded(
                 child: Row(
                   spacing: 24,
-                  children: [
-                    IconOkNoOk(isOk: true),
-                    Text(locale.searching, style: h2),
-                  ],
+                  children:
+                      snapshot.data!.searchState == SearchState.paused
+                          ? [
+                            IconWithState(state: IconState.pause),
+                            Text(locale.paused, style: h2),
+                          ]
+                          : [
+                            IconWithState(state: IconState.valid),
+                            Text(locale.searching, style: h2),
+                          ],
                 ),
               ),
             ],

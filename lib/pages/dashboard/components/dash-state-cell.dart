@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/components/icon-ok-not-ok.dart';
+import 'package:dossier_locataire/components/icon-with-state.dart';
 import 'package:flutter/material.dart';
 
 class StateStatus {
@@ -25,7 +25,9 @@ class DashStateCell extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(first.iconData, size: 20),
-            IconOkNoOk(isOk: first.isCompleted),
+            IconWithState(
+              state: first.isCompleted ? IconState.valid : IconState.wrong,
+            ),
           ],
         ),
         second != null
@@ -34,7 +36,10 @@ class DashStateCell extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(second!.iconData, size: 20),
-                IconOkNoOk(isOk: second!.isCompleted),
+                IconWithState(
+                  state:
+                      second!.isCompleted ? IconState.valid : IconState.wrong,
+                ),
               ],
             )
             : SizedBox.shrink(),
