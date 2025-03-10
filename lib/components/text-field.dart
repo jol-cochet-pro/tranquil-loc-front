@@ -1,8 +1,9 @@
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
-enum TextFieldType { text, number, password }
+enum TextFieldType { text, number, password, phone }
 
 class CustomTextField extends StatefulWidget {
   final void Function(String?)? onSaved;
@@ -39,6 +40,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final InputDecoration decoration = InputDecoration(
+      hintText: widget.hint,
+      errorText:
+          widget.errorText != null && widget.errorText!.isNotEmpty
+              ? widget.errorText
+              : null,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: colorScheme.outline),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: colorScheme.primary),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: colorScheme.error),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: colorScheme.error),
+      ),
+      errorMaxLines: 100,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4,
@@ -56,41 +77,30 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         Stack(
           children: [
-            TextFormField(
-              obscureText:
-                  widget.type == TextFieldType.password && !showPassword,
-              enableSuggestions:
-                  widget.type == TextFieldType.password && !showPassword,
-              autocorrect:
-                  widget.type == TextFieldType.password && !showPassword,
-              inputFormatters:
-                  widget.type == TextFieldType.number
-                      ? [FilteringTextInputFormatter.digitsOnly]
-                      : [],
-              decoration: InputDecoration(
-                hintText: widget.hint,
-                errorText:
-                    widget.errorText != null && widget.errorText!.isNotEmpty
-                        ? widget.errorText
-                        : null,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: colorScheme.outline),
+            widget.type == TextFieldType.phone
+                ? IntlPhoneField(
+                  decoration: decoration,
+                  languageCode: "en",
+                  onChanged: (phone) {
+                    widget.onChanged!(phone.completeNumber);
+                  },
+                )
+                : TextFormField(
+                  obscureText:
+                      widget.type == TextFieldType.password && !showPassword,
+                  enableSuggestions:
+                      widget.type == TextFieldType.password && !showPassword,
+                  autocorrect:
+                      widget.type == TextFieldType.password && !showPassword,
+                  inputFormatters:
+                      widget.type == TextFieldType.number
+                          ? [FilteringTextInputFormatter.digitsOnly]
+                          : [],
+                  decoration: decoration,
+                  validator: widget.validator,
+                  onSaved: widget.onSaved,
+                  onChanged: widget.onChanged,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: colorScheme.primary),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: colorScheme.error),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: colorScheme.error),
-                ),
-                errorMaxLines: 100,
-              ),
-              validator: widget.validator,
-              onSaved: widget.onSaved,
-              onChanged: widget.onChanged,
-            ),
             if (widget.type == TextFieldType.password)
               Positioned(
                 right: 12,

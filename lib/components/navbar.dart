@@ -1,6 +1,6 @@
 import 'package:dossier_locataire/components/nav-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/pages/auth/login.dart';
+import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';

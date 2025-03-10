@@ -1,9 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
-import 'package:dossier_locataire/pages/auth/login.dart';
+import 'package:dossier_locataire/pages/auth/forgot-password/forgot-password.dart';
+import 'package:dossier_locataire/pages/auth/register/register-cred.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
@@ -13,50 +13,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
-class RegisterUser {
+class LoginUser {
   String email;
   String password;
 
-  RegisterUser({required this.email, required this.password});
+  LoginUser({required this.email, required this.password});
 }
 
-@RoutePage()
-class Register extends StatefulWidget {
-  const Register({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
-  static const route = '/auth/register';
+  static const route = "/auth/login";
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Login> createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
+class _LoginState extends State<Login> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final RegisterUser user = RegisterUser(email: "", password: "");
-  final FormErrors userError = FormErrors();
+  final LoginUser user = LoginUser(email: "", password: "");
+  final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {
-    setState(() => userError.clear());
+    setState(() => errors.clear());
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: user.email,
         password: user.password,
       );
       context.go(Dashboard.route);
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
-        case 'weak-password':
-          setState(() => userError["password"] = locale.password_is_weak);
+        case 'user-disabled':
+          setState(() => errors["email"] = locale.account_deactivated);
           break;
-        case 'email-already-in-use':
-          setState(() => userError["email"] = locale.email_already_used);
+        case 'invalid-credential':
+        case 'user-not-found':
+          setState(() {
+            errors["email"] = locale.invalid_email_or_password;
+            errors["password"] = locale.invalid_email_or_password;
+          });
           break;
         case 'invalid-email':
           setState(
-            () =>
-                userError["email"] = locale.must_be_well_formatted(
-                  locale.email,
-                ),
+            () => errors["email"] = locale.must_be_well_formatted(locale.email),
           );
           break;
       }
@@ -65,7 +65,6 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final AppLocalizations locale = AppLocalizations.of(context)!;
     return PageLayout(
       hideNavbar: true,
@@ -85,13 +84,14 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(locale.register, style: h1),
-                    Text(locale.happy_to_welcome, style: p1),
+                    Text(locale.login, style: h1),
+                    Text(locale.happy_to_see_you, style: p1),
                   ],
                 ),
                 CustomTextField(
                   label: locale.email,
-                  onChanged: (newValue) => user.email = newValue!,
+                  onChanged:
+                      (newValue) => setState(() => user.email = newValue!),
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_email);
@@ -104,66 +104,37 @@ class _RegisterState extends State<Register> {
                   hint: locale.email_hint,
                   isRequired: true,
                   type: TextFieldType.text,
-                  errorText: userError["email"],
+                  helpLabel: locale.no_account,
+                  onHelpTap: () => context.go(RegisterCred.route),
+                  errorText: errors["email"],
                 ),
                 CustomTextField(
                   label: locale.password,
-                  onChanged: (newValue) => user.password = newValue!,
+                  onChanged:
+                      (newValue) => setState(() => user.password = newValue!),
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_password);
                     }
-                    if (!value.isStrongPassword()) {
-                      return locale.password_is_weak;
-                    }
                     return null;
                   },
                   hint: "●●●●●●●●",
                   isRequired: true,
                   type: TextFieldType.password,
-                  errorText: userError["password"],
-                ),
-                CustomTextField(
-                  label: locale.confirm_password,
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return locale.cant_be_empty(locale.the_confirm_password);
-                    }
-                    if (value != user.password) {
-                      return locale.confirm_password_must_match;
-                    }
-                    return null;
-                  },
-                  onChanged: (_) {},
-                  hint: "●●●●●●●●",
-                  isRequired: true,
-                  type: TextFieldType.password,
+                  helpLabel: locale.forgotten_password,
+                  onHelpTap: () => context.go(ForgotPassword.route),
+                  errorText: errors["password"],
                 ),
                 Center(
-                  child: Column(
-                    spacing: 8,
-                    children: [
-                      CustomButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            submit(locale);
-                          }
-                        },
-                        padding: EdgeInsets.symmetric(
-                          vertical: 16,
-                          horizontal: 32,
-                        ),
-                        type: ButtonType.primary,
-                        child: Text(locale.lets_go),
-                      ),
-                      GestureDetector(
-                        onTap: () => context.go(Login.route),
-                        child: Text(
-                          locale.already_has_account,
-                          style: TextStyle(color: colorScheme.primary),
-                        ),
-                      ),
-                    ],
+                  child: CustomButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        submit(locale);
+                      }
+                    },
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                    type: ButtonType.primary,
+                    child: Text(locale.lets_go),
                   ),
                 ),
               ],

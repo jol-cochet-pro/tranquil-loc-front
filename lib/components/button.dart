@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 enum ButtonType { primary, secondary, success }
 
 class CustomButton extends StatelessWidget {
-  final Widget child;
   final EdgeInsets padding;
   final void Function() onPressed;
   final ButtonType type;
+  final Widget child;
 
   const CustomButton({
     super.key,
     required this.onPressed,
+    required this.type,
     required this.padding,
     required this.child,
-    required this.type,
   });
 
   Color getForegroundColor(ColorScheme colorScheme) {
