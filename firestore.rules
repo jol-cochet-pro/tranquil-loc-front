@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+  	function isSignedIn() {
+    	return request.auth != null;
+    }
+    // Make the user data only available for the authenticated user
+    match /users/{userId} {
+      allow read, update, delete: if isSignedIn() && request.auth.uid == userId;
+      allow create: if isSignedIn();
+    }
+    
+    match /occupants/{userId} {
+      allow read, update: if isSignedIn() && request.auth.uid == userId;
+    	allow create: if isSignedIn();
+    }
+    
+    match /warrantors/{userId} {
+      allow read, update: if isSignedIn() && request.auth.uid == userId;
+    	allow create: if isSignedIn();
+    }
+  }
+}
