@@ -32,52 +32,10 @@ class Warrantor {
 }
 
 class WarrantorsCard extends StatelessWidget {
-  final List<Warrantor> warrantors = [
-    Warrantor(
-      id: "1",
-      firstname: "Jolan",
-      lastname: "Cochet",
-      dateOfBirth: DateTime(2003, 3, 27),
-      hasIncomeFilled: true,
-      hasPersonalInfoFilled: false,
-      hasEmailFilled: true,
-      hasPhoneFilled: true,
-      hasAllDocumentsFilled: false,
-    ),
-    Warrantor(
-      id: "2",
-      firstname: "Mael",
-      lastname: "Pendhillas",
-      dateOfBirth: DateTime(2003, 3, 27),
-      hasIncomeFilled: true,
-      hasPersonalInfoFilled: false,
-      hasEmailFilled: true,
-      hasPhoneFilled: true,
-      hasAllDocumentsFilled: false,
-    ),
-    Warrantor(
-      id: "2",
-      firstname: "Eliot",
-      lastname: "Blondeel",
-      dateOfBirth: DateTime(2003, 3, 27),
-      hasIncomeFilled: true,
-      hasPersonalInfoFilled: false,
-      hasEmailFilled: true,
-      hasPhoneFilled: true,
-      hasAllDocumentsFilled: false,
-    ),
-    Warrantor(
-      id: "2",
-      firstname: "Kakou",
-      lastname: "Kakou",
-      dateOfBirth: DateTime(2003, 3, 27),
-      hasIncomeFilled: true,
-      hasPersonalInfoFilled: false,
-      hasEmailFilled: true,
-      hasPhoneFilled: true,
-      hasAllDocumentsFilled: false,
-    ),
-  ];
+  final Future<List<Warrantor>> warrantors = Future.delayed(
+    Duration(seconds: 2),
+    () => [],
+  );
 
   WarrantorsCard({super.key});
 
@@ -85,73 +43,84 @@ class WarrantorsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     final AppLocalizations locale = AppLocalizations.of(context)!;
-    return DashCard(
-      title: locale.warrantors,
-      emptyInfo: locale.no_warrantors_saved,
-      onAdd: () {
-        print("add Warrantor.");
-      },
-      items: warrantors,
-      itemBuilder:
-          (context, index) => ShadowContainer(
-            radius: Radius.circular(10),
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 150,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return FutureBuilder(
+      future: warrantors,
+      builder:
+          (context, snapshot) => DashCard(
+            title: locale.warrantors,
+            emptyInfo: locale.no_warrantors_saved,
+            onAdd: () {
+              print("add Warrantor.");
+            },
+            hasData: snapshot.hasData,
+            items: snapshot.data,
+            itemBuilder:
+                (context, index) => ShadowContainer(
+                  radius: Radius.circular(10),
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "${warrantors[index].firstname} ${warrantors[index].lastname}",
-                        overflow: TextOverflow.ellipsis,
-                        style: h3,
+                      SizedBox(
+                        width: 150,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${snapshot.data![index].firstname} ${snapshot.data![index].lastname}",
+                              overflow: TextOverflow.ellipsis,
+                              style: h3,
+                            ),
+                            Text(
+                              formatter.format(
+                                snapshot.data![index].dateOfBirth,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              style: p2,
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        formatter.format(warrantors[index].dateOfBirth),
-                        overflow: TextOverflow.ellipsis,
-                        style: p2,
+                      DashStateCell(
+                        first: StateStatus(
+                          iconData: Icons.euro_outlined,
+                          isCompleted: snapshot.data![index].hasIncomeFilled,
+                        ),
+                        second: StateStatus(
+                          iconData: Icons.person_outline,
+                          isCompleted:
+                              snapshot.data![index].hasPersonalInfoFilled,
+                        ),
+                      ),
+                      DashStateCell(
+                        first: StateStatus(
+                          iconData: Icons.drafts_outlined,
+                          isCompleted: snapshot.data![index].hasEmailFilled,
+                        ),
+                        second: StateStatus(
+                          iconData: Icons.call_outlined,
+                          isCompleted: snapshot.data![index].hasPhoneFilled,
+                        ),
+                      ),
+                      DashStateCell(
+                        first: StateStatus(
+                          iconData: Icons.folder_outlined,
+                          isCompleted:
+                              snapshot.data![index].hasAllDocumentsFilled,
+                        ),
+                      ),
+                      CustomIconButton(
+                        onPressed: () {
+                          print(
+                            "id of the Warrantor: ${snapshot.data![index].id}",
+                          );
+                        },
+                        icon: Icons.settings_outlined,
                       ),
                     ],
                   ),
                 ),
-                DashStateCell(
-                  first: StateStatus(
-                    iconData: Icons.euro_outlined,
-                    isCompleted: warrantors[index].hasIncomeFilled,
-                  ),
-                  second: StateStatus(
-                    iconData: Icons.person_outline,
-                    isCompleted: warrantors[index].hasPersonalInfoFilled,
-                  ),
-                ),
-                DashStateCell(
-                  first: StateStatus(
-                    iconData: Icons.drafts_outlined,
-                    isCompleted: warrantors[index].hasEmailFilled,
-                  ),
-                  second: StateStatus(
-                    iconData: Icons.call_outlined,
-                    isCompleted: warrantors[index].hasPhoneFilled,
-                  ),
-                ),
-                DashStateCell(
-                  first: StateStatus(
-                    iconData: Icons.folder_outlined,
-                    isCompleted: warrantors[index].hasAllDocumentsFilled,
-                  ),
-                ),
-                CustomIconButton(
-                  onPressed: () {
-                    print("id of the Warrantor: ${warrantors[index].id}");
-                  },
-                  icon: Icons.settings_outlined,
-                ),
-              ],
-            ),
           ),
     );
   }

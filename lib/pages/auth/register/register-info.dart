@@ -58,13 +58,14 @@ class _RegisterInfosState extends State<RegisterInfos> {
       CollectionReference users = FirebaseFirestore.instance.collection(
         "users",
       );
-      users.add({
-        'userId': FirebaseAuth.instance.currentUser!.uid,
+      users.doc(FirebaseAuth.instance.currentUser!.uid).set({
         'firstname': user.firstname,
         'lastname': user.lastname,
         'phone': user.phone,
         'dateOfBirth': user.dateOfBirth,
         'type': userTypeToString(user.type, locale),
+        'opennedMail': 0,
+        'searchState': SearchState.searching,
       });
       context.go(Dashboard.route);
     } catch (error) {

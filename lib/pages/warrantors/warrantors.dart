@@ -6,6 +6,7 @@ class Warrantors extends StatelessWidget {
 
   static const route = '/warrantors';
 
+  @override
   Widget build(BuildContext context) {
     return PageLayout(child: Text("warrantor"));
   }

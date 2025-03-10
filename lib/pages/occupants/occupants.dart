@@ -16,6 +16,7 @@ enum ProSituation {
   student,
   official,
   freelance,
+  none,
 }
 
 class Document {
@@ -66,6 +67,8 @@ class Occupant {
         return locale.official;
       case ProSituation.freelance:
         return locale.freelance;
+      case ProSituation.none:
+        return "";
     }
   }
 
@@ -73,6 +76,23 @@ class Occupant {
     return (email.isNotEmpty &&
         phone.isNotEmpty &&
         !documents.any((document) => document.url == null));
+  }
+
+  bool getInfoCompleted(String info) {
+    switch (info) {
+      case "hasIncomeFilled":
+        return income != 0;
+      case "hasPersonalInfoFilled":
+        return firstname != "" && lastname != "";
+      case "hasEmailFilled":
+        return email != "";
+      case "hasPhoneFilled":
+        return phone != "";
+      case "hasAllDocumentsFilled":
+        return !documents.any((document) => document.url == null);
+      default:
+        return false;
+    }
   }
 }
 

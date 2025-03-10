@@ -1,5 +1,6 @@
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/icon-with-state.dart';
+import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/pages/dashboard/components/action-card.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/dashboard/share-dialog.dart';
@@ -25,46 +26,48 @@ class CallToAction extends StatelessWidget {
             children: [
               Text(locale.mail_openned_percentage, style: p1),
               Expanded(
-                child: Row(
-                  spacing: 24,
-                  children: [
-                    Icon(Icons.mark_email_read_outlined),
-                    Text("${snapshot.data!.opennedMail}%", style: h2),
-                  ],
-                ),
+                child:
+                    snapshot.hasData
+                        ? Row(
+                          spacing: 24,
+                          children: [
+                            Icon(Icons.mark_email_read_outlined),
+                            Text("${snapshot.data!.opennedMail}%", style: h2),
+                          ],
+                        )
+                        : Loader(),
               ),
             ],
           ),
         ),
-        MediaQuery.of(context).size.width > 1008
-            ? ActionCard(
-              flex: 5,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CustomButton(
-                    type: ButtonType.primary,
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ShareDialog(),
-                      );
-                    },
-                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                    child: Text(locale.share_my_folder),
-                  ),
-                  CustomButton(
-                    type: ButtonType.success,
-                    onPressed: () {
-                      print("Found flat.");
-                    },
-                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                    child: Text(locale.found_appartement),
-                  ),
-                ],
-              ),
-            )
-            : SizedBox.shrink(),
+        if (MediaQuery.of(context).size.width > 1008)
+          ActionCard(
+            flex: 5,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CustomButton(
+                  type: ButtonType.primary,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ShareDialog(),
+                    );
+                  },
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                  child: Text(locale.share_my_folder),
+                ),
+                CustomButton(
+                  type: ButtonType.success,
+                  onPressed: () {
+                    print("Found flat.");
+                  },
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                  child: Text(locale.found_appartement),
+                ),
+              ],
+            ),
+          ),
         ActionCard(
           flex: 3,
           child: Column(
@@ -72,19 +75,22 @@ class CallToAction extends StatelessWidget {
             children: [
               Text(locale.search_state, style: p1),
               Expanded(
-                child: Row(
-                  spacing: 24,
-                  children:
-                      snapshot.data!.searchState == SearchState.paused
-                          ? [
-                            IconWithState(state: IconState.pause),
-                            Text(locale.paused, style: h2),
-                          ]
-                          : [
-                            IconWithState(state: IconState.valid),
-                            Text(locale.searching, style: h2),
-                          ],
-                ),
+                child:
+                    snapshot.hasData
+                        ? Row(
+                          spacing: 24,
+                          children:
+                              snapshot.data!.searchState == SearchState.paused
+                                  ? [
+                                    IconWithState(state: IconState.pause),
+                                    Text(locale.paused, style: h2),
+                                  ]
+                                  : [
+                                    IconWithState(state: IconState.valid),
+                                    Text(locale.searching, style: h2),
+                                  ],
+                        )
+                        : Loader(),
               ),
             ],
           ),

@@ -111,7 +111,6 @@ class _NavbarState extends State<Navbar> {
                           FirebaseAuth.instance.signOut().then(
                             (_) => context.go(Login.route),
                           );
-                          ;
                         },
                       ),
                     ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 final TextStyle h1 = TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
 
