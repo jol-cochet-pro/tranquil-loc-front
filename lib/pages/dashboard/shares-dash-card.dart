@@ -1,39 +1,10 @@
 import 'package:dossier_locataire/components/icon-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
+import 'package:dossier_locataire/shared/models/share.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-enum ShareDurationPeriod { day, week, month }
-
-class Share {
-  final String id;
-  final String description;
-  final String email;
-  final int durationNum;
-  final ShareDurationPeriod durationPeriod;
-
-  Share({
-    required this.id,
-    required this.description,
-    required this.email,
-    required this.durationNum,
-    required this.durationPeriod,
-  });
-
-  String shareDurationToString(BuildContext context) {
-    final AppLocalizations locale = AppLocalizations.of(context)!;
-    switch (durationPeriod) {
-      case ShareDurationPeriod.day:
-        return locale.n_days(durationNum);
-      case ShareDurationPeriod.week:
-        return locale.n_weeks(durationNum);
-      case ShareDurationPeriod.month:
-        return locale.n_months(durationNum);
-    }
-  }
-}
 
 class SharesCard extends StatelessWidget {
   final Future<List<Share>> shares = Future.delayed(
@@ -74,9 +45,7 @@ class SharesCard extends StatelessWidget {
                         children: [
                           Icon(Icons.hourglass_empty_outlined),
                           Text(
-                            snapshot.data![index].shareDurationToString(
-                              context,
-                            ),
+                            snapshot.data![index].shareDurationToString(locale),
                             style: p2,
                           ),
                         ],

@@ -3,33 +3,13 @@ import 'package:dossier_locataire/components/dropdown.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/pages/dashboard/components/share-perm-cell.dart';
+import 'package:dossier_locataire/shared/enums/share-duration-period.dart';
+import 'package:dossier_locataire/shared/models/share-creation.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-
-enum ShareDurationPeriod { day, month, year }
-
-enum SharePermission { write, readFile, readInfo, none }
-
-class ShareCreation {
-  String description;
-  String email;
-  int durationNum;
-  ShareDurationPeriod durationPeriod;
-  SharePermission warrantorPermission;
-  SharePermission occupantPermission;
-
-  ShareCreation({
-    required this.description,
-    required this.email,
-    required this.durationNum,
-    required this.durationPeriod,
-    required this.warrantorPermission,
-    required this.occupantPermission,
-  });
-}
 
 class ShareDialog extends StatefulWidget {
   const ShareDialog({super.key});
@@ -49,20 +29,6 @@ class _ShareDialogState extends State<ShareDialog> {
     warrantorPermission: SharePermission.none,
   );
   String permissionError = "";
-
-  String shareDurationPeriodToString(
-    ShareDurationPeriod period,
-    AppLocalizations locale,
-  ) {
-    switch (period) {
-      case ShareDurationPeriod.day:
-        return locale.days;
-      case ShareDurationPeriod.month:
-        return locale.months;
-      case ShareDurationPeriod.year:
-        return locale.years;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,10 +142,7 @@ class _ShareDialogState extends State<ShareDialog> {
                               ShareDurationPeriod.values.map((el) {
                                 return DropdownMenuEntry(
                                   value: el,
-                                  label: shareDurationPeriodToString(
-                                    el,
-                                    locale,
-                                  ),
+                                  label: el.locale(locale),
                                 );
                               }).toList(),
                           isRequired: false,

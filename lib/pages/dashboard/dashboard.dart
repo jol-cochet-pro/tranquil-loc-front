@@ -3,35 +3,9 @@ import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/dashboard/call-to-action.dart';
 import 'package:dossier_locataire/pages/dashboard/dash-cards.dart';
 import 'package:dossier_locataire/pages/dashboard/hero-section.dart';
+import 'package:dossier_locataire/shared/models/dashboard-data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-enum SearchState { searching, paused }
-
-class DashboardData {
-  final String firstname;
-  final int opennedMail;
-  final SearchState searchState;
-
-  const DashboardData({
-    required this.firstname,
-    required this.opennedMail,
-    required this.searchState,
-  });
-
-  static Future<DashboardData> fromSnapshot(
-    Future<DocumentSnapshot<Map<String, dynamic>>> data,
-  ) {
-    return data.then(
-      (value) => DashboardData(
-        firstname: value["firstname"],
-        opennedMail: value["opennedMail"],
-        searchState: value["searchState"],
-      ),
-    );
-  }
-}
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});

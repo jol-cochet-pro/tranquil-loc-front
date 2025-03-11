@@ -2,10 +2,11 @@ import 'package:dossier_locataire/components/icon-button.dart';
 import 'package:dossier_locataire/components/icon-with-state.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/pages/occupants/components/occupant-info-card.dart';
+import 'package:dossier_locataire/shared/enums/pro-situation.dart';
+import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../occupants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OccupantCard extends StatelessWidget {
@@ -56,7 +57,7 @@ class OccupantCard extends StatelessWidget {
             second: OccupantInfo(
               icon: Icons.person_outline,
               name: locale.situation,
-              info: occupant.getProSituation(locale),
+              info: occupant.proSituation.locale(locale),
             ),
             title: locale.pro_situation,
           ),

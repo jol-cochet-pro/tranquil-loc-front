@@ -4,6 +4,7 @@ import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/auth/register/register-info.dart';
+import 'package:dossier_locataire/shared/models/register-user.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/types/form-errors.dart';
@@ -11,13 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-
-class RegisterUser {
-  String email;
-  String password;
-
-  RegisterUser({required this.email, required this.password});
-}
 
 class RegisterCred extends StatefulWidget {
   const RegisterCred({super.key});
@@ -30,7 +24,7 @@ class RegisterCred extends StatefulWidget {
 
 class _RegisterCredState extends State<RegisterCred> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final RegisterUser user = RegisterUser(email: "", password: "");
+  final RegisterUserCred user = RegisterUserCred(email: "", password: "");
   final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {

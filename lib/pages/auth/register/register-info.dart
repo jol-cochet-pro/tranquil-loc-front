@@ -6,6 +6,9 @@ import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
+import 'package:dossier_locataire/shared/enums/search-state.dart';
+import 'package:dossier_locataire/shared/enums/user-type.dart';
+import 'package:dossier_locataire/shared/models/register-user.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/types/form-errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,24 +16,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-
-enum UserType { warrantor, occupant, other }
-
-class RegisterUser {
-  String firstname;
-  String lastname;
-  String phone;
-  DateTime dateOfBirth;
-  UserType type;
-
-  RegisterUser({
-    required this.firstname,
-    required this.lastname,
-    required this.phone,
-    required this.dateOfBirth,
-    required this.type,
-  });
-}
 
 class RegisterInfos extends StatefulWidget {
   const RegisterInfos({super.key});
@@ -43,7 +28,7 @@ class RegisterInfos extends StatefulWidget {
 
 class _RegisterInfosState extends State<RegisterInfos> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final RegisterUser user = RegisterUser(
+  final RegisterUserInfo user = RegisterUserInfo(
     firstname: "",
     lastname: "",
     phone: "",
@@ -63,24 +48,13 @@ class _RegisterInfosState extends State<RegisterInfos> {
         'lastname': user.lastname,
         'phone': user.phone,
         'dateOfBirth': user.dateOfBirth,
-        'type': userTypeToString(user.type, locale),
+        'type': user.type.locale(locale),
         'opennedMail': 0,
-        'searchState': SearchState.searching,
+        'searchState': SearchState.searching.str,
       });
       context.go(Dashboard.route);
     } catch (error) {
       print(error.toString());
-    }
-  }
-
-  String userTypeToString(UserType type, AppLocalizations locale) {
-    switch (type) {
-      case UserType.occupant:
-        return locale.occupant;
-      case UserType.warrantor:
-        return locale.warrantor;
-      case UserType.other:
-        return locale.other;
     }
   }
 
@@ -165,7 +139,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
                       UserType.values.map((el) {
                         return DropdownMenuEntry(
                           value: el,
-                          label: userTypeToString(el, locale),
+                          label: el.locale(locale),
                         );
                       }).toList(),
                   isRequired: true,

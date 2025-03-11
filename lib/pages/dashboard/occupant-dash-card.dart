@@ -2,7 +2,7 @@ import 'package:dossier_locataire/components/icon-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-state-cell.dart';
-import 'package:dossier_locataire/pages/occupants/occupants.dart';
+import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

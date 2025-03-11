@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/pages/dashboard/share-dialog.dart';
+import 'package:dossier_locataire/shared/models/share-creation.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 

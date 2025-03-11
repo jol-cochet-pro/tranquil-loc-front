@@ -1,6 +1,6 @@
 import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
+import 'package:dossier_locataire/shared/models/dashboard-data.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

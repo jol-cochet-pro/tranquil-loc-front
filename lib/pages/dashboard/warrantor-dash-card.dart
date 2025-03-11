@@ -2,34 +2,11 @@ import 'package:dossier_locataire/components/icon-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-state-cell.dart';
+import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-class Warrantor {
-  final String id;
-  final String firstname;
-  final String lastname;
-  final DateTime dateOfBirth;
-  final bool hasIncomeFilled;
-  final bool hasPersonalInfoFilled;
-  final bool hasEmailFilled;
-  final bool hasPhoneFilled;
-  final bool hasAllDocumentsFilled;
-
-  Warrantor({
-    required this.id,
-    required this.firstname,
-    required this.lastname,
-    required this.dateOfBirth,
-    required this.hasIncomeFilled,
-    required this.hasPersonalInfoFilled,
-    required this.hasEmailFilled,
-    required this.hasPhoneFilled,
-    required this.hasAllDocumentsFilled,
-  });
-}
 
 class WarrantorsCard extends StatelessWidget {
   final Future<List<Warrantor>> warrantors = Future.delayed(
