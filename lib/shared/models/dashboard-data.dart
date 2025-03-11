@@ -11,17 +11,25 @@ class DashboardData {
     required this.searchState,
   });
 
-  static DashboardData fromSnapshot(Map<String, dynamic> data) {
+  factory DashboardData.fromFirestore(Map<String, dynamic>? data) {
     SearchState state = SearchState.searching;
     try {
-      state = SearchState.values.byName(data["searchState"]);
+      state = SearchState.values.byName(data?["searchState"]);
     } catch (_) {
       state = SearchState.searching;
     }
     return DashboardData(
-      firstname: data["firstname"],
-      opennedMail: data["opennedMail"],
+      firstname: data?["firstname"],
+      opennedMail: data?["opennedMail"],
       searchState: state,
     );
+  }
+
+  static Map<String, Object?> toFirestore(DashboardData dashboardData) {
+    return {
+      "firstname": dashboardData.firstname,
+      "opennedMail": dashboardData.opennedMail,
+      "searchState": dashboardData.searchState.str,
+    };
   }
 }

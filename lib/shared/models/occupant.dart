@@ -46,10 +46,7 @@ class Occupant {
     }
   }
 
-  factory Occupant.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-  ) {
-    final data = snapshot.data();
+  factory Occupant.fromFirestore(Map<String, dynamic>? data) {
     ProSituation situation = ProSituation.unemployed;
     try {
       situation = ProSituation.values.byName(data?["proSituation"]);
@@ -68,7 +65,10 @@ class Occupant {
       proSituation: situation,
       email: data?["email"],
       phone: data?["phone"],
-      documents: [],
+      documents:
+          data?["documents"]
+              .map<Document>((document) => Document.fromFirestore(document))
+              .toList(),
     );
   }
 
@@ -81,9 +81,10 @@ class Occupant {
       "proSituation": occupant.proSituation.str,
       "email": occupant.email,
       "phone": occupant.phone,
-      "documents": occupant.documents.map(
-        (document) => Document.toFirestore(document),
-      ),
+      "documents":
+          occupant.documents
+              .map((document) => Document.toFirestore(document))
+              .toList(),
     };
   }
 }

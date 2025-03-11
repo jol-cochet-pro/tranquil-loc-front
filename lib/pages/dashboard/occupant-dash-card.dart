@@ -27,11 +27,12 @@ class _OccupantsCardState extends State<OccupantsCard> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("occupants")
         .withConverter(
-          fromFirestore: (snapshot, _) => Occupant.fromFirestore(snapshot),
+          fromFirestore:
+              (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
           toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
         )
         .get()
-        .then((el) => el.docs.map((el) => el.data()).toList());
+        .then((value) => value.docs.map((doc) => doc.data()).toList());
     super.initState();
   }
 

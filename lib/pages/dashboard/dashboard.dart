@@ -20,14 +20,17 @@ class _DashboardState extends State<Dashboard> {
   late Future<DashboardData> dashboardData;
   @override
   void initState() {
-    var data =
-        FirebaseFirestore.instance
-            .collection("users")
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .get();
-    dashboardData = data.then(
-      (value) => DashboardData.fromSnapshot(value.data()!),
-    );
+    dashboardData = FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .withConverter(
+          fromFirestore:
+              (snapshot, _) => DashboardData.fromFirestore(snapshot.data()),
+          toFirestore:
+              (dashboardData, _) => DashboardData.toFirestore(dashboardData),
+        )
+        .get()
+        .then((value) => value.data()!);
     super.initState();
   }
 
