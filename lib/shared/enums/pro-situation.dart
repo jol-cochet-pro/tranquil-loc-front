@@ -13,6 +13,29 @@ enum ProSituation {
 }
 
 extension ProSituationExtension on ProSituation {
+  String get str {
+    switch (this) {
+      case ProSituation.cdd:
+        return "cdd";
+      case ProSituation.cdi:
+        return "cdi";
+      case ProSituation.retired:
+        return "retired";
+      case ProSituation.coopStudent:
+        return "coopStudent";
+      case ProSituation.unemployed:
+        return "unemployed";
+      case ProSituation.student:
+        return "student";
+      case ProSituation.official:
+        return "official";
+      case ProSituation.freelance:
+        return "freelance";
+      case ProSituation.none:
+        return "none";
+    }
+  }
+
   String locale(AppLocalizations locale) {
     switch (this) {
       case ProSituation.cdd:

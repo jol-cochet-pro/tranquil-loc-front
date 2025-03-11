@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/pro-situation.dart';
 import 'package:dossier_locataire/shared/models/document.dart';
 
@@ -45,26 +46,44 @@ class Occupant {
     }
   }
 
-  static Occupant fromSnapshot(Map<String, dynamic> data) {
+  factory Occupant.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+  ) {
+    final data = snapshot.data();
     ProSituation situation = ProSituation.unemployed;
     try {
-      situation = ProSituation.values.byName(data["proSituation"]);
+      situation = ProSituation.values.byName(data?["proSituation"]);
     } catch (_) {
       situation = ProSituation.unemployed;
     }
     return Occupant(
-      firstname: data["firstname"],
-      lastname: data["lastname"],
+      firstname: data?["firstname"],
+      lastname: data?["lastname"],
       dateOfBirth: DateTime.fromMillisecondsSinceEpoch(
-        (data["dateOfBirth"].seconds * 1000 +
-                data["dateOfBirth"].nanoseconds / 1000)
+        (data?["dateOfBirth"].seconds * 1000 +
+                data?["dateOfBirth"].nanoseconds / 1000)
             .round(),
       ),
-      income: data["income"],
+      income: data?["income"],
       proSituation: situation,
-      email: data["email"],
-      phone: data["phone"],
+      email: data?["email"],
+      phone: data?["phone"],
       documents: [],
     );
+  }
+
+  static Map<String, Object?> toFirestore(Occupant occupant) {
+    return {
+      "firstname": occupant.firstname,
+      "lastname": occupant.lastname,
+      "dateOfBirth": Timestamp.fromDate(occupant.dateOfBirth).toString(),
+      "income": occupant.income,
+      "proSituation": occupant.proSituation.str,
+      "email": occupant.email,
+      "phone": occupant.phone,
+      "documents": occupant.documents.map(
+        (document) => Document.toFirestore(document),
+      ),
+    };
   }
 }

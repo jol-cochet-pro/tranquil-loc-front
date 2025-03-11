@@ -22,18 +22,16 @@ class _OccupantsCardState extends State<OccupantsCard> {
 
   @override
   void initState() {
-    var data =
-        FirebaseFirestore.instance
-            .collection("users")
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection("occupants")
-            .get();
-    occupants = data.then(
-      (values) =>
-          values.docs
-              .map((value) => Occupant.fromSnapshot(value.data()))
-              .toList(),
-    );
+    occupants = FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("occupants")
+        .withConverter(
+          fromFirestore: (snapshot, _) => Occupant.fromFirestore(snapshot),
+          toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
+        )
+        .get()
+        .then((el) => el.docs.map((el) => el.data()).toList());
     super.initState();
   }
 
