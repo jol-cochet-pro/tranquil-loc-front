@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/search-state.dart';
 
 class DashboardData {
@@ -12,15 +11,17 @@ class DashboardData {
     required this.searchState,
   });
 
-  static Future<DashboardData> fromSnapshot(
-    Future<DocumentSnapshot<Map<String, dynamic>>> data,
-  ) {
-    return data.then(
-      (value) => DashboardData(
-        firstname: value["firstname"],
-        opennedMail: value["opennedMail"],
-        searchState: value["searchState"],
-      ),
+  static DashboardData fromSnapshot(Map<String, dynamic> data) {
+    SearchState state = SearchState.searching;
+    try {
+      state = SearchState.values.byName(data["searchState"]);
+    } catch (_) {
+      state = SearchState.searching;
+    }
+    return DashboardData(
+      firstname: data["firstname"],
+      opennedMail: data["opennedMail"],
+      searchState: state,
     );
   }
 }

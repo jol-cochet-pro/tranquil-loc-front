@@ -23,7 +23,6 @@ class _OccupantsState extends State<Occupants> {
   double oldPosition = 0.0;
   final List<Occupant> occupants = [
     Occupant(
-      id: "1",
       firstname: "Jolan",
       lastname: "Cochet",
       dateOfBirth: DateTime(2003, 3, 27),

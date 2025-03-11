@@ -14,7 +14,10 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
-    final DateFormat formatter = DateFormat('EEEE, dd MMMM yyyy');
+    final DateFormat formatter = DateFormat(
+      'EEEE, dd MMMM yyyy',
+      locale.localeName,
+    );
     final String date = formatter.format(DateTime.now());
     return ShadowContainer(
       radius: Radius.circular(10),

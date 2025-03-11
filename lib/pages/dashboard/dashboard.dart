@@ -25,7 +25,9 @@ class _DashboardState extends State<Dashboard> {
             .collection("users")
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .get();
-    dashboardData = DashboardData.fromSnapshot(data);
+    dashboardData = data.then(
+      (value) => DashboardData.fromSnapshot(value.data()!),
+    );
     super.initState();
   }
 

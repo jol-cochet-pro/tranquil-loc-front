@@ -2,7 +2,6 @@ import 'package:dossier_locataire/shared/enums/pro-situation.dart';
 import 'package:dossier_locataire/shared/models/document.dart';
 
 class Occupant {
-  final String id;
   final String firstname;
   final String lastname;
   final DateTime dateOfBirth;
@@ -13,7 +12,6 @@ class Occupant {
   final List<Document> documents;
 
   Occupant({
-    required this.id,
     required this.firstname,
     required this.lastname,
     required this.dateOfBirth,
@@ -45,5 +43,28 @@ class Occupant {
       default:
         return false;
     }
+  }
+
+  static Occupant fromSnapshot(Map<String, dynamic> data) {
+    ProSituation situation = ProSituation.unemployed;
+    try {
+      situation = ProSituation.values.byName(data["proSituation"]);
+    } catch (_) {
+      situation = ProSituation.unemployed;
+    }
+    return Occupant(
+      firstname: data["firstname"],
+      lastname: data["lastname"],
+      dateOfBirth: DateTime.fromMillisecondsSinceEpoch(
+        (data["dateOfBirth"].seconds * 1000 +
+                data["dateOfBirth"].nanoseconds / 1000)
+            .round(),
+      ),
+      income: data["income"],
+      proSituation: situation,
+      email: data["email"],
+      phone: data["phone"],
+      documents: [],
+    );
   }
 }
