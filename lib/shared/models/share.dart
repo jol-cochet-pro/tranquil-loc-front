@@ -1,19 +1,22 @@
 import 'package:dossier_locataire/shared/enums/share-duration-period.dart';
+import 'package:dossier_locataire/shared/enums/share-permission.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Share {
-  final String id;
-  final String description;
-  final String email;
-  final int durationNum;
-  final ShareDurationPeriod durationPeriod;
+  String description;
+  String email;
+  int durationNum;
+  ShareDurationPeriod durationPeriod;
+  SharePermission warrantorPermission;
+  SharePermission occupantPermission;
 
   Share({
-    required this.id,
     required this.description,
     required this.email,
     required this.durationNum,
     required this.durationPeriod,
+    required this.warrantorPermission,
+    required this.occupantPermission,
   });
 
   String shareDurationToString(AppLocalizations locale) {
@@ -25,5 +28,49 @@ class Share {
       case ShareDurationPeriod.month:
         return locale.n_months(durationNum);
     }
+  }
+
+  factory Share.fromFirestore(Map<String, dynamic>? data) {
+    ShareDurationPeriod durationPeriod = ShareDurationPeriod.day;
+    try {
+      durationPeriod = ShareDurationPeriod.values.byName(
+        data?["durationPeriod"],
+      );
+    } catch (_) {
+      durationPeriod = ShareDurationPeriod.day;
+    }
+    SharePermission occupantPerm = SharePermission.none;
+    try {
+      occupantPerm = SharePermission.values.byName(data?["occupantPermission"]);
+    } catch (_) {
+      occupantPerm = SharePermission.none;
+    }
+    SharePermission warrantorPerm = SharePermission.none;
+    try {
+      warrantorPerm = SharePermission.values.byName(
+        data?["warrantorPermission"],
+      );
+    } catch (_) {
+      warrantorPerm = SharePermission.none;
+    }
+    return Share(
+      description: data?["description"],
+      email: data?["email"],
+      durationNum: data?["durationNum"],
+      durationPeriod: durationPeriod,
+      occupantPermission: occupantPerm,
+      warrantorPermission: warrantorPerm,
+    );
+  }
+
+  static Map<String, Object?> toFirestore(Share share) {
+    return {
+      "description": share.description,
+      "email": share.email,
+      "durationNum": share.durationNum,
+      "durationPeriod": share.durationPeriod.str,
+      "occupantPermission": share.occupantPermission.str,
+      "warrantorPermission": share.occupantPermission.str,
+    };
   }
 }

@@ -4,7 +4,8 @@ import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/pages/dashboard/components/share-perm-cell.dart';
 import 'package:dossier_locataire/shared/enums/share-duration-period.dart';
-import 'package:dossier_locataire/shared/models/share-creation.dart';
+import 'package:dossier_locataire/shared/enums/share-permission.dart';
+import 'package:dossier_locataire/shared/models/share.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class ShareDialog extends StatefulWidget {
 
 class _ShareDialogState extends State<ShareDialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final ShareCreation shareCreation = ShareCreation(
+  final Share shareCreation = Share(
     description: "",
     email: "",
     durationNum: -1,
