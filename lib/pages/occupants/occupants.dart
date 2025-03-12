@@ -1,12 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/components/button.dart';
+import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/occupants/components/occupant-card.dart';
-import 'package:dossier_locataire/shared/enums/pro-situation.dart';
-import 'package:dossier_locataire/shared/models/document.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/scroll-controller.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -20,96 +21,23 @@ class Occupants extends StatefulWidget {
 }
 
 class _OccupantsState extends State<Occupants> {
-  double oldPosition = 0.0;
-  final List<Occupant> occupants = [
-    Occupant(
-      firstname: "Jolan",
-      lastname: "Cochet",
-      dateOfBirth: DateTime(2003, 3, 27),
-      income: 1000,
-      proSituation: ProSituation.cdd,
-      email: "jolan.cochet@gmail.com",
-      phone: "+33695243465",
-      documents: [
-        Document(name: "Carte d'identité", url: null),
-        Document(
-          name: "Bulletins de salaires",
-          url: "https://pdfobject.com/pdf/sample.pdf",
-        ),
-        Document(name: "Justificatif de domicile", url: null),
-        Document(
-          name: "Avis d'imposition",
-          url: "https://pdfobject.com/pdf/sample.pdf",
-        ),
-      ],
-    ),
-    // Occupant(
-    //   id: "1",
-    //   firstname: "Jolan",
-    //   lastname: "Cochet",
-    //   dateOfBirth: DateTime(2003, 3, 27),
-    //   income: 1000,
-    //   proSituation: ProSituation.cdd,
-    //   email: "jolan.cochet@gmail.com",
-    //   phone: "+33695243465",
-    //   documents: [
-    //     Document(name: "Carte d'identité", url: null),
-    //     Document(
-    //       name: "Bulletins de salaires",
-    //       url: "https://pdfobject.com/pdf/sample.pdf",
-    //     ),
-    //     Document(name: "Justificatif de domicile", url: null),
-    //     Document(
-    //       name: "Avis d'imposition",
-    //       url: "https://pdfobject.com/pdf/sample.pdf",
-    //     ),
-    //   ],
-    // ),
-    // Occupant(
-    //   id: "1",
-    //   firstname: "Jolan",
-    //   lastname: "Cochet",
-    //   dateOfBirth: DateTime(2003, 3, 27),
-    //   income: 1000,
-    //   proSituation: ProSituation.cdd,
-    //   email: "jolan.cochet@gmail.com",
-    //   phone: "+33695243465",
-    //   documents: [
-    //     Document(name: "Carte d'identité", url: null),
-    //     Document(
-    //       name: "Bulletins de salaires",
-    //       url: "https://pdfobject.com/pdf/sample.pdf",
-    //     ),
-    //     Document(name: "Justificatif de domicile", url: null),
-    //     Document(
-    //       name: "Avis d'imposition",
-    //       url: "https://pdfobject.com/pdf/sample.pdf",
-    //     ),
-    //   ],
-    // ),
-    // Occupant(
-    //   id: "1",
-    //   firstname: "Jolan",
-    //   lastname: "Cochet",
-    //   dateOfBirth: DateTime(2003, 3, 27),
-    //   income: 1000,
-    //   proSituation: ProSituation.cdd,
-    //   email: "jolan.cochet@gmail.com",
-    //   phone: "+33695243465",
-    //   documents: [
-    //     Document(name: "Carte d'identité", url: null),
-    //     Document(
-    //       name: "Bulletins de salaires",
-    //       url: "https://pdfobject.com/pdf/sample.pdf",
-    //     ),
-    //     Document(name: "Justificatif de domicile", url: null),
-    //     Document(
-    //       name: "Avis d'imposition",
-    //       url: "https://pdfobject.com/pdf/sample.pdf",
-    //     ),
-    //   ],
-    // ),
-  ];
+  late Future<List<Occupant>> occupants;
+
+  @override
+  void initState() {
+    occupants = FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("occupants")
+        .withConverter(
+          fromFirestore:
+              (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
+          toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
+        )
+        .get()
+        .then((value) => value.docs.map((doc) => doc.data()).toList());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,33 +68,47 @@ class _OccupantsState extends State<Occupants> {
             ),
           ),
           Expanded(
-            child:
-                occupants.isNotEmpty
-                    ? ScrollConfiguration(
-                      behavior: DragScrollBehavior(),
-                      child: ListView.separated(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemCount: occupants.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder:
-                            (context, index) =>
-                                OccupantCard(occupant: occupants[index]),
-                        separatorBuilder:
-                            (context, index) => SizedBox(width: 24),
-                      ),
-                    )
-                    : Center(
-                      child: ShadowContainer(
-                        radius: Radius.circular(10),
-                        child: Column(
-                          children: [
-                            Image(image: AssetImage("assets/empty_list.png")),
-                            Text(locale.no_future_occupants_saved, style: p1),
-                          ],
-                        ),
-                      ),
-                    ),
+            child: FutureBuilder(
+              future: occupants,
+              builder:
+                  (context, snapshot) =>
+                      snapshot.hasData
+                          ? snapshot.data!.isNotEmpty
+                              ? ScrollConfiguration(
+                                behavior: DragScrollBehavior(),
+                                child: ListView.separated(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data!.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder:
+                                      (context, index) => OccupantCard(
+                                        occupant: snapshot.data![index],
+                                      ),
+                                  separatorBuilder:
+                                      (context, index) => SizedBox(width: 24),
+                                ),
+                              )
+                              : Center(
+                                child: ShadowContainer(
+                                  radius: Radius.circular(10),
+                                  child: Column(
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                          "assets/empty_list.png",
+                                        ),
+                                      ),
+                                      Text(
+                                        locale.no_future_occupants_saved,
+                                        style: p1,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                          : Loader(),
+            ),
           ),
         ],
       ),
