@@ -11,6 +11,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class Navbar extends StatefulWidget {
+  static int selected = 0;
+
   const Navbar({super.key});
 
   @override
@@ -18,7 +20,6 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
-  static int selected = 0;
   bool profileOpen = false;
 
   @override
@@ -35,33 +36,18 @@ class _NavbarState extends State<Navbar> {
             spacing: 4,
             children: [
               NavButton(
-                isSelected: selected == 0,
-                onPressed: () {
-                  setState(() {
-                    selected = 0;
-                  });
-                  context.go(Dashboard.route);
-                },
+                isSelected: Navbar.selected == 0,
+                onPressed: () => context.go(Dashboard.route, extra: "occupant"),
                 child: Text(locale.dashboard),
               ),
               NavButton(
-                isSelected: selected == 1,
-                onPressed: () {
-                  setState(() {
-                    selected = 1;
-                  });
-                  context.go(Occupants.route);
-                },
+                isSelected: Navbar.selected == 1,
+                onPressed: () => context.go(Occupants.route),
                 child: Text(locale.occupants),
               ),
               NavButton(
-                isSelected: selected == 2,
-                onPressed: () {
-                  setState(() {
-                    selected = 2;
-                  });
-                  context.go(Warrantors.route);
-                },
+                isSelected: Navbar.selected == 2,
+                onPressed: () => context.go(Warrantors.route),
                 child: Text(locale.warrantors),
               ),
             ],

@@ -7,6 +7,7 @@ import 'package:dossier_locataire/pages/auth/verify-email/verify-email.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
+import 'package:dossier_locataire/shared/observers/go-router-observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -50,6 +51,7 @@ String? redirectFirstLog(BuildContext context, GoRouterState state) {
 }
 
 final GoRouter router = GoRouter(
+  observers: [GoRouterObserver()],
   initialLocation: Login.route,
   routes: [
     GoRoute(path: '/', redirect: (_, _) => Login.route),

@@ -25,6 +25,7 @@ class ShareDialog extends StatefulWidget {
 class _ShareDialogState extends State<ShareDialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final Share share = Share(
+    id: "",
     description: "",
     email: "",
     durationNum: -1,
@@ -49,8 +50,7 @@ class _ShareDialogState extends State<ShareDialog> {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("shares")
           .withConverter(
-            fromFirestore:
-                (snapshot, _) => Share.fromFirestore(snapshot.data()),
+            fromFirestore: (snapshot, _) => Share.fromFirestore(snapshot),
             toFirestore: (share, _) => Share.toFirestore(share),
           )
           .add(share);
@@ -63,6 +63,7 @@ class _ShareDialogState extends State<ShareDialog> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Dialog(
       child: Container(
         padding: EdgeInsets.all(32),
@@ -268,9 +269,7 @@ class _ShareDialogState extends State<ShareDialog> {
                   if (errors["permissions"] != null)
                     Text(
                       errors["permissions"]!,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
+                      style: TextStyle(color: colorScheme.error),
                     ),
                   Row(
                     spacing: 8,

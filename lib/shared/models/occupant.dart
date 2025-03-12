@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/pro-situation.dart';
 import 'package:dossier_locataire/shared/models/document.dart';
-import 'package:dossier_locataire/shared/models/firebase-data.dart';
 
-abstract class Occupant implements FirebaseData {
+class Occupant {
   final String firstname;
   final String lastname;
   final DateTime dateOfBirth;
@@ -47,8 +46,7 @@ abstract class Occupant implements FirebaseData {
     }
   }
 
-  @override
-  Occupant fromFirestore(Map<String, dynamic>? data) {
+  factory Occupant.fromFirestore(Map<String, dynamic>? data) {
     ProSituation situation = ProSituation.unemployed;
     try {
       situation = ProSituation.values.byName(data?["proSituation"]);
@@ -56,26 +54,26 @@ abstract class Occupant implements FirebaseData {
       situation = ProSituation.unemployed;
     }
     return Occupant(
-      firstname: data?["firstname"],
-      lastname: data?["lastname"],
+      firstname: data?["firstname"] ?? "",
+      lastname: data?["lastname"] ?? "",
       dateOfBirth: DateTime.fromMillisecondsSinceEpoch(
-        (data?["dateOfBirth"].seconds * 1000 +
-                data?["dateOfBirth"].nanoseconds / 1000)
+        (data?["dateOfBirth"].seconds ??
+                0 * 1000 + data?["dateOfBirth"].nanoseconds ??
+                0 / 1000)
             .round(),
       ),
-      income: data?["income"],
+      income: data?["income"] ?? 0,
       proSituation: situation,
-      email: data?["email"],
-      phone: data?["phone"],
+      email: data?["email"] ?? "",
+      phone: data?["phone"] ?? "",
       documents:
-          data?["documents"]
+          (data?["documents"] ?? [])
               .map<Document>((document) => Document.fromFirestore(document))
               .toList(),
     );
   }
 
-  @override
-  Map<String, Object?> toFirestore(Occupant occupant) {
+  static Map<String, Object?> toFirestore(Occupant occupant) {
     return {
       "firstname": occupant.firstname,
       "lastname": occupant.lastname,

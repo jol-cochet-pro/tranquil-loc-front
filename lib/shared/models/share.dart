@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/share-duration-period.dart';
 import 'package:dossier_locataire/shared/enums/share-permission.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Share {
+  String id;
   String description;
   String email;
   int durationNum;
@@ -11,6 +13,7 @@ class Share {
   SharePermission occupantPermission;
 
   Share({
+    required this.id,
     required this.description,
     required this.email,
     required this.durationNum,
@@ -30,7 +33,7 @@ class Share {
     }
   }
 
-  factory Share.fromFirestore(Map<String, dynamic>? data) {
+  factory Share.fromFirestore(DocumentSnapshot<Map<String, dynamic>>? data) {
     ShareDurationPeriod durationPeriod = ShareDurationPeriod.day;
     try {
       durationPeriod = ShareDurationPeriod.values.byName(
@@ -54,9 +57,10 @@ class Share {
       warrantorPerm = SharePermission.none;
     }
     return Share(
-      description: data?["description"],
-      email: data?["email"],
-      durationNum: data?["durationNum"],
+      id: data?.id ?? "",
+      description: data?["description"] ?? "",
+      email: data?["email"] ?? "",
+      durationNum: data?["durationNum"] ?? 0,
       durationPeriod: durationPeriod,
       occupantPermission: occupantPerm,
       warrantorPermission: warrantorPerm,

@@ -4,7 +4,6 @@ import 'package:dossier_locataire/pages/dashboard/call-to-action.dart';
 import 'package:dossier_locataire/pages/dashboard/dash-cards.dart';
 import 'package:dossier_locataire/pages/dashboard/hero-section.dart';
 import 'package:dossier_locataire/shared/models/dashboard-data.dart';
-import 'package:dossier_locataire/shared/models/firebase-data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -20,13 +19,15 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   late Future<DashboardData> dashboardData;
 
-  Future<T> retrieveData<T extends FirebaseData<T>>() {
+  Future<DashboardData> retrieveData() {
     return FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .withConverter(
-          fromFirestore: (snapshot, _) => T.fromFirestore(snapshot.data()),
-          toFirestore: (dashboardData, _) => T.toFirestore(dashboardData),
+          fromFirestore:
+              (snapshot, _) => DashboardData.fromFirestore(snapshot.data()),
+          toFirestore:
+              (dashboardData, _) => DashboardData.toFirestore(dashboardData),
         )
         .get()
         .then((value) => value.data()!);
