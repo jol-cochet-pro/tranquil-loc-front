@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/pro-situation.dart';
 import 'package:dossier_locataire/shared/models/document.dart';
+import 'package:dossier_locataire/shared/models/firebase-data.dart';
 
-class Occupant {
+abstract class Occupant implements FirebaseData {
   final String firstname;
   final String lastname;
   final DateTime dateOfBirth;
@@ -46,7 +47,8 @@ class Occupant {
     }
   }
 
-  factory Occupant.fromFirestore(Map<String, dynamic>? data) {
+  @override
+  Occupant fromFirestore(Map<String, dynamic>? data) {
     ProSituation situation = ProSituation.unemployed;
     try {
       situation = ProSituation.values.byName(data?["proSituation"]);
@@ -72,7 +74,8 @@ class Occupant {
     );
   }
 
-  static Map<String, Object?> toFirestore(Occupant occupant) {
+  @override
+  Map<String, Object?> toFirestore(Occupant occupant) {
     return {
       "firstname": occupant.firstname,
       "lastname": occupant.lastname,

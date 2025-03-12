@@ -70,7 +70,7 @@ class Share {
       "durationNum": share.durationNum,
       "durationPeriod": share.durationPeriod.str,
       "occupantPermission": share.occupantPermission.str,
-      "warrantorPermission": share.occupantPermission.str,
+      "warrantorPermission": share.warrantorPermission.str,
     };
   }
 }

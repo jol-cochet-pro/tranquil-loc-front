@@ -11,8 +11,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CallToAction extends StatelessWidget {
   final AsyncSnapshot<DashboardData> snapshot;
+  final void Function() reload;
 
-  const CallToAction({super.key, required this.snapshot});
+  const CallToAction({super.key, required this.snapshot, required this.reload});
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +50,12 @@ class CallToAction extends StatelessWidget {
               children: [
                 CustomButton(
                   type: ButtonType.primary,
-                  onPressed: () {
-                    showDialog(
+                  onPressed: () async {
+                    await showDialog(
                       context: context,
                       builder: (context) => ShareDialog(),
                     );
+                    reload();
                   },
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                   child: Text(locale.share_my_folder),

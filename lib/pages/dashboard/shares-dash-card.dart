@@ -7,6 +7,7 @@ import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class SharesCard extends StatefulWidget {
   const SharesCard({super.key});
@@ -55,10 +56,13 @@ class _SharesCardState extends State<SharesCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      snapshot.data![index].description,
-                      overflow: TextOverflow.ellipsis,
-                      style: h3,
+                    SizedBox(
+                      width: 180,
+                      child: Text(
+                        snapshot.data![index].description,
+                        overflow: TextOverflow.ellipsis,
+                        style: h3,
+                      ),
                     ),
                     Row(
                       spacing: 4,

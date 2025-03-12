@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/dropdown.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
@@ -8,6 +9,8 @@ import 'package:dossier_locataire/shared/enums/share-permission.dart';
 import 'package:dossier_locataire/shared/models/share.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/string-extensions.dart';
+import 'package:dossier_locataire/shared/types/form-errors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +24,7 @@ class ShareDialog extends StatefulWidget {
 
 class _ShareDialogState extends State<ShareDialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Share shareCreation = Share(
+  final Share share = Share(
     description: "",
     email: "",
     durationNum: -1,
@@ -29,7 +32,33 @@ class _ShareDialogState extends State<ShareDialog> {
     occupantPermission: SharePermission.none,
     warrantorPermission: SharePermission.none,
   );
-  String permissionError = "";
+  final FormErrors errors = FormErrors();
+
+  void submit(AppLocalizations locale) async {
+    setState(() => errors.clear());
+    if (share.warrantorPermission == SharePermission.none &&
+        share.occupantPermission == SharePermission.none) {
+      setState(() {
+        errors["permissions"] = locale.must_have_at_least_one_perm;
+      });
+      return;
+    }
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("shares")
+          .withConverter(
+            fromFirestore:
+                (snapshot, _) => Share.fromFirestore(snapshot.data()),
+            toFirestore: (share, _) => Share.toFirestore(share),
+          )
+          .add(share);
+      context.pop();
+    } catch (error) {
+      print(error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +86,8 @@ class _ShareDialogState extends State<ShareDialog> {
                 spacing: 16,
                 children: [
                   CustomTextField(
-                    onSaved: (newValue) {
-                      shareCreation.description = newValue!;
+                    onChanged: (newValue) {
+                      share.description = newValue!;
                     },
                     validator: (value) {
                       if (value == null || value == "") {
@@ -72,8 +101,8 @@ class _ShareDialogState extends State<ShareDialog> {
                     type: TextFieldType.text,
                   ),
                   CustomTextField(
-                    onSaved: (newValue) {
-                      shareCreation.email = newValue!;
+                    onChanged: (newValue) {
+                      share.email = newValue!;
                     },
                     label: locale.email,
                     hint: locale.email_hint,
@@ -96,11 +125,11 @@ class _ShareDialogState extends State<ShareDialog> {
                       Expanded(
                         flex: 2,
                         child: CustomTextField(
-                          onSaved: (newValue) {
+                          onChanged: (newValue) {
                             if (newValue == null || newValue == "") {
-                              shareCreation.durationNum = -1;
+                              share.durationNum = -1;
                             } else {
-                              shareCreation.durationNum = int.parse(newValue);
+                              share.durationNum = int.parse(newValue);
                             }
                           },
                           validator: (value) {
@@ -136,9 +165,7 @@ class _ShareDialogState extends State<ShareDialog> {
                         child: CustomDropDown(
                           defaultValue: ShareDurationPeriod.day,
                           onSelected:
-                              (value) => {
-                                shareCreation.durationPeriod = value!,
-                              },
+                              (value) => {share.durationPeriod = value!},
                           items:
                               ShareDurationPeriod.values.map((el) {
                                 return DropdownMenuEntry(
@@ -165,30 +192,30 @@ class _ShareDialogState extends State<ShareDialog> {
                         SharePermCell(
                           label: locale.read_infos,
                           permission: SharePermission.readInfo,
-                          value: shareCreation.warrantorPermission,
+                          value: share.warrantorPermission,
                           onChange: (newValue) {
                             setState(() {
-                              shareCreation.warrantorPermission = newValue;
+                              share.warrantorPermission = newValue;
                             });
                           },
                         ),
                         SharePermCell(
                           label: locale.read_files,
                           permission: SharePermission.readFile,
-                          value: shareCreation.warrantorPermission,
+                          value: share.warrantorPermission,
                           onChange: (newValue) {
                             setState(() {
-                              shareCreation.warrantorPermission = newValue;
+                              share.warrantorPermission = newValue;
                             });
                           },
                         ),
                         SharePermCell(
                           label: locale.write,
                           permission: SharePermission.write,
-                          value: shareCreation.warrantorPermission,
+                          value: share.warrantorPermission,
                           onChange: (newValue) {
                             setState(() {
-                              shareCreation.warrantorPermission = newValue;
+                              share.warrantorPermission = newValue;
                             });
                           },
                         ),
@@ -208,42 +235,43 @@ class _ShareDialogState extends State<ShareDialog> {
                         SharePermCell(
                           label: locale.read_infos,
                           permission: SharePermission.readInfo,
-                          value: shareCreation.occupantPermission,
+                          value: share.occupantPermission,
                           onChange: (newValue) {
                             setState(() {
-                              shareCreation.occupantPermission = newValue;
+                              share.occupantPermission = newValue;
                             });
                           },
                         ),
                         SharePermCell(
                           label: locale.read_files,
                           permission: SharePermission.readFile,
-                          value: shareCreation.occupantPermission,
+                          value: share.occupantPermission,
                           onChange: (newValue) {
                             setState(() {
-                              shareCreation.occupantPermission = newValue;
+                              share.occupantPermission = newValue;
                             });
                           },
                         ),
                         SharePermCell(
                           label: locale.write,
                           permission: SharePermission.write,
-                          value: shareCreation.occupantPermission,
+                          value: share.occupantPermission,
                           onChange: (newValue) {
                             setState(() {
-                              shareCreation.occupantPermission = newValue;
+                              share.occupantPermission = newValue;
                             });
                           },
                         ),
                       ],
                     ),
                   ),
-                  Text(
-                    permissionError,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
+                  if (errors["permissions"] != null)
+                    Text(
+                      errors["permissions"]!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                     ),
-                  ),
                   Row(
                     spacing: 8,
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -257,22 +285,8 @@ class _ShareDialogState extends State<ShareDialog> {
                       CustomButton(
                         type: ButtonType.primary,
                         onPressed: () {
-                          setState(() {
-                            permissionError = "";
-                          });
-                          if (shareCreation.warrantorPermission ==
-                                  SharePermission.none &&
-                              shareCreation.occupantPermission ==
-                                  SharePermission.none) {
-                            setState(() {
-                              permissionError =
-                                  locale.must_have_at_least_one_perm;
-                            });
-                            formKey.currentState!.validate();
-                            return;
-                          }
                           if (formKey.currentState!.validate()) {
-                            print("information sent.");
+                            submit(locale);
                           }
                         },
                         padding: EdgeInsets.all(16),
