@@ -5,7 +5,7 @@ import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/auth/forgot-password/forgot-password.dart';
 import 'package:dossier_locataire/pages/auth/register/register-cred.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
-import 'package:dossier_locataire/shared/string-extensions.dart';
+import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/types/form-errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';

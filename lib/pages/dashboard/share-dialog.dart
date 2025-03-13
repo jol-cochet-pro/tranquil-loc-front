@@ -8,7 +8,7 @@ import 'package:dossier_locataire/shared/enums/share-duration-period.dart';
 import 'package:dossier_locataire/shared/enums/share-permission.dart';
 import 'package:dossier_locataire/shared/models/share.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
-import 'package:dossier_locataire/shared/string-extensions.dart';
+import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/types/form-errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -166,7 +166,8 @@ class _ShareDialogState extends State<ShareDialog> {
                         child: CustomDropDown(
                           defaultValue: ShareDurationPeriod.day,
                           onSelected:
-                              (value) => {share.durationPeriod = value!},
+                              (value) =>
+                                  setState(() => share.durationPeriod = value!),
                           items:
                               ShareDurationPeriod.values.map((el) {
                                 return DropdownMenuEntry(

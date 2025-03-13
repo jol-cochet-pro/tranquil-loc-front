@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-enum TextFieldType { text, number, password, phone }
+enum TextFieldType { text, number, password, phone, currency }
 
 class CustomTextField extends StatefulWidget {
-  final void Function(String?)? onSaved;
+  final TextFieldType type;
   final void Function(String?)? onChanged;
   final String? label;
   final String hint;
@@ -14,12 +14,10 @@ class CustomTextField extends StatefulWidget {
   final GestureTapCallback? onHelpTap;
   final bool isRequired;
   final String? errorText;
-  final TextFieldType type;
   final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
-    this.onSaved,
     required this.hint,
     required this.isRequired,
     required this.type,
@@ -46,6 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           widget.errorText != null && widget.errorText!.isNotEmpty
               ? widget.errorText
               : null,
+      suffixText: widget.type == TextFieldType.currency ? " € / mois" : "",
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: colorScheme.outline),
       ),
@@ -98,7 +97,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
                           : [],
                   decoration: decoration,
                   validator: widget.validator,
-                  onSaved: widget.onSaved,
                   onChanged: widget.onChanged,
                 ),
             if (widget.type == TextFieldType.password)

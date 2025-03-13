@@ -3,10 +3,12 @@ import 'package:dossier_locataire/components/icon-button.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash-state-cell.dart';
+import 'package:dossier_locataire/pages/occupants/add-occupant.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -46,9 +48,7 @@ class _OccupantsCardState extends State<OccupantsCard> {
           (context, snapshot) => DashCard(
             title: locale.future_occupants,
             emptyInfo: locale.no_future_occupants_saved,
-            onAdd: () {
-              print("add occupant.");
-            },
+            onAdd: () => context.go(AddOccupant.route),
             hasData: snapshot.hasData,
             items: snapshot.data,
             itemBuilder:

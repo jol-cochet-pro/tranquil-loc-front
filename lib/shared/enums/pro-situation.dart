@@ -4,12 +4,12 @@ enum ProSituation {
   cdd,
   cdi,
   retired,
-  coopStudent,
+  apprentice,
   unemployed,
   student,
   official,
   freelance,
-  none,
+  other,
 }
 
 extension ProSituationExtension on ProSituation {
@@ -21,7 +21,7 @@ extension ProSituationExtension on ProSituation {
         return "cdi";
       case ProSituation.retired:
         return "retired";
-      case ProSituation.coopStudent:
+      case ProSituation.apprentice:
         return "coopStudent";
       case ProSituation.unemployed:
         return "unemployed";
@@ -31,8 +31,8 @@ extension ProSituationExtension on ProSituation {
         return "official";
       case ProSituation.freelance:
         return "freelance";
-      case ProSituation.none:
-        return "none";
+      case ProSituation.other:
+        return "other";
     }
   }
 
@@ -44,8 +44,8 @@ extension ProSituationExtension on ProSituation {
         return locale.cdi;
       case ProSituation.retired:
         return locale.retired;
-      case ProSituation.coopStudent:
-        return locale.coopStudent;
+      case ProSituation.apprentice:
+        return locale.apprentice;
       case ProSituation.unemployed:
         return locale.unemployed;
       case ProSituation.student:
@@ -54,8 +54,8 @@ extension ProSituationExtension on ProSituation {
         return locale.official;
       case ProSituation.freelance:
         return locale.freelance;
-      case ProSituation.none:
-        return "";
+      case ProSituation.other:
+        return locale.other;
     }
   }
 }

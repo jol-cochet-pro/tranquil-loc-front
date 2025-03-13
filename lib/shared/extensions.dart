@@ -13,3 +13,21 @@ extension PasswordValidator on String {
     ).hasMatch(this);
   }
 }
+
+extension CreateAddAll on Map {
+  void createAddAll<T>(String key, Iterable<T> values) {
+    if (this[key] == null) {
+      this[key] = values;
+    } else {
+      this[key]!.addAll(values);
+    }
+  }
+
+  void createAdd<T>(String key, T values) {
+    if (this[key] == null) {
+      this[key] = values;
+    } else {
+      this[key]!.add(values);
+    }
+  }
+}

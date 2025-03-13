@@ -88,17 +88,17 @@ class OccupantCard extends StatelessWidget {
                     child: Wrap(
                       runSpacing: 4,
                       children:
-                          occupant.documents.map((document) {
+                          occupant.documents.entries.map((entry) {
                             return Row(
                               spacing: 4,
                               children: [
                                 IconWithState(
                                   state:
-                                      document.url != null
+                                      entry.value.isNotEmpty
                                           ? IconState.valid
                                           : IconState.wrong,
                                 ),
-                                Text(document.name, style: p2),
+                                Text(entry.key, style: p2),
                               ],
                             );
                           }).toList(),

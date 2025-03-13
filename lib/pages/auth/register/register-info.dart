@@ -42,7 +42,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
     try {
       CollectionReference users = FirebaseFirestore.instance.collection(
         "users",
-      );
+      ); // TODO Change this to converter
       users.doc(FirebaseAuth.instance.currentUser!.uid).set({
         'firstname': user.firstname,
         'lastname': user.lastname,
@@ -54,7 +54,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
       });
       context.go(Dashboard.route);
     } catch (error) {
-      print(error.toString());
+      print(error);
     }
   }
 

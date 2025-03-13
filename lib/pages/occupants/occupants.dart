@@ -3,6 +3,7 @@ import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/components/shadow-container.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
+import 'package:dossier_locataire/pages/occupants/add-occupant.dart';
 import 'package:dossier_locataire/pages/occupants/components/occupant-card.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/scroll-controller.dart';
@@ -10,6 +11,7 @@ import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class Occupants extends StatefulWidget {
   const Occupants({super.key});
@@ -57,9 +59,7 @@ class _OccupantsState extends State<Occupants> {
               children: [
                 Text(locale.future_occupants, style: h1),
                 CustomButton(
-                  onPressed: () {
-                    print("add occupant.");
-                  },
+                  onPressed: () => context.go(AddOccupant.route),
                   type: ButtonType.primary,
                   padding: EdgeInsets.all(16),
                   child: Text(locale.add_future_occupant),

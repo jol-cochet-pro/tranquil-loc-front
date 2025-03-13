@@ -5,6 +5,7 @@ import 'package:dossier_locataire/pages/auth/register/register-info.dart';
 import 'package:dossier_locataire/pages/auth/verify-email/need-email-verification.dart';
 import 'package:dossier_locataire/pages/auth/verify-email/verify-email.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
+import 'package:dossier_locataire/pages/occupants/add-occupant.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
 import 'package:dossier_locataire/shared/observers/go-router-observer.dart';
@@ -69,6 +70,11 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Occupants.route,
       builder: (_, _) => Occupants(),
+      redirect: redirectLoggedInWithEmail,
+    ),
+    GoRoute(
+      path: AddOccupant.route,
+      builder: (_, _) => AddOccupant(),
       redirect: redirectLoggedInWithEmail,
     ),
     // Logged out

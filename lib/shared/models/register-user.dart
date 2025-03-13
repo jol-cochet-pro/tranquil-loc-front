@@ -1,6 +1,7 @@
 import 'package:dossier_locataire/shared/enums/user-type.dart';
 
 class RegisterUserCred {
+  // TODO Remove this to User
   String email;
   String password;
 
