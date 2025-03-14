@@ -27,6 +27,7 @@ class AddOccupant extends StatefulWidget {
 }
 
 class _AddOccupantState extends State<AddOccupant> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final Map<String, List<PlatformFile>> files = {
     DocumentType.identityDocuments.str: [],
     DocumentType.proofOfAddress.str: [],
@@ -55,10 +56,10 @@ class _AddOccupantState extends State<AddOccupant> {
           if (entry.value[i].bytes == null) {
             continue;
           }
-          var task = await storageRef
-              .child("$userUid/${entry.key}$i")
+          TaskSnapshot snapshot = await storageRef
+              .child("$userUid/${entry.key}$i.${entry.value[i].extension}")
               .putData(entry.value[i].bytes!);
-          occupant.documents[entry.key]!.add(task.ref);
+          occupant.documents[entry.key]!.add(snapshot.ref.fullPath);
         }
       }
       FirebaseFirestore.instance
@@ -105,7 +106,11 @@ class _AddOccupantState extends State<AddOccupant> {
                       child: Text(locale.canceled),
                     ),
                     CustomButton(
-                      onPressed: () => submit(locale),
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          submit(locale);
+                        }
+                      },
                       type: ButtonType.success,
                       padding: EdgeInsets.all(16),
                       child: Text(locale.save),
@@ -116,16 +121,19 @@ class _AddOccupantState extends State<AddOccupant> {
             ),
           ),
           Flexible(
-            child: Row(
-              spacing: 24,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: PersonalInfoForm(occupant: occupant)),
-                Expanded(
-                  child: DocumentsInfoForm(occupant: occupant, files: files),
-                ),
-              ],
+            child: Form(
+              key: formKey,
+              child: Row(
+                spacing: 24,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: PersonalInfoForm(occupant: occupant)),
+                  Expanded(
+                    child: DocumentsInfoForm(occupant: occupant, files: files),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

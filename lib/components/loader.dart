@@ -12,10 +12,27 @@ class Loader extends StatefulWidget {
 
 class _LoaderState extends State<Loader> {
   bool showLoader = false;
+  late Timer timer;
+
+  @override
+  void initState() {
+    timer = Timer(
+      Duration(seconds: 1),
+      () => setState(() => showLoader = true),
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    Timer(Duration(seconds: 1), () => setState(() => showLoader = true));
     return showLoader
         ? Center(
           child: LoadingAnimationWidget.waveDots(

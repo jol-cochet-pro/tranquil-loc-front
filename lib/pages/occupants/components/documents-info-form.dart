@@ -48,7 +48,6 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
                         .map(
                           (entry) => CustomFileInput(
                             label: entry.key,
-                            isRequired: true,
                             files: entry.value,
                             onAdd:
                                 (addFiles) => setState(

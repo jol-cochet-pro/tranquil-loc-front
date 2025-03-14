@@ -1,7 +1,7 @@
+import 'dart:js_interop';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/home-situation.dart';
 import 'package:dossier_locataire/shared/enums/pro-situation.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class Occupant {
   String firstname;
@@ -12,7 +12,7 @@ class Occupant {
   HomeSituation homeSituation;
   String email;
   String phone;
-  Map<String, List<Reference>> documents;
+  Map<String, List<String>> documents;
 
   Occupant({
     required this.firstname,
@@ -62,21 +62,21 @@ class Occupant {
     } catch (_) {
       homeSituation = HomeSituation.tenant;
     }
+    Map<String, List<String>> documents = {};
+    for (final entry in data?["documents"].entries) {
+      documents[entry.key] =
+          (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
+    }
     return Occupant(
       firstname: data?["firstname"] ?? "",
       lastname: data?["lastname"] ?? "",
-      dateOfBirth: DateTime.fromMillisecondsSinceEpoch(
-        (data?["dateOfBirth"].seconds ??
-                0 * 1000 + data?["dateOfBirth"].nanoseconds ??
-                0 / 1000)
-            .round(),
-      ),
+      dateOfBirth: data?["dateOfBirth"].toDate(),
       income: data?["income"] ?? 0,
       proSituation: proSituation,
       homeSituation: homeSituation,
       email: data?["email"] ?? "",
       phone: data?["phone"] ?? "",
-      documents: data?["documents"] ?? [],
+      documents: documents,
     );
   }
 
@@ -84,7 +84,7 @@ class Occupant {
     return {
       "firstname": occupant.firstname,
       "lastname": occupant.lastname,
-      "dateOfBirth": Timestamp.fromDate(occupant.dateOfBirth).toString(),
+      "dateOfBirth": Timestamp.fromDate(occupant.dateOfBirth),
       "income": occupant.income,
       "proSituation": occupant.proSituation.str,
       "homeSituation": occupant.homeSituation.str,

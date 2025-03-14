@@ -1,6 +1,6 @@
+import 'dart:js_interop';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/pro-situation.dart';
-import 'package:dossier_locataire/shared/models/document.dart';
 
 class Warrantor {
   final String firstname;
@@ -10,7 +10,7 @@ class Warrantor {
   final ProSituation proSituation;
   final String email;
   final String phone;
-  final List<Document> documents;
+  final Map<String, List<String>> documents;
 
   Warrantor({
     required this.firstname,
@@ -26,7 +26,7 @@ class Warrantor {
   bool getIsCompleted() {
     return (email.isNotEmpty &&
         phone.isNotEmpty &&
-        !documents.any((document) => document.url == null));
+        documents.values.every((value) => value.isNotEmpty));
   }
 
   bool getInfoCompleted(String info) {
@@ -40,7 +40,7 @@ class Warrantor {
       case "hasPhoneFilled":
         return phone != "";
       case "hasAllDocumentsFilled":
-        return !documents.any((document) => document.url == null);
+        return documents.values.every((value) => value.isNotEmpty);
       default:
         return false;
     }
@@ -53,22 +53,20 @@ class Warrantor {
     } catch (_) {
       situation = ProSituation.unemployed;
     }
+    Map<String, List<String>> documents = {};
+    for (final entry in data?["documents"].entries) {
+      documents[entry.key] =
+          (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
+    }
     return Warrantor(
       firstname: data?["firstname"],
       lastname: data?["lastname"],
-      dateOfBirth: DateTime.fromMillisecondsSinceEpoch(
-        (data?["dateOfBirth"].seconds * 1000 +
-                data?["dateOfBirth"].nanoseconds / 1000)
-            .round(),
-      ),
+      dateOfBirth: data?["dateOfBirth"].toDate(),
       income: data?["income"],
       proSituation: situation,
       email: data?["email"],
       phone: data?["phone"],
-      documents:
-          data?["documents"]
-              .map<Document>((document) => Document.fromFirestore(document))
-              .toList(),
+      documents: documents,
     );
   }
 
@@ -76,15 +74,12 @@ class Warrantor {
     return {
       "firstname": warrantor.firstname,
       "lastname": warrantor.lastname,
-      "dateOfBirth": Timestamp.fromDate(warrantor.dateOfBirth).toString(),
+      "dateOfBirth": Timestamp.fromDate(warrantor.dateOfBirth),
       "income": warrantor.income,
       "proSituation": warrantor.proSituation.str,
       "email": warrantor.email,
       "phone": warrantor.phone,
-      "documents":
-          warrantor.documents
-              .map((document) => Document.toFirestore(document))
-              .toList(),
+      "documents": warrantor.documents,
     };
   }
 }

@@ -48,7 +48,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
         'lastname': user.lastname,
         'phone': user.phone,
         'dateOfBirth': user.dateOfBirth,
-        'type': user.type.locale(locale),
+        'type': user.type.str,
         'opennedMail': 0,
         'searchState': SearchState.searching.str,
       });

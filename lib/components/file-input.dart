@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomFileInput extends StatefulWidget {
   final String? label;
-  final bool isRequired;
   final List<PlatformFile> files;
   final void Function(List<PlatformFile>) onAdd;
   final void Function(PlatformFile) onRemove;
@@ -14,7 +13,6 @@ class CustomFileInput extends StatefulWidget {
     super.key,
     this.label,
     required this.files,
-    required this.isRequired,
     required this.onAdd,
     required this.onRemove,
   });
@@ -57,15 +55,7 @@ class _FileInputState extends State<CustomFileInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4,
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          spacing: 4,
-          children: [
-            if (widget.label != null) Text(widget.label!, style: p1),
-            if (widget.isRequired)
-              Text("*", style: TextStyle(color: colorScheme.error)),
-          ],
-        ),
+        if (widget.label != null) Text(widget.label!, style: p1),
         GestureDetector(
           onTap: () => pickFiles(locale),
           child: Container(
