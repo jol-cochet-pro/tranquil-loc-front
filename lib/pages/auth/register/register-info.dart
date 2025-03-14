@@ -6,13 +6,16 @@ import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
-import 'package:dossier_locataire/shared/enums/search-state.dart';
+import 'package:dossier_locataire/shared/enums/home-situation.dart';
+import 'package:dossier_locataire/shared/enums/pro-situation.dart';
 import 'package:dossier_locataire/shared/enums/user-type.dart';
-import 'package:dossier_locataire/shared/models/register-user.dart';
+import 'package:dossier_locataire/shared/models/occupant.dart';
+import 'package:dossier_locataire/shared/models/user.dart';
+import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/types/form-errors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -28,7 +31,7 @@ class RegisterInfos extends StatefulWidget {
 
 class _RegisterInfosState extends State<RegisterInfos> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final RegisterUserInfo user = RegisterUserInfo(
+  final User user = User(
     firstname: "",
     lastname: "",
     phone: "",
@@ -40,18 +43,63 @@ class _RegisterInfosState extends State<RegisterInfos> {
   void submit(AppLocalizations locale) async {
     setState(() => errors.clear());
     try {
-      CollectionReference users = FirebaseFirestore.instance.collection(
-        "users",
-      ); // TODO Change this to converter
-      users.doc(FirebaseAuth.instance.currentUser!.uid).set({
-        'firstname': user.firstname,
-        'lastname': user.lastname,
-        'phone': user.phone,
-        'dateOfBirth': user.dateOfBirth,
-        'type': user.type.str,
-        'opennedMail': 0,
-        'searchState': SearchState.searching.str,
-      });
+      var currentUser = FirebaseAuth.instance.currentUser!;
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(currentUser.uid)
+          .withConverter(
+            fromFirestore: (snapshot, _) => User.fromFirebase(snapshot.data()),
+            toFirestore: (user, _) => User.toFirebase(user),
+          )
+          .set(user);
+      if (user.type == UserType.occupant) {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("occupants")
+            .withConverter(
+              fromFirestore:
+                  (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
+              toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
+            )
+            .add(
+              Occupant(
+                firstname: user.firstname,
+                lastname: user.lastname,
+                dateOfBirth: user.dateOfBirth,
+                income: 0,
+                proSituation: ProSituation.other,
+                homeSituation: HomeSituation.other,
+                email: currentUser.email!,
+                phone: user.phone,
+                documents: {},
+              ),
+            );
+      }
+      if (user.type == UserType.warrantor) {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("warrantors")
+            .withConverter(
+              fromFirestore:
+                  (snapshot, _) => Warrantor.fromFirestore(snapshot.data()),
+              toFirestore: (warrantor, _) => Warrantor.toFirestore(warrantor),
+            )
+            .add(
+              Warrantor(
+                firstname: user.firstname,
+                lastname: user.lastname,
+                dateOfBirth: user.dateOfBirth,
+                income: 0,
+                proSituation: ProSituation.other,
+                homeSituation: HomeSituation.other,
+                email: currentUser.email!,
+                phone: user.phone,
+                documents: {},
+              ),
+            );
+      }
       context.go(Dashboard.route);
     } catch (error) {
       print(error);

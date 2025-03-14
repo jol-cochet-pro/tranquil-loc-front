@@ -4,7 +4,7 @@ import 'package:dossier_locataire/components/text-field.dart';
 import 'package:dossier_locataire/layout/page-layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/auth/register/register-info.dart';
-import 'package:dossier_locataire/shared/models/register-user.dart';
+import 'package:dossier_locataire/shared/models/credentials.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/text-styles.dart';
 import 'package:dossier_locataire/shared/types/form-errors.dart';
@@ -24,7 +24,7 @@ class RegisterCred extends StatefulWidget {
 
 class _RegisterCredState extends State<RegisterCred> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final RegisterUserCred user = RegisterUserCred(email: "", password: "");
+  final Credentials user = Credentials(email: "", password: "");
   final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {

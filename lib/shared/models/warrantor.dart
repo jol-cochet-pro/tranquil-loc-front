@@ -1,5 +1,6 @@
 import 'dart:js_interop';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dossier_locataire/shared/enums/home-situation.dart';
 import 'package:dossier_locataire/shared/enums/pro-situation.dart';
 
 class Warrantor {
@@ -8,6 +9,7 @@ class Warrantor {
   final DateTime dateOfBirth;
   final int income;
   final ProSituation proSituation;
+  final HomeSituation homeSituation;
   final String email;
   final String phone;
   final Map<String, List<String>> documents;
@@ -18,6 +20,7 @@ class Warrantor {
     required this.dateOfBirth,
     required this.income,
     required this.proSituation,
+    required this.homeSituation,
     required this.email,
     required this.phone,
     required this.documents,
@@ -47,11 +50,17 @@ class Warrantor {
   }
 
   factory Warrantor.fromFirestore(Map<String, dynamic>? data) {
-    ProSituation situation = ProSituation.unemployed;
+    ProSituation proSituation = ProSituation.unemployed;
     try {
-      situation = ProSituation.values.byName(data?["proSituation"]);
+      proSituation = ProSituation.values.byName(data?["proSituation"]);
     } catch (_) {
-      situation = ProSituation.unemployed;
+      proSituation = ProSituation.unemployed;
+    }
+    HomeSituation homeSituation = HomeSituation.tenant;
+    try {
+      homeSituation = HomeSituation.values.byName(data?["proSituation"]);
+    } catch (_) {
+      homeSituation = HomeSituation.tenant;
     }
     Map<String, List<String>> documents = {};
     for (final entry in data?["documents"].entries) {
@@ -63,7 +72,8 @@ class Warrantor {
       lastname: data?["lastname"],
       dateOfBirth: data?["dateOfBirth"].toDate(),
       income: data?["income"],
-      proSituation: situation,
+      proSituation: proSituation,
+      homeSituation: homeSituation,
       email: data?["email"],
       phone: data?["phone"],
       documents: documents,
@@ -77,6 +87,7 @@ class Warrantor {
       "dateOfBirth": Timestamp.fromDate(warrantor.dateOfBirth),
       "income": warrantor.income,
       "proSituation": warrantor.proSituation.str,
+      "homeSituation": warrantor.homeSituation.str,
       "email": warrantor.email,
       "phone": warrantor.phone,
       "documents": warrantor.documents,
