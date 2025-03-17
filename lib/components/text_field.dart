@@ -1,9 +1,8 @@
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 
-enum TextFieldType { text, number, password, phone, currency }
+enum TextFieldType { text, number, password, currency, date }
 
 class CustomTextField extends StatefulWidget {
   final TextFieldType type;
@@ -76,29 +75,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         Stack(
           children: [
-            widget.type == TextFieldType.phone
-                ? IntlPhoneField(
-                  decoration: decoration,
-                  languageCode: "en",
-                  onChanged: (phone) {
-                    widget.onChanged!(phone.completeNumber);
-                  },
-                )
-                : TextFormField(
-                  obscureText:
-                      widget.type == TextFieldType.password && !showPassword,
-                  enableSuggestions:
-                      widget.type == TextFieldType.password && !showPassword,
-                  autocorrect:
-                      widget.type == TextFieldType.password && !showPassword,
-                  inputFormatters:
-                      widget.type == TextFieldType.number
-                          ? [FilteringTextInputFormatter.digitsOnly]
-                          : [],
-                  decoration: decoration,
-                  validator: widget.validator,
-                  onChanged: widget.onChanged,
-                ),
+            TextFormField(
+              obscureText:
+                  widget.type == TextFieldType.password && !showPassword,
+              enableSuggestions:
+                  widget.type == TextFieldType.password && !showPassword,
+              autocorrect:
+                  widget.type == TextFieldType.password && !showPassword,
+              inputFormatters:
+                  widget.type == TextFieldType.number
+                      ? [FilteringTextInputFormatter.digitsOnly]
+                      : [],
+              decoration: decoration,
+              validator: widget.validator,
+              onChanged: widget.onChanged,
+            ),
             if (widget.type == TextFieldType.password)
               Positioned(
                 right: 12,

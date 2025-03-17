@@ -118,17 +118,13 @@ class WarrantorCard extends StatelessWidget {
             children: [
               IconWithState(
                 state:
-                    warrantor.getIsCompleted()
-                        ? IconState.valid
-                        : IconState.wrong,
+                    warrantor.isCompleted ? IconState.valid : IconState.wrong,
               ),
               Text(
-                warrantor.getIsCompleted()
-                    ? locale.complete
-                    : locale.incomplete,
+                warrantor.isCompleted ? locale.complete : locale.incomplete,
                 style: TextStyle(
                   color:
-                      warrantor.getIsCompleted()
+                      warrantor.isCompleted
                           ? colorScheme.tertiary
                           : colorScheme.error,
                   fontSize: 14,

@@ -53,8 +53,7 @@ class _DashboardState extends State<Dashboard> {
                   HeroSection(snapshot: snapshot),
                   CallToAction(
                     snapshot: snapshot,
-                    reload:
-                        () => setState(() => dashboardData = retrieveData()),
+                    reload: () => dashboardData = retrieveData(),
                   ),
                   DashCards(),
                 ],

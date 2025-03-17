@@ -115,16 +115,13 @@ class OccupantCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconWithState(
-                state:
-                    occupant.getIsCompleted()
-                        ? IconState.valid
-                        : IconState.wrong,
+                state: occupant.isCompleted ? IconState.valid : IconState.wrong,
               ),
               Text(
-                occupant.getIsCompleted() ? locale.complete : locale.incomplete,
+                occupant.isCompleted ? locale.complete : locale.incomplete,
                 style: TextStyle(
                   color:
-                      occupant.getIsCompleted()
+                      occupant.isCompleted
                           ? colorScheme.tertiary
                           : colorScheme.error,
                   fontSize: 14,

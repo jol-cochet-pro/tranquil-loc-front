@@ -26,7 +26,7 @@ class Occupant {
     required this.documents,
   });
 
-  bool getIsCompleted() {
+  bool get isCompleted {
     return (email.isNotEmpty &&
         phone.isNotEmpty &&
         documents.values.every((value) => value.isNotEmpty));

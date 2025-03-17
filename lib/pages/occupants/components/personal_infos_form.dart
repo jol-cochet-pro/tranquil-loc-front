@@ -1,5 +1,6 @@
-import 'package:dossier_locataire/components/date_picker.dart';
+import 'package:dossier_locataire/components/date_field.dart';
 import 'package:dossier_locataire/components/dropdown.dart';
+import 'package:dossier_locataire/components/phone_field.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/shared/enums/home_situation.dart';
@@ -9,6 +10,7 @@ import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class PersonalInfoForm extends StatefulWidget {
   final Occupant occupant;
@@ -70,7 +72,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               ),
             ],
           ),
-          CustomDatePicker(
+          CustomDateField(
             label: locale.date_of_birth,
             onChanged:
                 (newValue) =>
@@ -102,23 +104,21 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                 ),
               ),
               Flexible(
-                child: CustomTextField(
+                child: CustomPhoneField(
                   label: locale.phone,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return locale.cant_be_empty(locale.the_phone);
-                    }
-                    if (!value.isEmail()) {
-                      return locale.must_be_well_formatted(locale.the_phone);
+                    if (value != null &&
+                        !PhoneNumber.fromCompleteNumber(
+                          completeNumber: value,
+                        ).isValidNumber()) {
+                      return locale.invalid_phone_number;
                     }
                     return null;
                   },
                   onChanged:
                       (newValue) =>
                           setState(() => widget.occupant.phone = newValue!),
-                  hint: locale.phone_hint,
                   isRequired: false,
-                  type: TextFieldType.phone,
                 ),
               ),
             ],

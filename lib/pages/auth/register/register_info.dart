@@ -1,6 +1,7 @@
 import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/date_picker.dart';
+import 'package:dossier_locataire/components/date_field.dart';
 import 'package:dossier_locataire/components/dropdown.dart';
+import 'package:dossier_locataire/components/phone_field.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
@@ -166,7 +167,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
                   type: TextFieldType.text,
                   errorText: errors["lastname"],
                 ),
-                CustomTextField(
+                CustomPhoneField(
                   label: locale.phone,
                   validator: (value) {
                     if (value == null || value == "") {
@@ -176,12 +177,10 @@ class _RegisterInfosState extends State<RegisterInfos> {
                   },
                   onChanged:
                       (newValue) => setState(() => user.phone = newValue!),
-                  hint: locale.phone_hint,
                   isRequired: true,
-                  type: TextFieldType.phone,
                   errorText: errors["phone"],
                 ),
-                CustomDatePicker(
+                CustomDateField(
                   label: locale.date_of_birth,
                   onChanged:
                       (newValue) => setState(() => user.dateOfBirth = newValue),

@@ -106,6 +106,7 @@
   "go_to_login": "Retour à la connexion",
   "expired_verif_code": "le code de vérification à expiré.",
   "invalid_verif_code": "le code de vérification à déjà été utilisé.",
+  "invalid_phone_number": "le numéro de téléphone n'est pas valide.",
   "user_not_found": "l'utilisateur n'a pas été trouvé.",
   "email_already_used": "L'adresse email est déjà utilisée.",
   "account_deactivated": "Le compte a été désactivé.",
