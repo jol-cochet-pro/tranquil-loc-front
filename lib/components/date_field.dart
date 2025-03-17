@@ -1,9 +1,11 @@
 import 'package:date_format_field/date_format_field.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomDateField extends StatefulWidget {
   final void Function(DateTime) onChanged;
+  final DateTime? initialValue;
   final String? label;
   final bool isRequired;
   final String? errorText;
@@ -12,6 +14,7 @@ class CustomDateField extends StatefulWidget {
     super.key,
     required this.isRequired,
     required this.onChanged,
+    this.initialValue,
     this.label,
     this.errorText,
   });
@@ -21,9 +24,14 @@ class CustomDateField extends StatefulWidget {
 }
 
 class _CustomDateFieldState extends State<CustomDateField> {
-  bool showPassword = false;
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final DateFormat formatter = DateFormat("dd/MM/yyyy");
+    if (widget.initialValue != null) {
+      controller.text = formatter.format(widget.initialValue!);
+    }
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final InputDecoration decoration = InputDecoration(
       hintText: "01/01/1970",
@@ -63,6 +71,7 @@ class _CustomDateFieldState extends State<CustomDateField> {
         Stack(
           children: [
             DateFormatField(
+              controller: controller,
               decoration: decoration,
               onComplete: (newValue) {
                 if (newValue != null) widget.onChanged(newValue);

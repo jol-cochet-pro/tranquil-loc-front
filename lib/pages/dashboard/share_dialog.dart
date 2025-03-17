@@ -167,7 +167,7 @@ class _ShareDialogState extends State<ShareDialog> {
                       ),
                       Flexible(
                         child: CustomDropDown(
-                          defaultValue: ShareDurationPeriod.day,
+                          initialValue: ShareDurationPeriod.day,
                           onSelected:
                               (value) =>
                                   setState(() => share.durationPeriod = value!),

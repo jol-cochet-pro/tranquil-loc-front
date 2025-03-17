@@ -8,6 +8,7 @@ import 'package:dossier_locataire/pages/auth/verify-email/verify_email.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
+import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,12 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AddOccupant.route,
       builder: (_, _) => AddOccupant(),
+      redirect: redirectLoggedInWithEmail,
+    ),
+    GoRoute(
+      path: UpdateOccupant.route,
+      builder:
+          (_, state) => UpdateOccupant(occupantId: state.pathParameters["id"]!),
       redirect: redirectLoggedInWithEmail,
     ),
     // Logged out

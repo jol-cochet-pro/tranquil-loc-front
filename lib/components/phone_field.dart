@@ -2,9 +2,11 @@ import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class CustomPhoneField extends StatefulWidget {
   final void Function(String?) onChanged;
+  final String? initialValue;
   final String? label;
   final bool isRequired;
   final String? errorText;
@@ -13,6 +15,7 @@ class CustomPhoneField extends StatefulWidget {
   const CustomPhoneField({
     super.key,
     required this.isRequired,
+    this.initialValue,
     this.label,
     this.validator,
     required this.onChanged,
@@ -26,6 +29,12 @@ class CustomPhoneField extends StatefulWidget {
 class _CustomPhoneFieldState extends State<CustomPhoneField> {
   @override
   Widget build(BuildContext context) {
+    final PhoneNumber? phoneNumber =
+        widget.initialValue != null
+            ? PhoneNumber.fromCompleteNumber(
+              completeNumber: widget.initialValue!,
+            )
+            : null;
     final AppLocalizations locale = AppLocalizations.of(context)!;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final InputDecoration decoration = InputDecoration(
@@ -64,9 +73,10 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
           ],
         ),
         IntlPhoneField(
+          initialValue: phoneNumber?.number,
           decoration: decoration,
           onChanged: (newValue) => widget.onChanged(newValue.completeNumber),
-          initialCountryCode: "FR",
+          initialCountryCode: phoneNumber?.countryISOCode ?? "FR",
           invalidNumberMessage: locale.invalid_phone_number,
           keyboardType: TextInputType.phone,
         ),

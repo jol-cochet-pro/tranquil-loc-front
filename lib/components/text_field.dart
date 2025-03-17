@@ -7,6 +7,7 @@ enum TextFieldType { text, number, password, currency, date }
 class CustomTextField extends StatefulWidget {
   final TextFieldType type;
   final void Function(String?)? onChanged;
+  final String? initialValue;
   final String? label;
   final String hint;
   final String? helpLabel;
@@ -20,6 +21,7 @@ class CustomTextField extends StatefulWidget {
     required this.hint,
     required this.isRequired,
     required this.type,
+    this.initialValue,
     this.label,
     this.validator,
     this.helpLabel,
@@ -76,6 +78,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         Stack(
           children: [
             TextFormField(
+              initialValue: widget.initialValue,
               obscureText:
                   widget.type == TextFieldType.password && !showPassword,
               enableSuggestions:

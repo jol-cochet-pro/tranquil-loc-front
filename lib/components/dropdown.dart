@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomDropDown<T> extends StatelessWidget {
   final List<DropdownMenuEntry<T>> items;
-  final T? defaultValue;
+  final T? initialValue;
   final String? label;
   final bool isRequired;
   final void Function(T?) onSelected;
@@ -12,9 +12,10 @@ class CustomDropDown<T> extends StatelessWidget {
   const CustomDropDown({
     super.key,
     required this.items,
+
     required this.isRequired,
     required this.onSelected,
-    required this.defaultValue,
+    required this.initialValue,
     this.label,
     this.validator,
   });
@@ -36,7 +37,7 @@ class CustomDropDown<T> extends StatelessWidget {
         ),
         DropdownMenu<T>(
           requestFocusOnTap: false,
-          initialSelection: defaultValue,
+          initialSelection: initialValue,
           dropdownMenuEntries: items,
           onSelected: onSelected,
           menuStyle: const MenuStyle(alignment: Alignment.bottomLeft),

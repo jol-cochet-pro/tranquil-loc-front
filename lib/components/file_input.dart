@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/shared/models/document.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomFileInput extends StatefulWidget {
   final String? label;
-  final List<PlatformFile> files;
+  final List<Document> files;
   final void Function(List<PlatformFile>) onAdd;
   final void Function(PlatformFile) onRemove;
 

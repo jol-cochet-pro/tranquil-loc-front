@@ -50,6 +50,7 @@ class Occupant {
   }
 
   factory Occupant.fromFirestore(Map<String, dynamic>? data) {
+    print(data);
     ProSituation proSituation = ProSituation.unemployed;
     try {
       proSituation = ProSituation.values.byName(data?["proSituation"]);

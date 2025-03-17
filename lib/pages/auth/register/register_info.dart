@@ -198,7 +198,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
                   isRequired: true,
                   onSelected:
                       (newValue) => setState(() => user.type = newValue!),
-                  defaultValue: UserType.other,
+                  initialValue: UserType.other,
                 ),
                 Center(
                   child: Column(
