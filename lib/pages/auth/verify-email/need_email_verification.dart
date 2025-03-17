@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/layout/page-layout.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,7 +30,9 @@ class _NeedEmailVerificationState extends State<NeedEmailVerification> {
     timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
       await FirebaseAuth.instance.currentUser?.reload();
       if (FirebaseAuth.instance.currentUser != null) {
-        context.go("/dashboard");
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          context.go(Dashboard.route);
+        });
       }
     });
   }
@@ -66,7 +70,9 @@ class _NeedEmailVerificationState extends State<NeedEmailVerification> {
               CustomButton(
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
-                  context.go(Login.route);
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    context.go(Login.route);
+                  });
                 },
                 padding: EdgeInsets.all(12),
                 type: ButtonType.primary,

@@ -1,7 +1,7 @@
-import 'package:dossier_locataire/components/icon-button.dart';
+import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/loader.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class DashCard extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'dart:js_interop';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dossier_locataire/shared/enums/home-situation.dart';
-import 'package:dossier_locataire/shared/enums/pro-situation.dart';
+import 'package:dossier_locataire/shared/enums/home_situation.dart';
+import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 
 class Occupant {
   String firstname;

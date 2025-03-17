@@ -1,25 +1,25 @@
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 
-class WarrantorInfo {
+class OccupantInfo {
   final IconData icon;
   final String name;
   final String info;
 
-  const WarrantorInfo({
+  const OccupantInfo({
     required this.icon,
     required this.name,
     required this.info,
   });
 }
 
-class WarrantorInfoCard extends StatelessWidget {
+class OccupantInfoCard extends StatelessWidget {
   final String title;
-  final WarrantorInfo first;
-  final WarrantorInfo second;
+  final OccupantInfo first;
+  final OccupantInfo second;
 
-  const WarrantorInfoCard({
+  const OccupantInfoCard({
     super.key,
     required this.first,
     required this.second,

@@ -1,16 +1,16 @@
 import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/icon-with-state.dart';
+import 'package:dossier_locataire/components/icon_with_state.dart';
 import 'package:dossier_locataire/components/loader.dart';
-import 'package:dossier_locataire/pages/dashboard/components/action-card.dart';
-import 'package:dossier_locataire/pages/dashboard/share-dialog.dart';
-import 'package:dossier_locataire/shared/enums/search-state.dart';
-import 'package:dossier_locataire/shared/models/dashboard-data.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/pages/dashboard/components/action_card.dart';
+import 'package:dossier_locataire/pages/dashboard/share_dialog.dart';
+import 'package:dossier_locataire/shared/enums/search_state.dart';
+import 'package:dossier_locataire/shared/models/user.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CallToAction extends StatelessWidget {
-  final AsyncSnapshot<DashboardData> snapshot;
+  final AsyncSnapshot<User> snapshot;
   final void Function() reload;
 
   const CallToAction({super.key, required this.snapshot, required this.reload});
@@ -63,7 +63,7 @@ class CallToAction extends StatelessWidget {
                 CustomButton(
                   type: ButtonType.success,
                   onPressed: () {
-                    print("Found flat.");
+                    // TODO ADD THIS
                   },
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                   child: Text(locale.found_appartement),

@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/components/icon-with-state.dart';
+import 'package:dossier_locataire/components/icon_with_state.dart';
 import 'package:flutter/material.dart';
 
 class StateStatus {

@@ -1,19 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/layout/page-layout.dart';
-import 'package:dossier_locataire/pages/occupants/components/documents-info-form.dart';
-import 'package:dossier_locataire/pages/occupants/components/personal-infos-form.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/layout/page_layout.dart';
+import 'package:dossier_locataire/pages/occupants/components/documents_info_form.dart';
+import 'package:dossier_locataire/pages/occupants/components/personal_infos_form.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
-import 'package:dossier_locataire/shared/enums/document-type.dart';
-import 'package:dossier_locataire/shared/enums/home-situation.dart';
-import 'package:dossier_locataire/shared/enums/pro-situation.dart';
+import 'package:dossier_locataire/shared/enums/document_type.dart';
+import 'package:dossier_locataire/shared/enums/home_situation.dart';
+import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -72,10 +73,12 @@ class _AddOccupantState extends State<AddOccupant> {
             toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
           )
           .add(occupant);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context.go(Occupants.route);
+      });
     } catch (error) {
-      print(error);
+      // TODO ADD THIS
     }
-    context.go(Occupants.route);
   }
 
   @override

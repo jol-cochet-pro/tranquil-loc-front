@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';

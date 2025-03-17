@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dossier_locataire/components/icon-button.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
+import 'package:dossier_locataire/components/icon_button.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
 import 'package:dossier_locataire/shared/models/share.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,7 +43,7 @@ class _SharesCardState extends State<SharesCard> {
             title: locale.my_shares,
             emptyInfo: locale.no_shares_saved,
             onAdd: () {
-              print("add shares");
+              // TODO ADD THIS
             },
             hasData: snapshot.hasData,
             items: snapshot.data,
@@ -75,7 +75,7 @@ class _SharesCardState extends State<SharesCard> {
                       Text(snapshot.data![index].email, style: p2),
                       CustomIconButton(
                         onPressed: () {
-                          print("id of the share ${snapshot.data![index].id}");
+                          // TODO ADD THIS
                         },
                         icon: Icons.settings_outlined,
                       ),

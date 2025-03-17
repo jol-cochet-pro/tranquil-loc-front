@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dossier_locataire/layout/page-layout.dart';
-import 'package:dossier_locataire/pages/dashboard/call-to-action.dart';
-import 'package:dossier_locataire/pages/dashboard/dash-cards.dart';
-import 'package:dossier_locataire/pages/dashboard/hero-section.dart';
-import 'package:dossier_locataire/shared/models/dashboard-data.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dossier_locataire/layout/page_layout.dart';
+import 'package:dossier_locataire/pages/dashboard/call_to_action.dart';
+import 'package:dossier_locataire/pages/dashboard/dash_cards.dart';
+import 'package:dossier_locataire/pages/dashboard/hero_section.dart';
+import 'package:dossier_locataire/shared/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -17,17 +17,15 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  late Future<DashboardData> dashboardData;
+  late Future<User> dashboardData;
 
-  Future<DashboardData> retrieveData() {
+  Future<User> retrieveData() {
     return FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .withConverter(
-          fromFirestore:
-              (snapshot, _) => DashboardData.fromFirestore(snapshot.data()),
-          toFirestore:
-              (dashboardData, _) => DashboardData.toFirestore(dashboardData),
+          fromFirestore: (snapshot, _) => User.fromFirestore(snapshot.data()),
+          toFirestore: (dashboardData, _) => User.toFirestore(dashboardData),
         )
         .get()
         .then((value) => value.data()!);

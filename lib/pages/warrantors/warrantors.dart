@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/loader.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/layout/page-layout.dart';
-import 'package:dossier_locataire/pages/warrantors/components/warrantor-card.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/layout/page_layout.dart';
+import 'package:dossier_locataire/pages/warrantors/components/warrantor_card.dart';
 import 'package:dossier_locataire/shared/models/warrantor.dart';
-import 'package:dossier_locataire/shared/scroll-controller.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/scroll_controller.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -58,7 +58,7 @@ class _WarrantorsState extends State<Warrantors> {
                 Text(locale.warrantors, style: h1),
                 CustomButton(
                   onPressed: () {
-                    print("add warrantor.");
+                    // TODO ADD THIS
                   },
                   type: ButtonType.primary,
                   padding: EdgeInsets.all(16),

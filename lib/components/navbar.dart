@@ -1,17 +1,29 @@
-import 'package:dossier_locataire/components/nav-button.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
+import 'package:dossier_locataire/components/nav_button.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class Navbar extends StatefulWidget {
   static int selected = 0;
+  static void setSelected(String location) {
+    String path = "/${location.split('/')[1]}";
+    switch (path) {
+      case Warrantors.route:
+        Navbar.selected = 2;
+      case Occupants.route:
+        Navbar.selected = 1;
+      default:
+        Navbar.selected = 0;
+    }
+  }
 
   const Navbar({super.key});
 
@@ -79,24 +91,25 @@ class _NavbarState extends State<Navbar> {
                         label: Text(locale.my_profile, style: p2),
                         icon: Icon(Icons.person_outline, size: 16),
                         onPressed: () {
-                          print("my profile");
+                          // TODO ADD THIS
                         },
                       ),
                       TextButton.icon(
                         label: Text(locale.settings, style: p2),
                         icon: Icon(Icons.settings_outlined, size: 16),
                         onPressed: () {
-                          print("my profile");
+                          // TODO ADD THIS
                         },
                       ),
                       Divider(height: 1, color: colorScheme.outline),
                       TextButton.icon(
                         label: Text(locale.logout, style: p2),
                         icon: Icon(Icons.exit_to_app, size: 16),
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut().then(
-                            (_) => context.go(Login.route),
-                          );
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            context.go(Login.route);
+                          });
                         },
                       ),
                     ],

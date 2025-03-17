@@ -1,37 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dossier_locataire/components/icon-button.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/pages/dashboard/components/dash-card.dart';
-import 'package:dossier_locataire/pages/dashboard/components/dash-state-cell.dart';
-import 'package:dossier_locataire/pages/occupants/add-occupant.dart';
-import 'package:dossier_locataire/shared/models/occupant.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/components/icon_button.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
+import 'package:dossier_locataire/pages/dashboard/components/dash_state_cell.dart';
+import 'package:dossier_locataire/shared/models/warrantor.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class OccupantsCard extends StatefulWidget {
-  const OccupantsCard({super.key});
+class WarrantorsCard extends StatefulWidget {
+  const WarrantorsCard({super.key});
 
   @override
-  State<OccupantsCard> createState() => _OccupantsCardState();
+  State<WarrantorsCard> createState() => _WarrantorsCardState();
 }
 
-class _OccupantsCardState extends State<OccupantsCard> {
-  late Future<List<Occupant>> occupants;
+class _WarrantorsCardState extends State<WarrantorsCard> {
+  late Future<List<Warrantor>> warrantors;
 
   @override
   void initState() {
-    occupants = FirebaseFirestore.instance
+    warrantors = FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection("occupants")
+        .collection("warrantors")
         .withConverter(
           fromFirestore:
-              (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
-          toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
+              (snapshot, _) => Warrantor.fromFirestore(snapshot.data()),
+          toFirestore: (occupant, _) => Warrantor.toFirestore(occupant),
         )
         .get()
         .then((value) => value.docs.map((doc) => doc.data()).toList());
@@ -43,12 +41,14 @@ class _OccupantsCardState extends State<OccupantsCard> {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     final AppLocalizations locale = AppLocalizations.of(context)!;
     return FutureBuilder(
-      future: occupants,
+      future: warrantors,
       builder:
           (context, snapshot) => DashCard(
-            title: locale.future_occupants,
-            emptyInfo: locale.no_future_occupants_saved,
-            onAdd: () => context.go(AddOccupant.route),
+            title: locale.warrantors,
+            emptyInfo: locale.no_warrantors_saved,
+            onAdd: () {
+              // TODO ADD THIS
+            },
             hasData: snapshot.hasData,
             items: snapshot.data,
             itemBuilder:
@@ -117,9 +117,7 @@ class _OccupantsCardState extends State<OccupantsCard> {
                       ),
                       CustomIconButton(
                         onPressed: () {
-                          print(
-                            "id of the occupant: ${snapshot.data![index].firstname}",
-                          );
+                          // TODO ADD THIS
                         },
                         icon: Icons.settings_outlined,
                       ),

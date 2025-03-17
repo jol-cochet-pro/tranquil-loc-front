@@ -1,15 +1,16 @@
 import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/components/text-field.dart';
-import 'package:dossier_locataire/layout/page-layout.dart';
-import 'package:dossier_locataire/pages/auth/forgot-password/forgot-password.dart';
-import 'package:dossier_locataire/pages/auth/register/register-cred.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/components/text_field.dart';
+import 'package:dossier_locataire/layout/page_layout.dart';
+import 'package:dossier_locataire/pages/auth/forgot-password/forgot_password.dart';
+import 'package:dossier_locataire/pages/auth/register/register_cred.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
-import 'package:dossier_locataire/shared/types/form-errors.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:dossier_locataire/shared/types/form_errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,7 +42,9 @@ class _LoginState extends State<Login> {
         email: user.email,
         password: user.password,
       );
-      context.go(Dashboard.route);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context.go(Dashboard.route);
+      });
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case 'user-disabled':

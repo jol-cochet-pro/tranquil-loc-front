@@ -1,14 +1,14 @@
-import 'package:dossier_locataire/pages/auth/forgot-password/forgot-password.dart';
+import 'package:dossier_locataire/components/navbar.dart';
+import 'package:dossier_locataire/pages/auth/forgot-password/forgot_password.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/pages/auth/register/register-cred.dart';
-import 'package:dossier_locataire/pages/auth/register/register-info.dart';
-import 'package:dossier_locataire/pages/auth/verify-email/need-email-verification.dart';
-import 'package:dossier_locataire/pages/auth/verify-email/verify-email.dart';
+import 'package:dossier_locataire/pages/auth/register/register_cred.dart';
+import 'package:dossier_locataire/pages/auth/register/register_info.dart';
+import 'package:dossier_locataire/pages/auth/verify-email/need_email_verification.dart';
+import 'package:dossier_locataire/pages/auth/verify-email/verify_email.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
-import 'package:dossier_locataire/pages/occupants/add-occupant.dart';
+import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
-import 'package:dossier_locataire/shared/observers/go-router-observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -52,8 +52,11 @@ String? redirectFirstLog(BuildContext context, GoRouterState state) {
 }
 
 final GoRouter router = GoRouter(
-  observers: [GoRouterObserver()],
   initialLocation: Login.route,
+  redirect: (context, state) {
+    Navbar.setSelected(state.matchedLocation);
+    return null;
+  },
   routes: [
     GoRoute(path: '/', redirect: (_, _) => Login.route),
     // Logged in with validated email

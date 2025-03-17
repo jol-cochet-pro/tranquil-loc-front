@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/dropdown.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/components/text-field.dart';
-import 'package:dossier_locataire/pages/dashboard/components/share-perm-cell.dart';
-import 'package:dossier_locataire/shared/enums/share-duration-period.dart';
-import 'package:dossier_locataire/shared/enums/share-permission.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/components/text_field.dart';
+import 'package:dossier_locataire/pages/dashboard/components/share_perm_cell.dart';
+import 'package:dossier_locataire/shared/enums/share_duration_period.dart';
+import 'package:dossier_locataire/shared/enums/share_permission.dart';
 import 'package:dossier_locataire/shared/models/share.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
-import 'package:dossier_locataire/shared/types/form-errors.dart';
+import 'package:dossier_locataire/shared/types/form_errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -54,9 +55,11 @@ class _ShareDialogState extends State<ShareDialog> {
             toFirestore: (share, _) => Share.toFirestore(share),
           )
           .add(share);
-      context.pop();
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context.pop();
+      });
     } catch (error) {
-      print(error);
+      // TODO ADD THIS
     }
   }
 

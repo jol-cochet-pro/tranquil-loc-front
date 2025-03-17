@@ -1,12 +1,12 @@
-import 'package:dossier_locataire/components/date-picker.dart';
+import 'package:dossier_locataire/components/date_picker.dart';
 import 'package:dossier_locataire/components/dropdown.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
-import 'package:dossier_locataire/components/text-field.dart';
-import 'package:dossier_locataire/shared/enums/home-situation.dart';
-import 'package:dossier_locataire/shared/enums/pro-situation.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/components/text_field.dart';
+import 'package:dossier_locataire/shared/enums/home_situation.dart';
+import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,7 +27,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       padding: EdgeInsets.all(20),
       radius: Radius.circular(10),
       child: Column(
-        spacing: 24,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("${locale.personal_infos}:", style: h2),

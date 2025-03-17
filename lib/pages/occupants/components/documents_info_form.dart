@@ -1,8 +1,8 @@
-import 'package:dossier_locataire/components/file-input.dart';
-import 'package:dossier_locataire/components/shadow-container.dart';
+import 'package:dossier_locataire/components/file_input.dart';
+import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
-import 'package:dossier_locataire/shared/text-styles.dart';
+import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
