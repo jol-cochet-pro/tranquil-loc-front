@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/dashboard/call_to_action.dart';
 import 'package:dossier_locataire/pages/dashboard/dash_cards.dart';

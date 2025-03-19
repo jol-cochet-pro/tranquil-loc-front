@@ -1,6 +1,4 @@
-import 'package:dossier_locataire/components/file_input.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -36,28 +34,7 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
               child: Wrap(
                 spacing: 24,
                 clipBehavior: Clip.hardEdge,
-                children:
-                    widget.occupant.documents.entries.map((entry) {
-                      return CustomFileInput(
-                        label: DocumentType.values
-                            .byName(entry.key)
-                            .locale(locale),
-                        files: entry.value,
-                        onAdd:
-                            (addFiles) => setState(
-                              () => widget.files.createAddAll(
-                                entry.key,
-                                addFiles,
-                              ),
-                            ),
-                        onRemove:
-                            (removeFile) => setState(
-                              () => entry.value.removeWhere(
-                                (file) => file.bytes == removeFile.bytes,
-                              ),
-                            ),
-                      );
-                    }).toList(),
+                children: [],
               ),
             ),
           ),

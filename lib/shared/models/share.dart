@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/share_duration_period.dart';
 import 'package:dossier_locataire/shared/enums/share_permission.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

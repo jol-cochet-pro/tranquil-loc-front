@@ -85,29 +85,29 @@ class _FileInputState extends State<CustomFileInput> {
           spacing: 4,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children:
-              widget.files
-                  .map(
-                    (file) => Row(
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 4,
-                      children: [
-                        Text(
-                          file.name,
-                          style: TextStyle(color: colorScheme.primary),
-                        ),
-                        GestureDetector(
-                          onTap: () => setState(() => widget.onRemove(file)),
-                          child: Icon(
-                            Icons.delete_outline,
-                            size: 15,
-                            color: colorScheme.primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                  .toList(),
+          children: [],
+          // widget.files
+          //     .map(
+          //       (file) => Row(
+          //         mainAxisSize: MainAxisSize.min,
+          //         spacing: 4,
+          //         children: [
+          //           Text(
+          //             file.name,
+          //             style: TextStyle(color: colorScheme.primary),
+          //           ),
+          //           GestureDetector(
+          //             onTap: () => setState(() => widget.onRemove(file)),
+          //             child: Icon(
+          //               Icons.delete_outline,
+          //               size: 15,
+          //               color: colorScheme.primary,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     )
+          //     .toList(),
         ),
         Column(
           mainAxisSize: MainAxisSize.min,

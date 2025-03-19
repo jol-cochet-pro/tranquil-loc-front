@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
@@ -124,9 +123,7 @@ class _AddOccupantState extends State<AddOccupant> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(child: PersonalInfoForm(occupant: occupant)),
-                  Expanded(
-                    child: DocumentsInfoForm(occupant: occupant, files: files),
-                  ),
+                  Expanded(child: DocumentsInfoForm(occupant: occupant)),
                 ],
               ),
             ),
