@@ -9,6 +9,7 @@ import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:dossier_locataire/shared/enums/home_situation.dart';
 import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,16 +64,7 @@ class _AddOccupantState extends State<AddOccupant> {
           occupant.documents[entry.key]!.add(snapshot.ref.fullPath);
         }
       }
-      FirebaseFirestore.instance
-          .collection("users")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("occupants")
-          .withConverter(
-            fromFirestore:
-                (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
-            toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
-          )
-          .add(occupant);
+      Storage.occupants.add(occupant);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Occupants.route);
       });

@@ -3,6 +3,7 @@ import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
 import 'package:dossier_locataire/shared/models/share.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,16 +21,9 @@ class _SharesCardState extends State<SharesCard> {
 
   @override
   void initState() {
-    shares = FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection("shares")
-        .withConverter(
-          fromFirestore: (snapshot, _) => Share.fromFirestore(snapshot),
-          toFirestore: (occupant, _) => Share.toFirestore(occupant),
-        )
-        .get()
-        .then((value) => value.docs.map((doc) => doc.data()).toList());
+    shares = Storage.shares.get().then(
+      (value) => value.docs.map((doc) => doc.data()).toList(),
+    );
     super.initState();
   }
 

@@ -5,6 +5,7 @@ import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash_state_cell.dart';
 import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,17 +25,9 @@ class _OccupantsCardState extends State<OccupantsCard> {
 
   @override
   void initState() {
-    occupants = FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection("occupants")
-        .withConverter(
-          fromFirestore:
-              (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
-          toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
-        )
-        .get()
-        .then((value) => value.docs.map((doc) => doc.data()).toList());
+    occupants = Storage.occupants.get().then(
+      (value) => value.docs.map((doc) => doc.data()).toList(),
+    );
     super.initState();
   }
 

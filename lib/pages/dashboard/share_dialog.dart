@@ -7,6 +7,7 @@ import 'package:dossier_locataire/pages/dashboard/components/share_perm_cell.dar
 import 'package:dossier_locataire/shared/enums/share_duration_period.dart';
 import 'package:dossier_locataire/shared/enums/share_permission.dart';
 import 'package:dossier_locataire/shared/models/share.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/types/form_errors.dart';
@@ -46,15 +47,7 @@ class _ShareDialogState extends State<ShareDialog> {
       return;
     }
     try {
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("shares")
-          .withConverter(
-            fromFirestore: (snapshot, _) => Share.fromFirestore(snapshot),
-            toFirestore: (share, _) => Share.toFirestore(share),
-          )
-          .add(share);
+      await Storage.shares.add(share);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.pop();
       });

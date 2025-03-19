@@ -4,6 +4,7 @@ import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/warrantors/components/warrantor_card.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/scroll_controller.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
@@ -25,17 +26,9 @@ class _WarrantorsState extends State<Warrantors> {
 
   @override
   void initState() {
-    warrantors = FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection("warrantors")
-        .withConverter(
-          fromFirestore:
-              (snapshot, _) => Warrantor.fromFirestore(snapshot.data()),
-          toFirestore: (warrantor, _) => Warrantor.toFirestore(warrantor),
-        )
-        .get()
-        .then((value) => value.docs.map((doc) => doc.data()).toList());
+    warrantors = Storage.warrantors.get().then(
+      (value) => value.docs.map((doc) => doc.data()).toList(),
+    );
     super.initState();
   }
 

@@ -33,7 +33,7 @@ class Share {
     }
   }
 
-  factory Share.fromFirestore(DocumentSnapshot<Map<String, dynamic>>? data) {
+  factory Share.fromFirestore(Map<String, dynamic>? data) {
     ShareDurationPeriod durationPeriod = ShareDurationPeriod.day;
     try {
       durationPeriod = ShareDurationPeriod.values.byName(
@@ -57,7 +57,7 @@ class Share {
       warrantorPerm = SharePermission.none;
     }
     return Share(
-      id: data?.id ?? "",
+      id: data?["key"] ?? "",
       description: data?["description"] ?? "",
       email: data?["email"] ?? "",
       durationNum: data?["durationNum"] ?? 0,

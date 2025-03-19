@@ -12,6 +12,7 @@ import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/enums/search_state.dart';
 import 'package:dossier_locataire/shared/enums/user_type.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
@@ -49,61 +50,36 @@ class _RegisterInfosState extends State<RegisterInfos> {
     setState(() => errors.clear());
     try {
       var currentUser = FirebaseAuth.instance.currentUser!;
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(currentUser.uid)
-          .withConverter(
-            fromFirestore: (snapshot, _) => User.fromFirestore(snapshot.data()),
-            toFirestore: (user, _) => User.toFirestore(user),
-          )
-          .set(user);
+      await Storage.user(currentUser.uid).set(user);
       if (user.type == UserType.occupant) {
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection("occupants")
-            .withConverter(
-              fromFirestore:
-                  (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
-              toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
-            )
-            .add(
-              Occupant(
-                firstname: user.firstname,
-                lastname: user.lastname,
-                dateOfBirth: user.dateOfBirth,
-                income: 0,
-                proSituation: ProSituation.other,
-                homeSituation: HomeSituation.other,
-                email: currentUser.email!,
-                phone: user.phone,
-                documents: {},
-              ),
-            );
+        await Storage.occupants.add(
+          Occupant(
+            firstname: user.firstname,
+            lastname: user.lastname,
+            dateOfBirth: user.dateOfBirth,
+            income: 0,
+            proSituation: ProSituation.other,
+            homeSituation: HomeSituation.other,
+            email: currentUser.email!,
+            phone: user.phone,
+            documents: {},
+          ),
+        );
       }
       if (user.type == UserType.warrantor) {
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection("warrantors")
-            .withConverter(
-              fromFirestore:
-                  (snapshot, _) => Warrantor.fromFirestore(snapshot.data()),
-              toFirestore: (warrantor, _) => Warrantor.toFirestore(warrantor),
-            )
-            .add(
-              Warrantor(
-                firstname: user.firstname,
-                lastname: user.lastname,
-                dateOfBirth: user.dateOfBirth,
-                income: 0,
-                proSituation: ProSituation.other,
-                homeSituation: HomeSituation.other,
-                email: currentUser.email!,
-                phone: user.phone,
-                documents: {},
-              ),
-            );
+        await Storage.warrantors.add(
+          Warrantor(
+            firstname: user.firstname,
+            lastname: user.lastname,
+            dateOfBirth: user.dateOfBirth,
+            income: 0,
+            proSituation: ProSituation.other,
+            homeSituation: HomeSituation.other,
+            email: currentUser.email!,
+            phone: user.phone,
+            documents: {},
+          ),
+        );
       }
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Dashboard.route);

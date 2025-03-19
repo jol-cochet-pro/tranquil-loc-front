@@ -8,6 +8,7 @@ import 'package:dossier_locataire/pages/occupants/components/personal_infos_form
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,18 +39,9 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
 
   @override
   void initState() {
-    occupant = FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection("occupants")
-        .doc(widget.occupantId)
-        .withConverter(
-          fromFirestore:
-              (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
-          toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
-        )
-        .get()
-        .then((value) => value.data()!);
+    occupant = Storage.occupant(
+      widget.occupantId,
+    ).get().then((value) => value.data()!);
     super.initState();
   }
 

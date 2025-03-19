@@ -3,6 +3,7 @@ import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/dashboard/call_to_action.dart';
 import 'package:dossier_locataire/pages/dashboard/dash_cards.dart';
 import 'package:dossier_locataire/pages/dashboard/hero_section.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:flutter/material.dart';
@@ -20,15 +21,9 @@ class _DashboardState extends State<Dashboard> {
   late Future<User> dashboardData;
 
   Future<User> retrieveData() {
-    return FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .withConverter(
-          fromFirestore: (snapshot, _) => User.fromFirestore(snapshot.data()),
-          toFirestore: (dashboardData, _) => User.toFirestore(dashboardData),
-        )
-        .get()
-        .then((value) => value.data()!);
+    return Storage.user(
+      FirebaseAuth.instance.currentUser!.uid,
+    ).get().then((value) => value.data()!);
   }
 
   @override
