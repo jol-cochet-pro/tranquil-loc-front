@@ -49,8 +49,21 @@ class Occupant {
     }
   }
 
+  static Occupant get defaultOccupant {
+    return Occupant(
+      firstname: "",
+      lastname: "",
+      dateOfBirth: DateTime.now(),
+      income: 0,
+      proSituation: ProSituation.other,
+      homeSituation: HomeSituation.tenant,
+      email: "",
+      phone: "",
+      documents: {},
+    );
+  }
+
   factory Occupant.fromFirestore(Map<String, dynamic>? data) {
-    print(data);
     ProSituation proSituation = ProSituation.unemployed;
     try {
       proSituation = ProSituation.values.byName(data?["proSituation"]);

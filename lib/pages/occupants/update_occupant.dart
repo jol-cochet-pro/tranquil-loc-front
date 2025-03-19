@@ -5,11 +5,9 @@ import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/occupants/components/documents_info_form.dart';
 import 'package:dossier_locataire/pages/occupants/components/personal_infos_form.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
-import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -27,12 +25,6 @@ class UpdateOccupant extends StatefulWidget {
 
 class _UpdateOccupantState extends State<UpdateOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Map<String, List<PlatformFile>> files = {
-    DocumentType.identityDocuments.str: [],
-    DocumentType.proofOfAddress.str: [],
-    DocumentType.areCertificate.str: [],
-    DocumentType.schoolEnrollmentCertificate.str: [],
-  };
   late Future<Occupant> occupant;
 
   @override
