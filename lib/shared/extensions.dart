@@ -1,12 +1,12 @@
-extension EmailValidator on String {
+import 'package:analyzer_plugin/utilities/pair.dart';
+
+extension StringExtension on String {
   bool isEmail() {
     return RegExp(
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
     ).hasMatch(this);
   }
-}
 
-extension PasswordValidator on String {
   bool isStrongPassword() {
     return RegExp(
       r'^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.;:]){1,}).{8,}$',
@@ -14,7 +14,9 @@ extension PasswordValidator on String {
   }
 }
 
-extension CreateAddAll on Map {
+extension PasswordValidator on String {}
+
+extension MapExtension on Map {
   void createAddAll<T>(String key, Iterable<T> values) {
     if (this[key] == null) {
       this[key] = values;
@@ -29,5 +31,11 @@ extension CreateAddAll on Map {
     } else {
       this[key]!.add(values);
     }
+  }
+}
+
+extension MapEntryExtension<T, K> on MapEntry<T, K> {
+  Pair<T, K> toPair() {
+    return Pair(key, value);
   }
 }

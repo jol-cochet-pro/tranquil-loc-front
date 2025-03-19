@@ -14,6 +14,7 @@ enum DocumentType {
   employerCertificate,
   registrationSirene,
   financialStatement,
+  other,
 }
 
 extension DocumentTypeExtension on DocumentType {
@@ -45,6 +46,8 @@ extension DocumentTypeExtension on DocumentType {
         return "registrationSirene";
       case DocumentType.financialStatement:
         return "financialStatement";
+      case DocumentType.other:
+        return "other";
     }
   }
 
@@ -76,6 +79,8 @@ extension DocumentTypeExtension on DocumentType {
         return locale.registrationSirene;
       case DocumentType.financialStatement:
         return locale.financialStatement;
+      case DocumentType.other:
+        return locale.other;
     }
   }
 }

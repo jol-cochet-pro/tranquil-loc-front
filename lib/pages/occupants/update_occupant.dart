@@ -1,3 +1,5 @@
+import 'package:dossier_locataire/api/file_api.dart';
+import 'package:dossier_locataire/api/occupant_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
@@ -5,10 +7,13 @@ import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/occupants/components/documents_info_form.dart';
 import 'package:dossier_locataire/pages/occupants/components/personal_infos_form.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
+import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,6 +30,8 @@ class UpdateOccupant extends StatefulWidget {
 
 class _UpdateOccupantState extends State<UpdateOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final Map<String, List<PlatformFile>> newDocuments = {};
+  final Map<String, List<String>> rmDocuments = {};
   late Future<Occupant> occupant;
 
   @override
@@ -35,39 +42,25 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
     super.initState();
   }
 
-  // void submit(AppLocalizations locale) async {
-  //   try {
-  //     Reference storageRef = FirebaseStorage.instance.ref();
-  //     String userUid = FirebaseAuth.instance.currentUser!.uid;
-  //     for (final entry in files.entries) {
-  //       occupant.documents[entry.key] = [];
-  //       for (var i = 0; i < entry.value.length; i++) {
-  //         if (entry.value[i].bytes == null) {
-  //           continue;
-  //         }
-  //         TaskSnapshot snapshot = await storageRef
-  //             .child("$userUid/${entry.key}$i.${entry.value[i].extension}")
-  //             .putData(entry.value[i].bytes!);
-  //         occupant.documents[entry.key]!.add(snapshot.ref.fullPath);
-  //       }
-  //     }
-  //     FirebaseFirestore.instance
-  //         .collection("users")
-  //         .doc(FirebaseAuth.instance.currentUser!.uid)
-  //         .collection("occupants")
-  //         .withConverter(
-  //           fromFirestore:
-  //               (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
-  //           toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
-  //         )
-  //         .add(occupant);
-  //     SchedulerBinding.instance.addPostFrameCallback((_) {
-  //       context.go(Occupants.route);
-  //     });
-  //   } catch (error) {
-  //     // TODO ADD THIS
-  //   }
-  // }
+  void submit(AppLocalizations locale) async {
+    Occupant loadedOccupant = await occupant;
+    try {
+      for (final document in rmDocuments.entries) {
+        await FileApi.remove(document.toPair());
+      }
+      for (final document in newDocuments.entries) {
+        loadedOccupant.documents[document.key] = await FileApi.add(
+          document.toPair(),
+        );
+      }
+      await OccupantApi.update(widget.occupantId, loadedOccupant);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context.go(Occupants.route);
+      });
+    } catch (error) {
+      // TODO ADD THIS
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +92,7 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
                     CustomButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          // submit(locale);
+                          submit(locale);
                         }
                       },
                       type: ButtonType.success,
@@ -127,11 +120,14 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
                                 Expanded(
                                   child: PersonalInfoForm(
                                     occupant: snapshot.data!,
+                                    onSituationUpdate: (value) {},
                                   ),
                                 ),
                                 Expanded(
                                   child: DocumentsInfoForm(
                                     occupant: snapshot.data!,
+                                    newDocuments: newDocuments,
+                                    rmDocuments: rmDocuments,
                                   ),
                                 ),
                               ],

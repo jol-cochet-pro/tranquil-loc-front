@@ -14,8 +14,13 @@ import 'package:intl_phone_field/phone_number.dart';
 
 class PersonalInfoForm extends StatefulWidget {
   final Occupant occupant;
+  final void Function(ProSituation) onSituationUpdate;
 
-  const PersonalInfoForm({super.key, required this.occupant});
+  const PersonalInfoForm({
+    super.key,
+    required this.occupant,
+    required this.onSituationUpdate,
+  });
 
   @override
   State<PersonalInfoForm> createState() => _PersonalInfoFormState();
@@ -144,9 +149,10 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           CustomDropDown(
             label: locale.pro_situation,
             initialValue: widget.occupant.proSituation,
-            onSelected:
-                (value) =>
-                    setState(() => widget.occupant.proSituation = value!),
+            onSelected: (value) {
+              widget.onSituationUpdate(value!);
+              setState(() => widget.occupant.proSituation = value);
+            },
             items:
                 ProSituation.values.map((el) {
                   return DropdownMenuEntry(value: el, label: el.locale(locale));
