@@ -2,10 +2,12 @@ import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/icon_with_state.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/occupants/components/occupant_info_card.dart';
+import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
 import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -42,7 +44,7 @@ class OccupantCard extends StatelessWidget {
               ),
               CustomIconButton(
                 onPressed: () {
-                  // TODO ADD THIS
+                  context.go(UpdateOccupant.routeId(occupant.id));
                 },
                 icon: Icons.settings_outlined,
               ),

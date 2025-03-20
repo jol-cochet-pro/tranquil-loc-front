@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/shared/models/file.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -5,11 +6,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomFileInput extends StatefulWidget {
   final String? label;
-  final List<String> initialFiles;
+  final List<File> initialFiles;
   final List<PlatformFile> files;
   final void Function(List<PlatformFile>) onAdd;
   final void Function(PlatformFile) onRemove;
-  final void Function(String) onInitialRemove;
+  final void Function(File) onInitialRemove;
 
   const CustomFileInput({
     super.key,
@@ -27,6 +28,7 @@ class CustomFileInput extends StatefulWidget {
 
 class _FileInputState extends State<CustomFileInput> {
   final List<String> errors = [];
+  final List<File> removed = [];
   Future<void> pickFiles(AppLocalizations locale) async {
     setState(() => errors.clear());
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -89,23 +91,35 @@ class _FileInputState extends State<CustomFileInput> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ...widget.initialFiles.map(
-              (file) => Row(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 4,
-                children: [
-                  Text(file, style: TextStyle(color: colorScheme.primary)),
-                  GestureDetector(
-                    onTap: () => setState(() => widget.onInitialRemove(file)),
-                    child: Icon(
-                      Icons.delete_outline,
-                      size: 15,
-                      color: colorScheme.primary,
-                    ),
+            ...widget.initialFiles
+                .where(
+                  (file) =>
+                      !removed.map((file) => file.name).contains(file.name),
+                )
+                .map(
+                  (file) => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 4,
+                    children: [
+                      Text(
+                        file.name,
+                        style: TextStyle(color: colorScheme.primary),
+                      ),
+                      GestureDetector(
+                        onTap:
+                            () => setState(() {
+                              removed.add(file);
+                              widget.onInitialRemove(file);
+                            }),
+                        child: Icon(
+                          Icons.delete_outline,
+                          size: 15,
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
             ...widget.files.map(
               (file) => Row(
                 mainAxisSize: MainAxisSize.min,

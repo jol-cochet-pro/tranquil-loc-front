@@ -53,6 +53,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
       if (user.type == UserType.occupant) {
         await Storage.occupants.add(
           Occupant(
+            id: "",
             firstname: user.firstname,
             lastname: user.lastname,
             dateOfBirth: user.dateOfBirth,

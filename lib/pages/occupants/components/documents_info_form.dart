@@ -2,6 +2,7 @@ import 'package:dossier_locataire/components/file_input.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
+import 'package:dossier_locataire/shared/models/file.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
@@ -11,13 +12,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DocumentsInfoForm extends StatefulWidget {
   final Occupant occupant;
   final Map<String, List<PlatformFile>> newDocuments;
-  final Map<String, List<String>>? rmDocuments;
+  final Map<String, List<File>>? rmDocuments;
 
   const DocumentsInfoForm({
     super.key,
     required this.occupant,
     required this.newDocuments,
-    this.rmDocuments,
+    required this.rmDocuments,
   });
 
   @override

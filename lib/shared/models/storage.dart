@@ -12,8 +12,7 @@ class Storage {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("occupants")
         .withConverter(
-          fromFirestore:
-              (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
+          fromFirestore: (snapshot, _) => Occupant.fromFirestore(snapshot),
           toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
         );
   }
@@ -25,8 +24,7 @@ class Storage {
         .collection("occupants")
         .doc(id)
         .withConverter(
-          fromFirestore:
-              (snapshot, _) => Occupant.fromFirestore(snapshot.data()),
+          fromFirestore: (snapshot, _) => Occupant.fromFirestore(snapshot),
           toFirestore: (occupant, _) => Occupant.toFirestore(occupant),
         );
   }

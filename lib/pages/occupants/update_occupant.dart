@@ -7,7 +7,9 @@ import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/occupants/components/documents_info_form.dart';
 import 'package:dossier_locataire/pages/occupants/components/personal_infos_form.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
+import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
+import 'package:dossier_locataire/shared/models/file.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
@@ -23,6 +25,7 @@ class UpdateOccupant extends StatefulWidget {
   const UpdateOccupant({super.key, required this.occupantId});
 
   static const route = "/occupants/update/:id";
+  static String routeId(String id) => "/occupants/update/$id";
 
   @override
   State<UpdateOccupant> createState() => _UpdateOccupantState();
@@ -30,8 +33,8 @@ class UpdateOccupant extends StatefulWidget {
 
 class _UpdateOccupantState extends State<UpdateOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Map<String, List<PlatformFile>> newDocuments = {};
-  final Map<String, List<String>> rmDocuments = {};
+  Map<String, List<PlatformFile>> newDocuments = {};
+  final Map<String, List<File>> rmDocuments = {};
   late Future<Occupant> occupant;
 
   @override
@@ -120,7 +123,12 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
                                 Expanded(
                                   child: PersonalInfoForm(
                                     occupant: snapshot.data!,
-                                    onSituationUpdate: (value) {},
+                                    onSituationUpdate:
+                                        (situation) => setState(
+                                          () =>
+                                              newDocuments =
+                                                  situation.documents,
+                                        ),
                                   ),
                                 ),
                                 Expanded(

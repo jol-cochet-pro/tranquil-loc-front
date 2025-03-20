@@ -2,8 +2,10 @@ import 'dart:js_interop';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/home_situation.dart';
 import 'package:dossier_locataire/shared/enums/pro_situation.dart';
+import 'package:dossier_locataire/shared/models/file.dart';
 
 class Occupant {
+  String id;
   String firstname;
   String lastname;
   DateTime dateOfBirth;
@@ -12,9 +14,10 @@ class Occupant {
   HomeSituation homeSituation;
   String email;
   String phone;
-  Map<String, List<String>> documents;
+  Map<String, List<File>> documents;
 
   Occupant({
+    required this.id,
     required this.firstname,
     required this.lastname,
     required this.dateOfBirth,
@@ -51,6 +54,7 @@ class Occupant {
 
   static Occupant get defaultOccupant {
     return Occupant(
+      id: "",
       firstname: "",
       lastname: "",
       dateOfBirth: DateTime.now(),
@@ -63,33 +67,40 @@ class Occupant {
     );
   }
 
-  factory Occupant.fromFirestore(Map<String, dynamic>? data) {
+  factory Occupant.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+  ) {
+    Map<String, dynamic>? data = snapshot.data();
+    if (data == null) return Occupant.defaultOccupant;
     ProSituation proSituation = ProSituation.unemployed;
     try {
-      proSituation = ProSituation.values.byName(data?["proSituation"]);
+      proSituation = ProSituation.values.byName(data["proSituation"]);
     } catch (_) {
       proSituation = ProSituation.unemployed;
     }
     HomeSituation homeSituation = HomeSituation.tenant;
     try {
-      homeSituation = HomeSituation.values.byName(data?["proSituation"]);
+      homeSituation = HomeSituation.values.byName(data["proSituation"]);
     } catch (_) {
       homeSituation = HomeSituation.tenant;
     }
-    Map<String, List<String>> documents = {};
-    for (final entry in data?["documents"].entries) {
-      documents[entry.key] =
+    Map<String, List<File>> documents = {};
+    for (final entry in data["documents"].entries) {
+      List<String> refs =
           (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
+      documents[entry.key] =
+          refs.map((ref) => File(name: ref.split('/').last, url: ref)).toList();
     }
     return Occupant(
-      firstname: data?["firstname"] ?? "",
-      lastname: data?["lastname"] ?? "",
-      dateOfBirth: data?["dateOfBirth"].toDate(),
-      income: data?["income"] ?? 0,
+      id: snapshot.id,
+      firstname: data["firstname"] ?? "",
+      lastname: data["lastname"] ?? "",
+      dateOfBirth: data["dateOfBirth"].toDate(),
+      income: data["income"] ?? 0,
       proSituation: proSituation,
       homeSituation: homeSituation,
-      email: data?["email"] ?? "",
-      phone: data?["phone"] ?? "",
+      email: data["email"] ?? "",
+      phone: data["phone"] ?? "",
       documents: documents,
     );
   }
@@ -104,7 +115,9 @@ class Occupant {
       "homeSituation": occupant.homeSituation.str,
       "email": occupant.email,
       "phone": occupant.phone,
-      "documents": occupant.documents,
+      "documents": occupant.documents.map(
+        (key, values) => MapEntry(key, values.map((value) => value.url)),
+      ),
     };
   }
 }
