@@ -7,21 +7,31 @@ import 'package:analyzer_plugin/utilities/pair.dart';
 class FileApi {
   static Future<List<File>> add(
     Pair<String, List<PlatformFile>> document,
+    String folder,
+    int startIndex,
   ) async {
     String userUid = FirebaseAuth.instance.currentUser!.uid;
     List<File> refs = [];
     for (final (index, file) in document.last.indexed) {
+      String filename =
+          "${document.first}${startIndex + index}.${file.extension}";
       TaskSnapshot snapshot = await FirebaseStorage.instance
-          .ref("$userUid/${document.first}$index.${file.extension}")
+          .ref("$userUid/$folder/$filename")
           .putData(file.bytes!);
+      String bucket = "gs://${FirebaseStorage.instance.bucket}";
       refs.add(
         File(
           name: snapshot.ref.fullPath.split('/').last,
-          url: snapshot.ref.fullPath,
+          url: "$bucket/${snapshot.ref.fullPath}",
         ),
       );
     }
     return refs;
+  }
+
+  static Future<ListResult> getAll(String folder) async {
+    String userUid = FirebaseAuth.instance.currentUser!.uid;
+    return FirebaseStorage.instance.ref("$userUid/$folder").listAll();
   }
 
   static Future<void> remove(Pair<String, List<File>> document) async {

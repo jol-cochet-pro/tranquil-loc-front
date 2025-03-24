@@ -71,6 +71,7 @@ class _CustomDateFieldState extends State<CustomDateField> {
         Stack(
           children: [
             DateFormatField(
+              initialDate: widget.initialValue,
               controller: controller,
               decoration: decoration,
               onComplete: (newValue) {

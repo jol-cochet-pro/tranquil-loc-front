@@ -25,11 +25,11 @@ extension MapExtension on Map {
     }
   }
 
-  void createAdd<T>(String key, T values) {
+  void createAdd<T>(String key, T value) {
     if (this[key] == null) {
-      this[key] = values;
+      this[key] = [value];
     } else {
-      this[key]!.add(values);
+      this[key]!.add(value);
     }
   }
 }

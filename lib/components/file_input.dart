@@ -3,6 +3,7 @@ import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomFileInput extends StatefulWidget {
   final String? label;
@@ -101,9 +102,16 @@ class _FileInputState extends State<CustomFileInput> {
                     mainAxisSize: MainAxisSize.min,
                     spacing: 4,
                     children: [
-                      Text(
-                        file.name,
-                        style: TextStyle(color: colorScheme.primary),
+                      GestureDetector(
+                        onTap: () async => context.go(file.url),
+                        child: Text(
+                          file.name,
+                          style: TextStyle(
+                            color: colorScheme.primary,
+                            decoration: TextDecoration.underline,
+                            decorationColor: colorScheme.primary,
+                          ),
+                        ),
                       ),
                       GestureDetector(
                         onTap:

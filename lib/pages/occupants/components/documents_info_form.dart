@@ -55,14 +55,21 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
                         initialFiles:
                             widget.occupant.documents[entry.key] ?? [],
                         files: entry.value,
-                        onAdd: (file) => entry.value.addAll(file),
+                        onAdd:
+                            (file) => setState(() => entry.value.addAll(file)),
                         onRemove:
-                            (file) => entry.value.removeWhere(
-                              (wfile) => wfile.name == file.name,
+                            (file) => setState(
+                              () => entry.value.removeWhere(
+                                (wfile) => wfile.bytes == file.bytes,
+                              ),
                             ),
                         onInitialRemove:
-                            (file) =>
-                                widget.rmDocuments?.createAdd(entry.key, file),
+                            (file) => setState(() {
+                              widget.rmDocuments?.createAdd(entry.key, file);
+                              widget.occupant.documents[entry.key]!.removeWhere(
+                                (wfile) => wfile.name == file.url,
+                              );
+                            }),
                       );
                     }).toList(),
               ),

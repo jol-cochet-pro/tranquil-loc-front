@@ -11,9 +11,9 @@ import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/models/file.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
-import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -33,27 +33,41 @@ class UpdateOccupant extends StatefulWidget {
 
 class _UpdateOccupantState extends State<UpdateOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<String, List<PlatformFile>> newDocuments = {};
+  Map<String, List<PlatformFile>> newDocuments = ProSituation.other.documents;
   final Map<String, List<File>> rmDocuments = {};
-  late Future<Occupant> occupant;
+  late Future<Occupant?> occupant;
 
   @override
   void initState() {
-    occupant = Storage.occupant(
-      widget.occupantId,
-    ).get().then((value) => value.data()!);
+    occupant = OccupantApi.get(widget.occupantId);
     super.initState();
   }
 
   void submit(AppLocalizations locale) async {
-    Occupant loadedOccupant = await occupant;
+    Occupant? loadedOccupant = await occupant;
+    if (loadedOccupant == null) return;
     try {
       for (final document in rmDocuments.entries) {
+        loadedOccupant.documents[document.key]!.removeWhere(
+          (wfile) => document.value.map((file) => file.url).contains(wfile.url),
+        );
         await FileApi.remove(document.toPair());
       }
+      ListResult oldDocuments = await FileApi.getAll(
+        "occupants/${widget.occupantId}",
+      );
       for (final document in newDocuments.entries) {
-        loadedOccupant.documents[document.key] = await FileApi.add(
-          document.toPair(),
+        int startIndex =
+            oldDocuments.items
+                .where((item) => item.name.startsWith(document.key))
+                .length;
+        loadedOccupant.documents.createAddAll(
+          document.key,
+          await FileApi.add(
+            document.toPair(),
+            "occupants/${widget.occupantId}",
+            startIndex,
+          ),
         );
       }
       await OccupantApi.update(widget.occupantId, loadedOccupant);
@@ -110,38 +124,41 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
           Flexible(
             child: FutureBuilder(
               future: occupant,
-              builder:
-                  (context, snapshot) => Form(
-                    key: formKey,
-                    child:
-                        snapshot.hasData
-                            ? Row(
-                              spacing: 24,
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: PersonalInfoForm(
-                                    occupant: snapshot.data!,
-                                    onSituationUpdate:
-                                        (situation) => setState(
-                                          () =>
-                                              newDocuments =
-                                                  situation.documents,
-                                        ),
-                                  ),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  newDocuments = snapshot.data!.proSituation.documents;
+                }
+                return Form(
+                  key: formKey,
+                  child:
+                      snapshot.hasData
+                          ? Row(
+                            spacing: 24,
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: PersonalInfoForm(
+                                  occupant: snapshot.data!,
+                                  onSituationUpdate:
+                                      (situation) => setState(
+                                        () =>
+                                            newDocuments = situation.documents,
+                                      ),
                                 ),
-                                Expanded(
-                                  child: DocumentsInfoForm(
-                                    occupant: snapshot.data!,
-                                    newDocuments: newDocuments,
-                                    rmDocuments: rmDocuments,
-                                  ),
+                              ),
+                              Expanded(
+                                child: DocumentsInfoForm(
+                                  occupant: snapshot.data!,
+                                  newDocuments: newDocuments,
+                                  rmDocuments: rmDocuments,
                                 ),
-                              ],
-                            )
-                            : Loader(),
-                  ),
+                              ),
+                            ],
+                          )
+                          : Loader(),
+                );
+              },
             ),
           ),
         ],

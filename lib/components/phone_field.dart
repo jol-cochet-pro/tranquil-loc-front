@@ -30,7 +30,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
   @override
   Widget build(BuildContext context) {
     final PhoneNumber? phoneNumber =
-        widget.initialValue != null
+        widget.initialValue != null && widget.initialValue!.isNotEmpty
             ? PhoneNumber.fromCompleteNumber(
               completeNumber: widget.initialValue!,
             )
@@ -73,7 +73,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
           ],
         ),
         IntlPhoneField(
-          initialValue: phoneNumber?.number,
+          initialValue: phoneNumber?.completeNumber,
           decoration: decoration,
           onChanged: (newValue) => widget.onChanged(newValue.completeNumber),
           initialCountryCode: phoneNumber?.countryISOCode ?? "FR",

@@ -32,10 +32,15 @@ class _AddOccupantState extends State<AddOccupant> {
 
   void submit(AppLocalizations locale) async {
     try {
+      String id = await OccupantApi.add(occupant);
       for (final document in documents.entries) {
-        occupant.documents[document.key] = await FileApi.add(document.toPair());
+        occupant.documents[document.key] = await FileApi.add(
+          document.toPair(),
+          "occupants/$id",
+          0,
+        );
       }
-      await OccupantApi.add(occupant);
+      await OccupantApi.update(id, occupant);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Occupants.route);
       });
@@ -74,7 +79,7 @@ class _AddOccupantState extends State<AddOccupant> {
                     CustomButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          // submit(locale);
+                          submit(locale);
                         }
                       },
                       type: ButtonType.success,
@@ -106,6 +111,7 @@ class _AddOccupantState extends State<AddOccupant> {
                     child: DocumentsInfoForm(
                       occupant: occupant,
                       newDocuments: documents,
+                      rmDocuments: {},
                     ),
                   ),
                 ],

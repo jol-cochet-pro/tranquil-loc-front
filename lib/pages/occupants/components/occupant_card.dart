@@ -3,6 +3,7 @@ import 'package:dossier_locataire/components/icon_with_state.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/occupants/components/occupant_info_card.dart';
 import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
+import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
@@ -101,7 +102,12 @@ class OccupantCard extends StatelessWidget {
                                             ? IconState.valid
                                             : IconState.wrong,
                                   ),
-                                  Text(entry.key, style: p2),
+                                  Text(
+                                    DocumentType.values
+                                        .byName(entry.key)
+                                        .locale(locale),
+                                    style: p2,
+                                  ),
                                 ],
                               );
                             }).toList(),
