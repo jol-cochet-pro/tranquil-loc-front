@@ -37,7 +37,6 @@ class _AddOccupantState extends State<AddOccupant> {
         occupant.documents[document.key] = await FileApi.add(
           document.toPair(),
           "occupants/$id",
-          0,
         );
       }
       await OccupantApi.update(id, occupant);

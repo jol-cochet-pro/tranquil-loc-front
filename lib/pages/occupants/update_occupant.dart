@@ -13,7 +13,6 @@ import 'package:dossier_locataire/shared/models/file.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -36,6 +35,7 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
   Map<String, List<PlatformFile>> newDocuments = ProSituation.other.documents;
   final Map<String, List<File>> rmDocuments = {};
   late Future<Occupant?> occupant;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -47,28 +47,25 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
     Occupant? loadedOccupant = await occupant;
     if (loadedOccupant == null) return;
     try {
+      setState(() => isLoading = true);
       for (final document in rmDocuments.entries) {
+        await FileApi.remove(document.toPair());
         loadedOccupant.documents[document.key]!.removeWhere(
           (wfile) => document.value.map((file) => file.url).contains(wfile.url),
         );
-        await FileApi.remove(document.toPair());
       }
-      ListResult oldDocuments = await FileApi.getAll(
-        "occupants/${widget.occupantId}",
-      );
+      for (final document in Map.of(loadedOccupant.documents).entries) {
+        if (!loadedOccupant.proSituation.documents.containsKey(document.key)) {
+          await FileApi.remove(document.toPair());
+          loadedOccupant.documents.remove(document.key);
+        }
+      }
       for (final document in newDocuments.entries) {
-        int startIndex =
-            oldDocuments.items
-                .where((item) => item.name.startsWith(document.key))
-                .length;
-        loadedOccupant.documents.createAddAll(
-          document.key,
-          await FileApi.add(
-            document.toPair(),
-            "occupants/${widget.occupantId}",
-            startIndex,
-          ),
+        List<File> uploadedFiles = await FileApi.add(
+          document.toPair(),
+          "occupants/${widget.occupantId}",
         );
+        loadedOccupant.documents.createAddAll(document.key, uploadedFiles);
       }
       await OccupantApi.update(widget.occupantId, loadedOccupant);
       SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -96,28 +93,30 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(locale.update_future_occupant, style: h1),
-                Row(
-                  spacing: 8,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CustomButton(
-                      onPressed: () => context.go(Occupants.route),
-                      type: ButtonType.secondary,
-                      padding: EdgeInsets.all(16),
-                      child: Text(locale.canceled),
-                    ),
-                    CustomButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          submit(locale);
-                        }
-                      },
-                      type: ButtonType.success,
-                      padding: EdgeInsets.all(16),
-                      child: Text(locale.save),
-                    ),
-                  ],
-                ),
+                !isLoading
+                    ? Row(
+                      spacing: 8,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CustomButton(
+                          onPressed: () => context.go(Occupants.route),
+                          type: ButtonType.secondary,
+                          padding: EdgeInsets.all(16),
+                          child: Text(locale.canceled),
+                        ),
+                        CustomButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              submit(locale);
+                            }
+                          },
+                          type: ButtonType.success,
+                          padding: EdgeInsets.all(16),
+                          child: Text(locale.save),
+                        ),
+                      ],
+                    )
+                    : Loader(showImediately: true),
               ],
             ),
           ),

@@ -55,6 +55,7 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
                         initialFiles:
                             widget.occupant.documents[entry.key] ?? [],
                         files: entry.value,
+                        onDownload: (file) => file.download(),
                         onAdd:
                             (file) => setState(() => entry.value.addAll(file)),
                         onRemove:
@@ -66,9 +67,6 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
                         onInitialRemove:
                             (file) => setState(() {
                               widget.rmDocuments?.createAdd(entry.key, file);
-                              widget.occupant.documents[entry.key]!.removeWhere(
-                                (wfile) => wfile.name == file.url,
-                              );
                             }),
                       );
                     }).toList(),

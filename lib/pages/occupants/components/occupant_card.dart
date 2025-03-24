@@ -89,35 +89,36 @@ class OccupantCard extends StatelessWidget {
                     child: ShadowContainer(
                       padding: EdgeInsets.all(10),
                       radius: Radius.circular(10),
-                      child: Wrap(
-                        runSpacing: 4,
-                        children:
-                            occupant.documents.entries.map((entry) {
-                              return Row(
-                                spacing: 4,
-                                children: [
-                                  IconWithState(
-                                    state:
-                                        entry.value.isNotEmpty
-                                            ? IconState.valid
-                                            : IconState.wrong,
-                                  ),
-                                  Text(
-                                    DocumentType.values
-                                        .byName(entry.key)
-                                        .locale(locale),
-                                    style: p2,
-                                  ),
-                                ],
-                              );
-                            }).toList(),
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          runSpacing: 4,
+                          children:
+                              occupant.documents.entries.map((entry) {
+                                return Row(
+                                  spacing: 4,
+                                  children: [
+                                    IconWithState(
+                                      state:
+                                          entry.value.isNotEmpty
+                                              ? IconState.valid
+                                              : IconState.wrong,
+                                    ),
+                                    Text(
+                                      DocumentType.values
+                                          .byName(entry.key)
+                                          .locale(locale),
+                                      style: p2,
+                                    ),
+                                  ],
+                                );
+                              }).toList(),
+                        ),
                       ),
                     ),
                   ),
               ],
             ),
           ),
-
           Row(
             spacing: 4,
             mainAxisAlignment: MainAxisAlignment.center,
