@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "dossier-loc"
+    "development": "dossier-loc",
+    "production": "easyloc-21aea"
   }
 }

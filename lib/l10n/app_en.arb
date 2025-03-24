@@ -45,6 +45,7 @@
   "write": "Write",
   "add_future_occupant": "Add a future tenant",
   "update_future_occupant": "Edit a future tenant",
+  "update_warrantor": "Edit a warrantor",
   "add_warrantor": "Add a guarantor",
   "monthly_income": "Monthly income",
   "the_monthly_income": "The monthly income",

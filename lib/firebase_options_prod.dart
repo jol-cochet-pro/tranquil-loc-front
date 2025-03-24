@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options.dart';
+/// import 'firebase_options_prod.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -21,7 +21,10 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for ios - '
@@ -50,20 +53,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAXrzZ_jqcGbtkcwT9cxZbzGT-COC-XOnI',
-    appId: '1:255481462173:web:1bf98a3a7ce556de0fc374',
-    messagingSenderId: '255481462173',
-    projectId: 'dossier-loc',
-    authDomain: 'dossier-loc.firebaseapp.com',
-    storageBucket: 'dossier-loc.firebasestorage.app',
-    measurementId: 'G-4XP789N3BK',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAVrQsLy0m1AyrAxsPbKZ0ybzEEW05tyWk',
-    appId: '1:255481462173:android:c4c2d8220bda0aaf0fc374',
-    messagingSenderId: '255481462173',
-    projectId: 'dossier-loc',
-    storageBucket: 'dossier-loc.firebasestorage.app',
+    apiKey: 'AIzaSyBIc663J--Dl7MwMPZDHQhPt736irjmPP4',
+    appId: '1:718746202547:web:debafa251756e5ece9dbc6',
+    messagingSenderId: '718746202547',
+    projectId: 'easyloc-21aea',
+    authDomain: 'easyloc-21aea.firebaseapp.com',
+    storageBucket: 'easyloc-21aea.firebasestorage.app',
+    measurementId: 'G-6BRRMD307B',
   );
 }

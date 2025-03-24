@@ -15,19 +15,17 @@
   },
   "flutter": {
     "platforms": {
-      "android": {
-        "default": {
-          "projectId": "dossier-loc",
-          "appId": "1:255481462173:android:c4c2d8220bda0aaf0fc374",
-          "fileOutput": "android/app/google-services.json"
-        }
-      },
       "dart": {
-        "lib/firebase_options.dart": {
+        "lib/firebase_options_dev.dart": {
           "projectId": "dossier-loc",
           "configurations": {
-            "android": "1:255481462173:android:c4c2d8220bda0aaf0fc374",
             "web": "1:255481462173:web:1bf98a3a7ce556de0fc374"
+          }
+        },
+        "lib/firebase_options_prod.dart": {
+          "projectId": "easyloc-21aea",
+          "configurations": {
+            "web": "1:718746202547:web:debafa251756e5ece9dbc6"
           }
         }
       }
