@@ -69,6 +69,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
       if (user.type == UserType.warrantor) {
         await Storage.warrantors.add(
           Warrantor(
+            id: "",
             firstname: user.firstname,
             lastname: user.lastname,
             dateOfBirth: user.dateOfBirth,

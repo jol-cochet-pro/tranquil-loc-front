@@ -9,6 +9,8 @@ import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
+import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
+import 'package:dossier_locataire/pages/warrantors/update_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +71,18 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Warrantors.route,
       builder: (_, _) => Warrantors(),
+      redirect: redirectLoggedInWithEmail,
+    ),
+    GoRoute(
+      path: AddWarrantor.route,
+      builder: (_, _) => AddWarrantor(),
+      redirect: redirectLoggedInWithEmail,
+    ),
+    GoRoute(
+      path: UpdateWarrantor.route,
+      builder:
+          (_, state) =>
+              UpdateWarrantor(warrantorId: state.pathParameters["id"]!),
       redirect: redirectLoggedInWithEmail,
     ),
     GoRoute(

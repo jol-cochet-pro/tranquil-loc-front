@@ -2,13 +2,15 @@ import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
+import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/components/warrantor_card.dart';
-import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/models/warrantor.dart';
+import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/scroll_controller.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class Warrantors extends StatefulWidget {
   const Warrantors({super.key});
@@ -48,9 +50,7 @@ class _WarrantorsState extends State<Warrantors> {
               children: [
                 Text(locale.warrantors, style: h1),
                 CustomButton(
-                  onPressed: () {
-                    // TODO ADD THIS
-                  },
+                  onPressed: () => context.go(AddWarrantor.route),
                   type: ButtonType.primary,
                   padding: EdgeInsets.all(16),
                   child: Text(locale.add_warrantor),

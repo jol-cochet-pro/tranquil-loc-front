@@ -1,16 +1,16 @@
 import 'package:dossier_locataire/api/file_api.dart';
-import 'package:dossier_locataire/api/occupant_api.dart';
+import 'package:dossier_locataire/api/warrantor_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
-import 'package:dossier_locataire/pages/occupants/components/documents_info_form.dart';
-import 'package:dossier_locataire/pages/occupants/components/personal_infos_form.dart';
-import 'package:dossier_locataire/pages/occupants/occupants.dart';
+import 'package:dossier_locataire/pages/warrantors/components/documents_info_form.dart';
+import 'package:dossier_locataire/pages/warrantors/components/personal_infos_form.dart';
+import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
 import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/models/file.dart';
-import 'package:dossier_locataire/shared/models/occupant.dart';
+import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -18,61 +18,61 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
-class UpdateOccupant extends StatefulWidget {
-  final String occupantId;
+class UpdateWarrantor extends StatefulWidget {
+  final String warrantorId;
 
-  const UpdateOccupant({super.key, required this.occupantId});
+  const UpdateWarrantor({super.key, required this.warrantorId});
 
-  static const route = "/occupants/update/:id";
-  static String routeId(String id) => "/occupants/update/$id";
+  static const route = "/warrantors/update/:id";
+  static String routeId(String id) => "/warrantors/update/$id";
 
   @override
-  State<UpdateOccupant> createState() => _UpdateOccupantState();
+  State<UpdateWarrantor> createState() => _UpdateWarrantorState();
 }
 
-class _UpdateOccupantState extends State<UpdateOccupant> {
+class _UpdateWarrantorState extends State<UpdateWarrantor> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Map<String, List<PlatformFile>> newDocuments = ProSituation.other.documents;
   final Map<String, List<File>> rmDocuments = {};
-  late Future<Occupant?> occupant;
+  late Future<Warrantor?> warrantor;
   bool isLoading = false;
 
   @override
   void initState() {
-    occupant = OccupantApi.get(widget.occupantId);
+    warrantor = WarrantorApi.get(widget.warrantorId);
     super.initState();
   }
 
   void submit(AppLocalizations locale) async {
-    Occupant? loadedOccupant = await occupant;
-    if (loadedOccupant == null) return;
+    Warrantor? loadedWarrantor = await warrantor;
+    if (loadedWarrantor == null) return;
     try {
       setState(() => isLoading = true);
       // Remove old documents that where removed
       for (final document in rmDocuments.entries) {
         await FileApi.remove(document.toPair());
-        loadedOccupant.documents[document.key]!.removeWhere(
+        loadedWarrantor.documents[document.key]!.removeWhere(
           (wfile) => document.value.map((file) => file.url).contains(wfile.url),
         );
       }
       // Remove old documents with pro-situation
-      for (final document in Map.of(loadedOccupant.documents).entries) {
-        if (!loadedOccupant.proSituation.documents.containsKey(document.key)) {
+      for (final document in Map.of(loadedWarrantor.documents).entries) {
+        if (!loadedWarrantor.proSituation.documents.containsKey(document.key)) {
           await FileApi.remove(document.toPair());
-          loadedOccupant.documents.remove(document.key);
+          loadedWarrantor.documents.remove(document.key);
         }
       }
       // Create new documents
       for (final document in newDocuments.entries) {
         List<File> uploadedFiles = await FileApi.add(
           document.toPair(),
-          "occupants/${widget.occupantId}",
+          "warrantors/${widget.warrantorId}",
         );
-        loadedOccupant.documents.createAddAll(document.key, uploadedFiles);
+        loadedWarrantor.documents.createAddAll(document.key, uploadedFiles);
       }
-      await OccupantApi.update(widget.occupantId, loadedOccupant);
+      await WarrantorApi.update(widget.warrantorId, loadedWarrantor);
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        context.go(Occupants.route);
+        context.go(Warrantors.route);
       });
     } catch (error) {
       // TODO ADD THIS
@@ -95,14 +95,14 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(locale.update_future_occupant, style: h1),
+                Text(locale.update_warrantor, style: h1),
                 !isLoading
                     ? Row(
                       spacing: 8,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         CustomButton(
-                          onPressed: () => context.go(Occupants.route),
+                          onPressed: () => context.go(Warrantors.route),
                           type: ButtonType.secondary,
                           padding: EdgeInsets.all(16),
                           child: Text(locale.canceled),
@@ -125,7 +125,7 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
           ),
           Flexible(
             child: FutureBuilder(
-              future: occupant,
+              future: warrantor,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   newDocuments = snapshot.data!.proSituation.documents;
@@ -141,7 +141,7 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
                             children: [
                               Expanded(
                                 child: PersonalInfoForm(
-                                  occupant: snapshot.data!,
+                                  warrantor: snapshot.data!,
                                   onSituationUpdate:
                                       (situation) => setState(
                                         () =>
@@ -151,7 +151,7 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
                               ),
                               Expanded(
                                 child: DocumentsInfoForm(
-                                  occupant: snapshot.data!,
+                                  warrantor: snapshot.data!,
                                   newDocuments: newDocuments,
                                   rmDocuments: rmDocuments,
                                 ),

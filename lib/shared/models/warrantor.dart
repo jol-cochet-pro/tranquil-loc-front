@@ -2,19 +2,22 @@ import 'dart:js_interop';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/home_situation.dart';
 import 'package:dossier_locataire/shared/enums/pro_situation.dart';
+import 'package:dossier_locataire/shared/models/file.dart';
 
 class Warrantor {
-  final String firstname;
-  final String lastname;
-  final DateTime dateOfBirth;
-  final int income;
-  final ProSituation proSituation;
-  final HomeSituation homeSituation;
-  final String email;
-  final String phone;
-  final Map<String, List<String>> documents;
+  String id;
+  String firstname;
+  String lastname;
+  DateTime dateOfBirth;
+  int income;
+  ProSituation proSituation;
+  HomeSituation homeSituation;
+  String email;
+  String phone;
+  Map<String, List<File>> documents;
 
   Warrantor({
+    required this.id,
     required this.firstname,
     required this.lastname,
     required this.dateOfBirth,
@@ -49,33 +52,55 @@ class Warrantor {
     }
   }
 
-  factory Warrantor.fromFirestore(Map<String, dynamic>? data) {
+  static Warrantor get defaultWarrantor {
+    return Warrantor(
+      id: "",
+      firstname: "",
+      lastname: "",
+      dateOfBirth: DateTime.now(),
+      income: 0,
+      proSituation: ProSituation.other,
+      homeSituation: HomeSituation.tenant,
+      email: "",
+      phone: "",
+      documents: {},
+    );
+  }
+
+  factory Warrantor.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+  ) {
+    Map<String, dynamic>? data = snapshot.data();
+    if (data == null) return Warrantor.defaultWarrantor;
     ProSituation proSituation = ProSituation.unemployed;
     try {
-      proSituation = ProSituation.values.byName(data?["proSituation"]);
+      proSituation = ProSituation.values.byName(data["proSituation"]);
     } catch (_) {
       proSituation = ProSituation.unemployed;
     }
     HomeSituation homeSituation = HomeSituation.tenant;
     try {
-      homeSituation = HomeSituation.values.byName(data?["proSituation"]);
+      homeSituation = HomeSituation.values.byName(data["proSituation"]);
     } catch (_) {
       homeSituation = HomeSituation.tenant;
     }
-    Map<String, List<String>> documents = {};
-    for (final entry in data?["documents"].entries) {
-      documents[entry.key] =
+    Map<String, List<File>> documents = {};
+    for (final entry in data["documents"].entries) {
+      List<String> refs =
           (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
+      documents[entry.key] =
+          refs.map((ref) => File(name: ref.split('/').last, url: ref)).toList();
     }
     return Warrantor(
-      firstname: data?["firstname"],
-      lastname: data?["lastname"],
-      dateOfBirth: data?["dateOfBirth"].toDate(),
-      income: data?["income"],
+      id: snapshot.id,
+      firstname: data["firstname"] ?? "",
+      lastname: data["lastname"] ?? "",
+      dateOfBirth: data["dateOfBirth"].toDate(),
+      income: data["income"] ?? 0,
       proSituation: proSituation,
       homeSituation: homeSituation,
-      email: data?["email"],
-      phone: data?["phone"],
+      email: data["email"] ?? "",
+      phone: data["phone"] ?? "",
       documents: documents,
     );
   }
@@ -90,7 +115,9 @@ class Warrantor {
       "homeSituation": warrantor.homeSituation.str,
       "email": warrantor.email,
       "phone": warrantor.phone,
-      "documents": warrantor.documents,
+      "documents": warrantor.documents.map(
+        (key, values) => MapEntry(key, values.map((value) => value.url)),
+      ),
     };
   }
 }

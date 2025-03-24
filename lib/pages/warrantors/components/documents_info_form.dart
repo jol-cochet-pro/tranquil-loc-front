@@ -3,20 +3,20 @@ import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/models/file.dart';
-import 'package:dossier_locataire/shared/models/occupant.dart';
+import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DocumentsInfoForm extends StatefulWidget {
-  final Occupant occupant;
+  final Warrantor warrantor;
   final Map<String, List<PlatformFile>> newDocuments;
   final Map<String, List<File>>? rmDocuments;
 
   const DocumentsInfoForm({
     super.key,
-    required this.occupant,
+    required this.warrantor,
     required this.newDocuments,
     required this.rmDocuments,
   });
@@ -46,6 +46,7 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
               child: Wrap(
                 spacing: 24,
                 runSpacing: 12,
+                clipBehavior: Clip.hardEdge,
                 children:
                     widget.newDocuments.entries.map((entry) {
                       return CustomFileInput(
@@ -53,7 +54,7 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
                             .byName(entry.key)
                             .locale(locale),
                         initialFiles:
-                            widget.occupant.documents[entry.key] ?? [],
+                            widget.warrantor.documents[entry.key] ?? [],
                         files: entry.value,
                         onDownload: (file) => file.download(),
                         onAdd:

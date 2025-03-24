@@ -2,10 +2,13 @@ import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/icon_with_state.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/warrantors/components/warrantor_info_card.dart';
+import 'package:dossier_locataire/pages/warrantors/update_warrantor.dart';
+import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -36,16 +39,13 @@ class WarrantorCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "${warrantor.firstname} ${warrantor.lastname}",
-                    style: h2,
-                  ),
+                  Text("${warrantor.firstname} ${warrantor.lastname}", style: h2),
                   Text(formatter.format(warrantor.dateOfBirth), style: p1),
                 ],
               ),
               CustomIconButton(
                 onPressed: () {
-                  // TODO ADD THIS
+                  context.go(UpdateWarrantor.routeId(warrantor.id));
                 },
                 icon: Icons.settings_outlined,
               ),
@@ -84,41 +84,47 @@ class WarrantorCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text("${locale.documents}:", style: h3),
-                Expanded(
-                  child: ShadowContainer(
-                    padding: EdgeInsets.all(10),
-                    radius: Radius.circular(10),
-                    child: Wrap(
-                      runSpacing: 4,
-                      children:
-                          warrantor.documents.entries.map((entry) {
-                            return Row(
-                              spacing: 4,
-                              children: [
-                                IconWithState(
-                                  state:
-                                      entry.value.isNotEmpty
-                                          ? IconState.valid
-                                          : IconState.wrong,
-                                ),
-                                Text(entry.key, style: p2),
-                              ],
-                            );
-                          }).toList(),
+                if (warrantor.documents.isNotEmpty)
+                  Expanded(
+                    child: ShadowContainer(
+                      padding: EdgeInsets.all(10),
+                      radius: Radius.circular(10),
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          runSpacing: 4,
+                          children:
+                              warrantor.documents.entries.map((entry) {
+                                return Row(
+                                  spacing: 4,
+                                  children: [
+                                    IconWithState(
+                                      state:
+                                          entry.value.isNotEmpty
+                                              ? IconState.valid
+                                              : IconState.wrong,
+                                    ),
+                                    Text(
+                                      DocumentType.values
+                                          .byName(entry.key)
+                                          .locale(locale),
+                                      style: p2,
+                                    ),
+                                  ],
+                                );
+                              }).toList(),
+                        ),
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
-
           Row(
             spacing: 4,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconWithState(
-                state:
-                    warrantor.isCompleted ? IconState.valid : IconState.wrong,
+                state: warrantor.isCompleted ? IconState.valid : IconState.wrong,
               ),
               Text(
                 warrantor.isCompleted ? locale.complete : locale.incomplete,

@@ -3,6 +3,7 @@ import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash_state_cell.dart';
 import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
+import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
@@ -107,9 +108,10 @@ class _OccupantsCardState extends State<OccupantsCard> {
                         ),
                       ),
                       CustomIconButton(
-                        onPressed: () {
-                          // TODO ADD THIS
-                        },
+                        onPressed:
+                            () => context.go(
+                              UpdateOccupant.routeId(snapshot.data![index].id),
+                            ),
                         icon: Icons.settings_outlined,
                       ),
                     ],
