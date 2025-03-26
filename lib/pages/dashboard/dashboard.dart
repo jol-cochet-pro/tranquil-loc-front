@@ -1,8 +1,8 @@
+import 'package:dossier_locataire/api/user_api.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/dashboard/call_to_action.dart';
 import 'package:dossier_locataire/pages/dashboard/dash_cards.dart';
 import 'package:dossier_locataire/pages/dashboard/hero_section.dart';
-import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:flutter/material.dart';
@@ -17,17 +17,12 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  late Future<User> dashboardData;
-
-  Future<User> retrieveData() {
-    return Storage.user(
-      FirebaseAuth.instance.currentUser!.uid,
-    ).get().then((value) => value.data()!);
-  }
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
+  late Future<User?> dashboardData;
 
   @override
   void initState() {
-    dashboardData = retrieveData();
+    dashboardData = UserApi.get(userId);
     super.initState();
   }
 
@@ -47,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
                   HeroSection(snapshot: snapshot),
                   CallToAction(
                     snapshot: snapshot,
-                    reload: () => dashboardData = retrieveData(),
+                    reload: () => dashboardData = UserApi.get(userId),
                   ),
                   DashCards(),
                 ],

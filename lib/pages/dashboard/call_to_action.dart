@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CallToAction extends StatelessWidget {
-  final AsyncSnapshot<User> snapshot;
+  final AsyncSnapshot<User?> snapshot;
   final void Function() reload;
 
   const CallToAction({super.key, required this.snapshot, required this.reload});

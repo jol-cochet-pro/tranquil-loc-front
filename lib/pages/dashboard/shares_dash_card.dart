@@ -1,8 +1,8 @@
+import 'package:dossier_locataire/api/share_api.dart';
 import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
 import 'package:dossier_locataire/shared/models/share.dart';
-import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,9 +19,7 @@ class _SharesCardState extends State<SharesCard> {
 
   @override
   void initState() {
-    shares = Storage.shares.get().then(
-      (value) => value.docs.map((doc) => doc.data()).toList(),
-    );
+    shares = ShareApi.getAll();
     super.initState();
   }
 

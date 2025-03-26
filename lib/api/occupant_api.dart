@@ -13,4 +13,10 @@ class OccupantApi {
   static Future<Occupant?> get(String id) async {
     return await Storage.occupant(id).get().then((value) => value.data());
   }
+
+  static Future<List<Occupant>> getAll() async {
+    return await Storage.occupants.get().then(
+      (value) => value.docs.map((doc) => doc.data()).toList(),
+    );
+  }
 }

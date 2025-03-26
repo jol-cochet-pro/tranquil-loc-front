@@ -1,10 +1,10 @@
+import 'package:dossier_locataire/api/warrantor_api.dart';
 import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash_state_cell.dart';
 import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/update_warrantor.dart';
-import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +24,7 @@ class _WarrantorsCardState extends State<WarrantorsCard> {
 
   @override
   void initState() {
-    warrantors = Storage.warrantors.get().then(
-      (value) => value.docs.map((doc) => doc.data()).toList(),
-    );
+    warrantors = WarrantorApi.getAll();
     super.initState();
   }
 

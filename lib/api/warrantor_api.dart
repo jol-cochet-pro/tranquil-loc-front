@@ -13,4 +13,10 @@ class WarrantorApi {
   static Future<Warrantor?> get(String id) async {
     return await Storage.warrantor(id).get().then((value) => value.data());
   }
+
+  static Future<List<Warrantor>> getAll() async {
+    return await Storage.warrantors.get().then(
+      (value) => value.docs.map((doc) => doc.data()).toList(),
+    );
+  }
 }

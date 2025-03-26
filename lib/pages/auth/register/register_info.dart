@@ -1,3 +1,6 @@
+import 'package:dossier_locataire/api/occupant_api.dart';
+import 'package:dossier_locataire/api/user_api.dart';
+import 'package:dossier_locataire/api/warrantor_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/date_field.dart';
 import 'package:dossier_locataire/components/dropdown.dart';
@@ -12,7 +15,6 @@ import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/enums/search_state.dart';
 import 'package:dossier_locataire/shared/enums/user_type.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
-import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
@@ -49,9 +51,9 @@ class _RegisterInfosState extends State<RegisterInfos> {
     setState(() => errors.clear());
     try {
       var currentUser = FirebaseAuth.instance.currentUser!;
-      await Storage.user(currentUser.uid).set(user);
+      await UserApi.update(currentUser.uid, user);
       if (user.type == UserType.occupant) {
-        await Storage.occupants.add(
+        await OccupantApi.add(
           Occupant(
             id: "",
             firstname: user.firstname,
@@ -67,7 +69,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
         );
       }
       if (user.type == UserType.warrantor) {
-        await Storage.warrantors.add(
+        await WarrantorApi.add(
           Warrantor(
             id: "",
             firstname: user.firstname,

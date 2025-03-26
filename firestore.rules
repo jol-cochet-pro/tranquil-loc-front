@@ -14,6 +14,14 @@ service cloud.firestore {
       match /occupants/{occupantId} {
           allow read, update, delete, create: if isSignedIn() && request.auth.uid == userId;
       }
+
+      match /warrantors/{warrantorId} {
+          allow read, update, delete, create: if isSignedIn() && request.auth.uid == userId;
+      }
+
+      match /shares/{shareId} {
+          allow read, update, delete, create: if isSignedIn() && request.auth.uid == userId;
+      }
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/api/occupant_api.dart';
 import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
@@ -5,7 +6,6 @@ import 'package:dossier_locataire/pages/dashboard/components/dash_state_cell.dar
 import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
 import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
-import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -24,9 +24,7 @@ class _OccupantsCardState extends State<OccupantsCard> {
 
   @override
   void initState() {
-    occupants = Storage.occupants.get().then(
-      (value) => value.docs.map((doc) => doc.data()).toList(),
-    );
+    occupants = OccupantApi.getAll();
     super.initState();
   }
 
