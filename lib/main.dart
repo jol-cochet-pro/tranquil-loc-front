@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp.router(
-      title: 'Dossier locataire',
+      title: 'EasyLoc',
       routerConfig: router,
       localizationsDelegates: [
         AppLocalizations.delegate,
