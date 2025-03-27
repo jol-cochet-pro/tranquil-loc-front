@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:dossier_locataire/api/share_api.dart';
 import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
@@ -32,8 +33,10 @@ class _SharesCardState extends State<SharesCard> {
           (context, snapshot) => DashCard(
             title: locale.my_shares,
             emptyInfo: locale.no_shares_saved,
-            onAdd: () {
-              // TODO ADD THIS
+            onAdd: () async {
+              final result =
+                  await FirebaseFunctions.instance.httpsCallable("send").call();
+              print(result.data);
             },
             hasData: snapshot.hasData,
             items: snapshot.data,

@@ -1,5 +1,3 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'firebase_options_dev.dart' as dev;
 import 'firebase_options_dev.dart' as prod;
 import 'package:dossier_locataire/router.dart';
@@ -14,11 +12,6 @@ void main() async {
     'ENVIRONMENT',
     defaultValue: 'PRODUCTION',
   );
-  if (environment == 'PRODUCTION') {
-    await dotenv.load(fileName: '.env.prod');
-  } else if (environment == 'DEVELOPMENT') {
-    await dotenv.load(fileName: '.env.dev');
-  }
   try {
     await Firebase.initializeApp(
       options:

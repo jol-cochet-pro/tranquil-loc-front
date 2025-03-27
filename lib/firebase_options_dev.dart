@@ -3,7 +3,6 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -54,12 +53,12 @@ class DefaultFirebaseOptions {
   }
 
   static FirebaseOptions web = FirebaseOptions(
-    apiKey: dotenv.env['API_KEY']!,
-    appId: dotenv.env['APP_ID']!,
-    messagingSenderId: dotenv.env['MESSAGING_SENDER_ID']!,
-    projectId: dotenv.env['PROJECT_ID']!,
-    authDomain: dotenv.env['AUTH_DOMAIN']!,
-    storageBucket: dotenv.env['STORAGE_BUCKET']!,
-    measurementId: dotenv.env['MEASUREMENT_ID']!,
+    apiKey: 'AIzaSyAXrzZ_jqcGbtkcwT9cxZbzGT-COC-XOnI',
+    appId: '1:255481462173:web:1bf98a3a7ce556de0fc374',
+    messagingSenderId: '255481462173',
+    projectId: 'dossier-loc',
+    authDomain: 'dossier-loc.firebaseapp.com',
+    storageBucket: 'dossier-loc.firebasestorage.app',
+    measurementId: 'G-4XP789N3BK',
   );
 }
