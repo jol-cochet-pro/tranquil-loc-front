@@ -28,7 +28,7 @@ export const send = onCall({ secrets: [API_KEY, API_SECRET] }, async (request) =
             Messages: [
                 {
                     From: {
-                        Email: "contact@easyloc.fr",
+                        Email: "contact@tranquil-loc.fr",
                         Name: "Mailjet Pilot"
                     },
                     To: [
