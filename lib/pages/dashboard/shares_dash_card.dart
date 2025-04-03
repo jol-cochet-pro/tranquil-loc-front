@@ -34,8 +34,9 @@ class _SharesCardState extends State<SharesCard> {
             title: locale.my_shares,
             emptyInfo: locale.no_shares_saved,
             onAdd: () async {
-              final result =
-                  await FirebaseFunctions.instance.httpsCallable("send").call();
+              final result = await FirebaseFunctions.instance
+                  .httpsCallable("send")
+                  .call({"email": "jolan.cochet@yopmail.com"});
               print(result.data);
             },
             hasData: snapshot.hasData,
