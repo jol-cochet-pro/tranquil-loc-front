@@ -71,8 +71,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(locale.mistake_happens, style: h1),
-                    Text(locale.an_email_will_be_sent, style: p1),
+                    Text(locale.mistake_happens, style: h2),
+                    Text(locale.an_email_will_be_sent, style: p2),
                   ],
                 ),
                 CustomTextField(

@@ -63,7 +63,7 @@ class _FileInputState extends State<CustomFileInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4,
       children: [
-        if (widget.label != null) Text(widget.label!, style: p1),
+        if (widget.label != null) Text(widget.label!, style: p2),
         GestureDetector(
           onTap: () => pickFiles(locale),
           child: Container(

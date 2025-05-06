@@ -96,6 +96,9 @@ flutter:
     - family: Inter
       fonts:
         - asset: fonts/inter.ttf
+    - family: Plus Jakarta Sans
+      fonts:
+        - asset: fonts/jakarta.ttf
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

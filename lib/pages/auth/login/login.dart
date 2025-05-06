@@ -87,8 +87,8 @@ class _LoginState extends State<Login> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(locale.login, style: h1),
-                    Text(locale.happy_to_see_you, style: p1),
+                    Text(locale.login, style: h2),
+                    Text(locale.happy_to_see_you, style: p2),
                   ],
                 ),
                 CustomTextField(

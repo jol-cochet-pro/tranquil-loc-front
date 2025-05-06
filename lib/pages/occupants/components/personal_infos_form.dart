@@ -37,7 +37,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${locale.personal_infos}:", style: h2),
+          Text("${locale.personal_infos}:", style: h3),
           Row(
             spacing: 24,
             children: [
@@ -133,7 +133,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               ),
             ],
           ),
-          Text("${locale.situation}:", style: h2),
+          Text("${locale.situation}:", style: h3),
           CustomDropDown(
             label: locale.home_situation,
             initialValue: widget.occupant.homeSituation,

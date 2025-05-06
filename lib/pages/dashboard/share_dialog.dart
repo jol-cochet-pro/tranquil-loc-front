@@ -70,8 +70,8 @@ class _ShareDialogState extends State<ShareDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(locale.share, style: h1),
-                Text(locale.share_dialog_description, style: p1),
+                Text(locale.share, style: h2),
+                Text(locale.share_dialog_description, style: p2),
               ],
             ),
             Form(
@@ -174,7 +174,7 @@ class _ShareDialogState extends State<ShareDialog> {
                       ),
                     ],
                   ),
-                  Text("${locale.permissions}: ", style: h3),
+                  Text("${locale.permissions}: ", style: h4),
                   ShadowContainer(
                     padding: EdgeInsets.all(10),
                     radius: Radius.circular(10),
@@ -183,7 +183,7 @@ class _ShareDialogState extends State<ShareDialog> {
                       children: [
                         SizedBox(
                           width: 100,
-                          child: Text(locale.warrantors, style: h3),
+                          child: Text(locale.warrantors, style: h4),
                         ),
                         SharePermCell(
                           label: locale.read_infos,
@@ -226,7 +226,7 @@ class _ShareDialogState extends State<ShareDialog> {
                       children: [
                         SizedBox(
                           width: 100,
-                          child: Text(locale.occupants, style: h3),
+                          child: Text(locale.occupants, style: h4),
                         ),
                         SharePermCell(
                           label: locale.read_infos,

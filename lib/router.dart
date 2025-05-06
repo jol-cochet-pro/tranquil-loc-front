@@ -6,6 +6,7 @@ import 'package:dossier_locataire/pages/auth/register/register_info.dart';
 import 'package:dossier_locataire/pages/auth/verify-email/need_email_verification.dart';
 import 'package:dossier_locataire/pages/auth/verify-email/verify_email.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
+import 'package:dossier_locataire/pages/landing/landing.dart';
 import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
@@ -135,5 +136,6 @@ final GoRouter router = GoRouter(
               VerifiyEmail(actionCode: state.uri.queryParameters["oobCode"]),
       redirect: redirectLoggedInWithoutEmail,
     ),
+    GoRoute(path: Landing.route, builder: (_, state) => Landing()),
   ],
 );

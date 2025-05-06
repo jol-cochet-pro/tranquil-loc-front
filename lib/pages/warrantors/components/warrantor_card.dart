@@ -39,8 +39,11 @@ class WarrantorCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${warrantor.firstname} ${warrantor.lastname}", style: h2),
-                  Text(formatter.format(warrantor.dateOfBirth), style: p1),
+                  Text(
+                    "${warrantor.firstname} ${warrantor.lastname}",
+                    style: h3,
+                  ),
+                  Text(formatter.format(warrantor.dateOfBirth), style: p2),
                 ],
               ),
               CustomIconButton(
@@ -83,7 +86,7 @@ class WarrantorCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("${locale.documents}:", style: h3),
+                Text("${locale.documents}:", style: h4),
                 if (warrantor.documents.isNotEmpty)
                   Expanded(
                     child: ShadowContainer(
@@ -107,7 +110,7 @@ class WarrantorCard extends StatelessWidget {
                                       DocumentType.values
                                           .byName(entry.key)
                                           .locale(locale),
-                                      style: p2,
+                                      style: p3,
                                     ),
                                   ],
                                 );
@@ -124,7 +127,8 @@ class WarrantorCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconWithState(
-                state: warrantor.isCompleted ? IconState.valid : IconState.wrong,
+                state:
+                    warrantor.isCompleted ? IconState.valid : IconState.wrong,
               ),
               Text(
                 warrantor.isCompleted ? locale.complete : locale.incomplete,

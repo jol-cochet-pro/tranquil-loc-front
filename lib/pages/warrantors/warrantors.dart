@@ -46,7 +46,7 @@ class _WarrantorsState extends State<Warrantors> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(locale.warrantors, style: h1),
+                Text(locale.warrantors, style: h2),
                 CustomButton(
                   onPressed: () => context.go(AddWarrantor.route),
                   type: ButtonType.primary,
@@ -90,7 +90,7 @@ class _WarrantorsState extends State<Warrantors> {
                                       ),
                                       Text(
                                         locale.no_warrantors_saved,
-                                        style: p1,
+                                        style: p2,
                                       ),
                                     ],
                                   ),

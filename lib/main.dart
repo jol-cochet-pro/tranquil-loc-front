@@ -69,7 +69,6 @@ class MyApp extends StatelessWidget {
         Locale('fr'), // French
         Locale('en'), // English
       ],
-
       theme: ThemeData(
         fontFamily: "Inter",
         fontFamilyFallback: ["Inter"],

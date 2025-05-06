@@ -46,7 +46,7 @@ class _OccupantsState extends State<Occupants> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(locale.future_occupants, style: h1),
+                Text(locale.future_occupants, style: h2),
                 CustomButton(
                   onPressed: () => context.go(AddOccupant.route),
                   type: ButtonType.primary,
@@ -90,7 +90,7 @@ class _OccupantsState extends State<Occupants> {
                                       ),
                                       Text(
                                         locale.no_future_occupants_saved,
-                                        style: p1,
+                                        style: p2,
                                       ),
                                     ],
                                   ),

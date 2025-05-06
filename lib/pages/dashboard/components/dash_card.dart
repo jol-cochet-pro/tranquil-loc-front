@@ -35,7 +35,7 @@ class DashCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: h2),
+              Text(title, style: h3),
               CustomIconButton(onPressed: onAdd, icon: Icons.add),
             ],
           ),
@@ -51,7 +51,7 @@ class DashCard extends StatelessWidget {
                           separatorBuilder:
                               (context, index) => SizedBox(height: 12),
                         )
-                        : Center(child: Text(emptyInfo, style: p1))
+                        : Center(child: Text(emptyInfo, style: p2))
                     : Loader(),
           ),
         ],

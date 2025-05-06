@@ -35,7 +35,7 @@ class WarrantorInfoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("$title:", style: h3),
+          Text("$title:", style: h4),
           Expanded(
             child: ShadowContainer(
               padding: EdgeInsets.all(10),
@@ -49,7 +49,7 @@ class WarrantorInfoCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(first.name, style: p2),
+                            Text(first.name, style: p3),
                             Icon(first.icon, size: 20),
                           ],
                         ),
@@ -58,7 +58,7 @@ class WarrantorInfoCard extends StatelessWidget {
                             child: Text(
                               first.info,
                               overflow: TextOverflow.ellipsis,
-                              style: p1,
+                              style: p2,
                             ),
                           ),
                         ),
@@ -78,7 +78,7 @@ class WarrantorInfoCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(second.name, style: p2),
+                            Text(second.name, style: p3),
                             Icon(second.icon, size: 20),
                           ],
                         ),
@@ -87,7 +87,7 @@ class WarrantorInfoCard extends StatelessWidget {
                             child: Text(
                               second.info,
                               overflow: TextOverflow.ellipsis,
-                              style: p1,
+                              style: p2,
                             ),
                           ),
                         ),

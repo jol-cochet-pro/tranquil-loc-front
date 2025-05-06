@@ -67,7 +67,7 @@ class _AddWarrantorState extends State<AddWarrantor> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(locale.add_warrantor, style: h1),
+                Text(locale.add_warrantor, style: h2),
                 !isLoading
                     ? Row(
                       spacing: 8,

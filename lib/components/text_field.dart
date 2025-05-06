@@ -67,7 +67,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         Row(
           spacing: 4,
           children: [
-            if (widget.label != null) Text(widget.label!, style: p1),
+            if (widget.label != null) Text(widget.label!, style: p2),
             if (widget.isRequired)
               Text(
                 "*",

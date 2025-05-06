@@ -95,7 +95,7 @@ class _UpdateWarrantorState extends State<UpdateWarrantor> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(locale.update_warrantor, style: h1),
+                Text(locale.update_warrantor, style: h2),
                 !isLoading
                     ? Row(
                       spacing: 8,

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ShadowContainer extends StatelessWidget {
-  final Radius radius;
+  final Radius? radius;
   final EdgeInsetsGeometry? padding;
   final BoxConstraints? constraints;
+  final BoxShape? shape;
   final Widget child;
 
   const ShadowContainer({
     super.key,
-    required this.radius,
+    this.radius,
     this.padding,
     this.constraints,
+    this.shape,
     required this.child,
   });
 
@@ -21,8 +23,12 @@ class ShadowContainer extends StatelessWidget {
       padding: padding,
       constraints: constraints,
       decoration: BoxDecoration(
+        shape: shape ?? BoxShape.rectangle,
         color: Colors.white,
-        borderRadius: BorderRadius.all(radius),
+        borderRadius:
+            shape != BoxShape.circle
+                ? BorderRadius.all(radius ?? Radius.circular(8))
+                : null,
         boxShadow: [
           BoxShadow(
             color: colorScheme.shadow,
