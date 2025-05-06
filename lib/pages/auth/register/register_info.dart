@@ -115,7 +115,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(locale.register, style: h2),
-                    Text(locale.happy_to_welcome, style: p1),
+                    Text(locale.happy_to_welcome, style: p2),
                   ],
                 ),
                 CustomTextField(

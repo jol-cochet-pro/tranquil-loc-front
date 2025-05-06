@@ -51,7 +51,7 @@ class DashCard extends StatelessWidget {
                           separatorBuilder:
                               (context, index) => SizedBox(height: 12),
                         )
-                        : Center(child: Text(emptyInfo, style: p1))
+                        : Center(child: Text(emptyInfo, style: p2))
                     : Loader(),
           ),
         ],

@@ -90,7 +90,7 @@ class _WarrantorsState extends State<Warrantors> {
                                       ),
                                       Text(
                                         locale.no_warrantors_saved,
-                                        style: p1,
+                                        style: p2,
                                       ),
                                     ],
                                   ),

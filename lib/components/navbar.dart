@@ -85,17 +85,17 @@ class _NavbarState extends State<Navbar> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8,
                     children: [
-                      Text(locale.my_account, style: p1),
+                      Text(locale.my_account, style: p2),
                       Divider(height: 1, color: colorScheme.outline),
                       TextButton.icon(
-                        label: Text(locale.my_profile, style: p2),
+                        label: Text(locale.my_profile, style: p3),
                         icon: Icon(Icons.person_outline, size: 16),
                         onPressed: () {
                           // TODO ADD THIS
                         },
                       ),
                       TextButton.icon(
-                        label: Text(locale.settings, style: p2),
+                        label: Text(locale.settings, style: p3),
                         icon: Icon(Icons.settings_outlined, size: 16),
                         onPressed: () {
                           // TODO ADD THIS
@@ -103,7 +103,7 @@ class _NavbarState extends State<Navbar> {
                       ),
                       Divider(height: 1, color: colorScheme.outline),
                       TextButton.icon(
-                        label: Text(locale.logout, style: p2),
+                        label: Text(locale.logout, style: p3),
                         icon: Icon(Icons.exit_to_app, size: 16),
                         onPressed: () async {
                           await FirebaseAuth.instance.signOut();
@@ -124,7 +124,7 @@ class _NavbarState extends State<Navbar> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Jolan Cochet", style: h4),
-                      Text(locale.occupant, style: p2),
+                      Text(locale.occupant, style: p3),
                     ],
                   ),
                   Icon(

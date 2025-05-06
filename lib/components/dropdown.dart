@@ -29,7 +29,7 @@ class CustomDropDown<T> extends StatelessWidget {
       children: [
         Row(
           children: [
-            label != null ? Text(label!, style: p1) : SizedBox.shrink(),
+            label != null ? Text(label!, style: p2) : SizedBox.shrink(),
             isRequired
                 ? Text("*", style: TextStyle(color: colorScheme.error))
                 : SizedBox.shrink(),

@@ -64,7 +64,7 @@ class _OccupantsCardState extends State<OccupantsCard> {
                                 snapshot.data![index].dateOfBirth,
                               ),
                               overflow: TextOverflow.ellipsis,
-                              style: p2,
+                              style: p3,
                             ),
                           ],
                         ),

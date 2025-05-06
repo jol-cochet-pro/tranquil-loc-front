@@ -71,14 +71,14 @@ class _VerifiyEmailState extends State<VerifiyEmail> {
                               Text(locale.email_verified, style: h2),
                               Text(
                                 locale.your_email_has_been_verified,
-                                style: p1,
+                                style: p2,
                               ),
                             ]
                             : [
                               Text(locale.email_not_verified, style: h2),
                               Text(
                                 locale.your_email_has_not_been_verify(whyError),
-                                style: p1,
+                                style: p2,
                               ),
                             ],
                   ),

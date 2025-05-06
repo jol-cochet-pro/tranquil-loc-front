@@ -90,7 +90,7 @@ class _OccupantsState extends State<Occupants> {
                                       ),
                                       Text(
                                         locale.no_future_occupants_saved,
-                                        style: p1,
+                                        style: p2,
                                       ),
                                     ],
                                   ),

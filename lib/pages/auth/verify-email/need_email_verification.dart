@@ -64,7 +64,7 @@ class _NeedEmailVerificationState extends State<NeedEmailVerification> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(locale.email_not_verified, style: h2),
-                  Text(locale.your_email_needs_verif, style: p1),
+                  Text(locale.your_email_needs_verif, style: p2),
                 ],
               ),
               CustomButton(

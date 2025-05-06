@@ -20,7 +20,7 @@ class SharePermCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(label, style: p2),
+        Text(label, style: p3),
         Switch(
           value: Enum.compareByIndex(permission, value) >= 0,
           onChanged: (newValue) {

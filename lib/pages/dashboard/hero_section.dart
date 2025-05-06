@@ -38,7 +38,7 @@ class HeroSection extends StatelessWidget {
                             locale.hey_username(snapshot.data!.firstname),
                             style: h2,
                           ),
-                          Text(locale.happy_to_see_you, style: p1),
+                          Text(locale.happy_to_see_you, style: p2),
                         ],
                       ),
                       Text("👋", style: h2),
@@ -46,7 +46,7 @@ class HeroSection extends StatelessWidget {
                   ),
                   Text(
                     date.replaceFirst(date[0], date[0].toUpperCase()),
-                    style: p1,
+                    style: p2,
                   ),
                 ],
               )

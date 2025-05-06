@@ -61,11 +61,11 @@ class _SharesCardState extends State<SharesCard> {
                           Icon(Icons.hourglass_empty_outlined),
                           Text(
                             snapshot.data![index].shareDurationToString(locale),
-                            style: p2,
+                            style: p3,
                           ),
                         ],
                       ),
-                      Text(snapshot.data![index].email, style: p2),
+                      Text(snapshot.data![index].email, style: p3),
                       CustomIconButton(
                         onPressed: () {
                           // TODO ADD THIS

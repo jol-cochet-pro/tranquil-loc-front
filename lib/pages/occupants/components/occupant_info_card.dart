@@ -49,7 +49,7 @@ class OccupantInfoCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(first.name, style: p2),
+                            Text(first.name, style: p3),
                             Icon(first.icon, size: 20),
                           ],
                         ),
@@ -58,7 +58,7 @@ class OccupantInfoCard extends StatelessWidget {
                             child: Text(
                               first.info,
                               overflow: TextOverflow.ellipsis,
-                              style: p1,
+                              style: p2,
                             ),
                           ),
                         ),
@@ -78,7 +78,7 @@ class OccupantInfoCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(second.name, style: p2),
+                            Text(second.name, style: p3),
                             Icon(second.icon, size: 20),
                           ],
                         ),
@@ -87,7 +87,7 @@ class OccupantInfoCard extends StatelessWidget {
                             child: Text(
                               second.info,
                               overflow: TextOverflow.ellipsis,
-                              style: p1,
+                              style: p2,
                             ),
                           ),
                         ),

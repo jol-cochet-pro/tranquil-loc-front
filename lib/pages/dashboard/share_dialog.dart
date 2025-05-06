@@ -71,7 +71,7 @@ class _ShareDialogState extends State<ShareDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(locale.share, style: h2),
-                Text(locale.share_dialog_description, style: p1),
+                Text(locale.share_dialog_description, style: p2),
               ],
             ),
             Form(

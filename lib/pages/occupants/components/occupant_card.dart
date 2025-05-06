@@ -40,7 +40,7 @@ class OccupantCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("${occupant.firstname} ${occupant.lastname}", style: h3),
-                  Text(formatter.format(occupant.dateOfBirth), style: p1),
+                  Text(formatter.format(occupant.dateOfBirth), style: p2),
                 ],
               ),
               CustomIconButton(
@@ -107,7 +107,7 @@ class OccupantCard extends StatelessWidget {
                                       DocumentType.values
                                           .byName(entry.key)
                                           .locale(locale),
-                                      style: p2,
+                                      style: p3,
                                     ),
                                   ],
                                 );

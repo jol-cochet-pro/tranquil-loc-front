@@ -26,7 +26,7 @@ class CallToAction extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(locale.mail_openned_percentage, style: p1),
+              Text(locale.mail_openned_percentage, style: p2),
               Expanded(
                 child:
                     snapshot.hasData
@@ -76,7 +76,7 @@ class CallToAction extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(locale.search_state, style: p1),
+              Text(locale.search_state, style: p2),
               Expanded(
                 child:
                     snapshot.hasData
