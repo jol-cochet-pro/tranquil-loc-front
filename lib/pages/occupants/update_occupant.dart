@@ -95,7 +95,7 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(locale.update_future_occupant, style: h1),
+                Text(locale.update_future_occupant, style: h2),
                 !isLoading
                     ? Row(
                       spacing: 8,

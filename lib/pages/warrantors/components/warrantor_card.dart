@@ -39,7 +39,7 @@ class WarrantorCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${warrantor.firstname} ${warrantor.lastname}", style: h2),
+                  Text("${warrantor.firstname} ${warrantor.lastname}", style: h3),
                   Text(formatter.format(warrantor.dateOfBirth), style: p1),
                 ],
               ),
@@ -83,7 +83,7 @@ class WarrantorCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("${locale.documents}:", style: h3),
+                Text("${locale.documents}:", style: h4),
                 if (warrantor.documents.isNotEmpty)
                   Expanded(
                     child: ShadowContainer(

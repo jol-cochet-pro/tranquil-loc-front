@@ -36,12 +36,12 @@ class HeroSection extends StatelessWidget {
                         children: [
                           Text(
                             locale.hey_username(snapshot.data!.firstname),
-                            style: h1,
+                            style: h2,
                           ),
                           Text(locale.happy_to_see_you, style: p1),
                         ],
                       ),
-                      Text("👋", style: h1),
+                      Text("👋", style: h2),
                     ],
                   ),
                   Text(

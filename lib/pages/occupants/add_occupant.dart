@@ -67,7 +67,7 @@ class _AddOccupantState extends State<AddOccupant> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(locale.add_future_occupant, style: h1),
+                Text(locale.add_future_occupant, style: h2),
                 !isLoading
                     ? Row(
                       spacing: 8,

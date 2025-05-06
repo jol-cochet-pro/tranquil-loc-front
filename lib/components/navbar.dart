@@ -41,7 +41,7 @@ class _NavbarState extends State<Navbar> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Image(image: NetworkImage('https://fakeimg.pl/40/')),
+        Text("Tranquil'loc", style: h1),
         ShadowContainer(
           radius: Radius.circular(100),
           child: Row(
@@ -123,7 +123,7 @@ class _NavbarState extends State<Navbar> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Jolan Cochet", style: h3),
+                      Text("Jolan Cochet", style: h4),
                       Text(locale.occupant, style: p2),
                     ],
                   ),

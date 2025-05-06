@@ -35,7 +35,7 @@ class WarrantorInfoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("$title:", style: h3),
+          Text("$title:", style: h4),
           Expanded(
             child: ShadowContainer(
               padding: EdgeInsets.all(10),

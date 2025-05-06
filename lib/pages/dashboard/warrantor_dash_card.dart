@@ -57,7 +57,7 @@ class _WarrantorsCardState extends State<WarrantorsCard> {
                             Text(
                               "${snapshot.data![index].firstname} ${snapshot.data![index].lastname}",
                               overflow: TextOverflow.ellipsis,
-                              style: h3,
+                              style: h4,
                             ),
                             Text(
                               formatter.format(

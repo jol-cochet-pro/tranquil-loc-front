@@ -52,7 +52,7 @@ class _SharesCardState extends State<SharesCard> {
                         child: Text(
                           snapshot.data![index].description,
                           overflow: TextOverflow.ellipsis,
-                          style: h3,
+                          style: h4,
                         ),
                       ),
                       Row(

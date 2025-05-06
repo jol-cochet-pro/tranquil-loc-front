@@ -63,7 +63,7 @@ class _NeedEmailVerificationState extends State<NeedEmailVerification> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(locale.email_not_verified, style: h1),
+                  Text(locale.email_not_verified, style: h2),
                   Text(locale.your_email_needs_verif, style: p1),
                 ],
               ),

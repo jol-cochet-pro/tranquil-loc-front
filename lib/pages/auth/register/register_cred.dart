@@ -79,7 +79,7 @@ class _RegisterCredState extends State<RegisterCred> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(locale.register, style: h1),
+                    Text(locale.register, style: h2),
                     Text(locale.happy_to_welcome, style: p1),
                   ],
                 ),

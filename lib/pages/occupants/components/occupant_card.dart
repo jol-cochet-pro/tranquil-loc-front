@@ -39,7 +39,7 @@ class OccupantCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${occupant.firstname} ${occupant.lastname}", style: h2),
+                  Text("${occupant.firstname} ${occupant.lastname}", style: h3),
                   Text(formatter.format(occupant.dateOfBirth), style: p1),
                 ],
               ),
@@ -83,7 +83,7 @@ class OccupantCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("${locale.documents}:", style: h3),
+                Text("${locale.documents}:", style: h4),
                 if (occupant.documents.isNotEmpty)
                   Expanded(
                     child: ShadowContainer(

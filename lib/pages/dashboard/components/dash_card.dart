@@ -35,7 +35,7 @@ class DashCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: h2),
+              Text(title, style: h3),
               CustomIconButton(onPressed: onAdd, icon: Icons.add),
             ],
           ),

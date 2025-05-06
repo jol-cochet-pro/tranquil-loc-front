@@ -39,7 +39,7 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [Text(locale.documents, style: h2)],
+            children: [Text(locale.documents, style: h3)],
           ),
           Expanded(
             child: SingleChildScrollView(
