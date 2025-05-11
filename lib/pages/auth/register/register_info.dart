@@ -1,6 +1,3 @@
-import 'package:dossier_locataire/api/occupant_api.dart';
-import 'package:dossier_locataire/api/user_api.dart';
-import 'package:dossier_locataire/api/warrantor_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/date_field.dart';
 import 'package:dossier_locataire/components/dropdown.dart';
@@ -9,19 +6,12 @@ import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
-import 'package:dossier_locataire/shared/enums/home_situation.dart';
-import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/enums/search_state.dart';
 import 'package:dossier_locataire/shared/enums/user_type.dart';
-import 'package:dossier_locataire/shared/models/occupant.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
-import 'package:dossier_locataire/shared/models/warrantor.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/types/form_errors.dart';
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -49,47 +39,48 @@ class _RegisterInfosState extends State<RegisterInfos> {
 
   void submit(AppLocalizations locale) async {
     setState(() => errors.clear());
-    try {
-      var currentUser = FirebaseAuth.instance.currentUser!;
-      await UserApi.update(currentUser.uid, user);
-      if (user.type == UserType.occupant) {
-        await OccupantApi.add(
-          Occupant(
-            id: "",
-            firstname: user.firstname,
-            lastname: user.lastname,
-            dateOfBirth: user.dateOfBirth,
-            income: 0,
-            proSituation: ProSituation.other,
-            homeSituation: HomeSituation.other,
-            email: currentUser.email!,
-            phone: user.phone,
-            documents: {},
-          ),
-        );
-      }
-      if (user.type == UserType.warrantor) {
-        await WarrantorApi.add(
-          Warrantor(
-            id: "",
-            firstname: user.firstname,
-            lastname: user.lastname,
-            dateOfBirth: user.dateOfBirth,
-            income: 0,
-            proSituation: ProSituation.other,
-            homeSituation: HomeSituation.other,
-            email: currentUser.email!,
-            phone: user.phone,
-            documents: {},
-          ),
-        );
-      }
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        context.go(Dashboard.route);
-      });
-    } catch (error) {
-      // TODO ADD THIS
-    }
+    // TODO FIREBASE REPLACEMENT
+    // try {
+    //   var currentUser = FirebaseAuth.instance.currentUser!;
+    //   await UserApi.update(currentUser.uid, user);
+    //   if (user.type == UserType.occupant) {
+    //     await OccupantApi.add(
+    //       Occupant(
+    //         id: "",
+    //         firstname: user.firstname,
+    //         lastname: user.lastname,
+    //         dateOfBirth: user.dateOfBirth,
+    //         income: 0,
+    //         proSituation: ProSituation.other,
+    //         homeSituation: HomeSituation.other,
+    //         email: currentUser.email!,
+    //         phone: user.phone,
+    //         documents: {},
+    //       ),
+    //     );
+    //   }
+    //   if (user.type == UserType.warrantor) {
+    //     await WarrantorApi.add(
+    //       Warrantor(
+    //         id: "",
+    //         firstname: user.firstname,
+    //         lastname: user.lastname,
+    //         dateOfBirth: user.dateOfBirth,
+    //         income: 0,
+    //         proSituation: ProSituation.other,
+    //         homeSituation: HomeSituation.other,
+    //         email: currentUser.email!,
+    //         phone: user.phone,
+    //         documents: {},
+    //       ),
+    //     );
+    //   }
+    //   SchedulerBinding.instance.addPostFrameCallback((_) {
+    //     context.go(Dashboard.route);
+    //   });
+    // } catch (error) {
+    //   // TODO ADD THIS
+    // }
   }
 
   @override

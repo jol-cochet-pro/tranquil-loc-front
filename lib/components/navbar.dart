@@ -5,7 +5,6 @@ import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/occupants/occupants.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -106,7 +105,8 @@ class _NavbarState extends State<Navbar> {
                         label: Text(locale.logout, style: p3),
                         icon: Icon(Icons.exit_to_app, size: 16),
                         onPressed: () async {
-                          await FirebaseAuth.instance.signOut();
+                          // TODO FIREBASE REPLACEMENT
+                          // await FirebaseAuth.instance.signOut();
                           SchedulerBinding.instance.addPostFrameCallback((_) {
                             context.go(Login.route);
                           });

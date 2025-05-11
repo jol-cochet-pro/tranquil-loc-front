@@ -29,20 +29,20 @@ class AddOccupant extends StatefulWidget {
 class _AddOccupantState extends State<AddOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Map<String, List<PlatformFile>> documents = ProSituation.other.documents;
-  final Occupant occupant = Occupant.defaultOccupant;
+  final Occupant occupant = Occupant.empty;
   bool isLoading = false;
 
   void submit(AppLocalizations locale) async {
     try {
       setState(() => isLoading = true);
-      String id = await OccupantApi.add(occupant);
+      Occupant newOccupant = await OccupantApi.add(occupant);
       for (final document in documents.entries) {
         occupant.documents[document.key] = await FileApi.add(
           document.toPair(),
-          "occupants/$id",
+          "occupants/${newOccupant.id}",
         );
       }
-      await OccupantApi.update(id, occupant);
+      await OccupantApi.update(newOccupant.id, occupant);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Occupants.route);
       });

@@ -3,14 +3,11 @@ import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/pages/auth/register/register_info.dart';
 import 'package:dossier_locataire/shared/models/credentials.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/types/form_errors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,31 +27,32 @@ class _RegisterCredState extends State<RegisterCred> {
 
   void submit(AppLocalizations locale) async {
     setState(() => errors.clear());
-    try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-            email: user.email,
-            password: user.password,
-          )
-          .then((userCred) => userCred.user?.sendEmailVerification());
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        context.go(RegisterInfos.route);
-      });
-    } on FirebaseAuthException catch (error) {
-      switch (error.code) {
-        case 'weak-password':
-          setState(() => errors["password"] = locale.password_is_weak);
-          break;
-        case 'email-already-in-use':
-          setState(() => errors["email"] = locale.email_already_used);
-          break;
-        case 'invalid-email':
-          setState(
-            () => errors["email"] = locale.must_be_well_formatted(locale.email),
-          );
-          break;
-      }
-    }
+    // TODO FIREBASE REPLACEMENT
+    // try {
+    //   await FirebaseAuth.instance
+    //       .createUserWithEmailAndPassword(
+    //         email: user.email,
+    //         password: user.password,
+    //       )
+    //       .then((userCred) => userCred.user?.sendEmailVerification());
+    //   SchedulerBinding.instance.addPostFrameCallback((_) {
+    //     context.go(RegisterInfos.route);
+    //   });
+    // } on FirebaseAuthException catch (error) {
+    //   switch (error.code) {
+    //     case 'weak-password':
+    //       setState(() => errors["password"] = locale.password_is_weak);
+    //       break;
+    //     case 'email-already-in-use':
+    //       setState(() => errors["email"] = locale.email_already_used);
+    //       break;
+    //     case 'invalid-email':
+    //       setState(
+    //         () => errors["email"] = locale.must_be_well_formatted(locale.email),
+    //       );
+    //       break;
+    //   }
+    // }
   }
 
   @override

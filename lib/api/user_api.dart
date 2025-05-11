@@ -1,12 +1,16 @@
-import 'package:dossier_locataire/shared/models/storage.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 
 class UserApi {
-  static Future<void> update(String id, User user) async {
-    await Storage.user(id).set(user);
+  static Future<User> update(String id, User user) async {
+    // TODO FIREBASE REPLACEMENT
+    // await Storage.user(id).set(user);
+
+    return User.empty;
   }
 
   static Future<User?> get(String id) async {
-    return Storage.user(id).get().then((value) => value.data()!);
+    // TODO FIREBASE REPLACEMENT
+    // return Storage.user(id).get().then((value) => value.data()!);
+    return null;
   }
 }

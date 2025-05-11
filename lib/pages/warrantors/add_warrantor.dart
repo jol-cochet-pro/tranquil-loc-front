@@ -29,20 +29,20 @@ class AddWarrantor extends StatefulWidget {
 class _AddWarrantorState extends State<AddWarrantor> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Map<String, List<PlatformFile>> documents = ProSituation.other.documents;
-  final Warrantor warrantor = Warrantor.defaultWarrantor;
+  final Warrantor warrantor = Warrantor.empty;
   bool isLoading = false;
 
   void submit(AppLocalizations locale) async {
     try {
       setState(() => isLoading = true);
-      String id = await WarrantorApi.add(warrantor);
+      Warrantor newWarrantor = await WarrantorApi.add(warrantor);
       for (final document in documents.entries) {
         warrantor.documents[document.key] = await FileApi.add(
           document.toPair(),
-          "warrantors/$id",
+          "warrantors/${newWarrantor.id}",
         );
       }
-      await WarrantorApi.update(id, warrantor);
+      await WarrantorApi.update(newWarrantor.id, warrantor);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Warrantors.route);
       });

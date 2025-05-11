@@ -6,7 +6,6 @@ import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/types/form_errors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -32,21 +31,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: resetEmail.email,
-      );
-    } on FirebaseAuthException catch (error) {
-      switch (error.code) {
-        case 'auth/invalid-email':
-          setState(
-            () =>
-                errors["email"] = locale.must_be_well_formatted(
-                  locale.the_email,
-                ),
-          );
-      }
-    }
+    // TODO FIREBASE REPLACEMENT
+    // try {
+    //   await FirebaseAuth.instance.sendPasswordResetEmail(
+    //     email: resetEmail.email,
+    //   );
+    // } on FirebaseAuthException catch (error) {
+    //   switch (error.code) {
+    //     case 'auth/invalid-email':
+    //       setState(
+    //         () =>
+    //             errors["email"] = locale.must_be_well_formatted(
+    //               locale.the_email,
+    //             ),
+    //       );
+    //   }
+    // }
   }
 
   @override

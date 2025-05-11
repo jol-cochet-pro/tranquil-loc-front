@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dossier_locataire/shared/enums/home_situation.dart';
 import 'package:dossier_locataire/shared/enums/pro_situation.dart';
 import 'package:dossier_locataire/shared/models/file.dart';
@@ -52,7 +50,7 @@ class Warrantor {
     }
   }
 
-  static Warrantor get defaultWarrantor {
+  static Warrantor get empty {
     return Warrantor(
       id: "",
       firstname: "",
@@ -66,58 +64,59 @@ class Warrantor {
       documents: {},
     );
   }
+  // TODO FIREBASE REPLACEMENT
 
-  factory Warrantor.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-  ) {
-    Map<String, dynamic>? data = snapshot.data();
-    if (data == null) return Warrantor.defaultWarrantor;
-    ProSituation proSituation = ProSituation.unemployed;
-    try {
-      proSituation = ProSituation.values.byName(data["proSituation"]);
-    } catch (_) {
-      proSituation = ProSituation.unemployed;
-    }
-    HomeSituation homeSituation = HomeSituation.tenant;
-    try {
-      homeSituation = HomeSituation.values.byName(data["proSituation"]);
-    } catch (_) {
-      homeSituation = HomeSituation.tenant;
-    }
-    Map<String, List<File>> documents = {};
-    for (final entry in data["documents"].entries) {
-      List<String> refs =
-          (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
-      documents[entry.key] =
-          refs.map((ref) => File(name: ref.split('/').last, url: ref)).toList();
-    }
-    return Warrantor(
-      id: snapshot.id,
-      firstname: data["firstname"] ?? "",
-      lastname: data["lastname"] ?? "",
-      dateOfBirth: data["dateOfBirth"].toDate(),
-      income: data["income"] ?? 0,
-      proSituation: proSituation,
-      homeSituation: homeSituation,
-      email: data["email"] ?? "",
-      phone: data["phone"] ?? "",
-      documents: documents,
-    );
-  }
+  // factory Warrantor.fromFirestore(
+  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
+  // ) {
+  //   Map<String, dynamic>? data = snapshot.data();
+  //   if (data == null) return Warrantor.defaultWarrantor;
+  //   ProSituation proSituation = ProSituation.unemployed;
+  //   try {
+  //     proSituation = ProSituation.values.byName(data["proSituation"]);
+  //   } catch (_) {
+  //     proSituation = ProSituation.unemployed;
+  //   }
+  //   HomeSituation homeSituation = HomeSituation.tenant;
+  //   try {
+  //     homeSituation = HomeSituation.values.byName(data["proSituation"]);
+  //   } catch (_) {
+  //     homeSituation = HomeSituation.tenant;
+  //   }
+  //   Map<String, List<File>> documents = {};
+  //   for (final entry in data["documents"].entries) {
+  //     List<String> refs =
+  //         (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
+  //     documents[entry.key] =
+  //         refs.map((ref) => File(name: ref.split('/').last, url: ref)).toList();
+  //   }
+  //   return Warrantor(
+  //     id: snapshot.id,
+  //     firstname: data["firstname"] ?? "",
+  //     lastname: data["lastname"] ?? "",
+  //     dateOfBirth: data["dateOfBirth"].toDate(),
+  //     income: data["income"] ?? 0,
+  //     proSituation: proSituation,
+  //     homeSituation: homeSituation,
+  //     email: data["email"] ?? "",
+  //     phone: data["phone"] ?? "",
+  //     documents: documents,
+  //   );
+  // }
 
-  static Map<String, Object?> toFirestore(Warrantor warrantor) {
-    return {
-      "firstname": warrantor.firstname,
-      "lastname": warrantor.lastname,
-      "dateOfBirth": Timestamp.fromDate(warrantor.dateOfBirth),
-      "income": warrantor.income,
-      "proSituation": warrantor.proSituation.str,
-      "homeSituation": warrantor.homeSituation.str,
-      "email": warrantor.email,
-      "phone": warrantor.phone,
-      "documents": warrantor.documents.map(
-        (key, values) => MapEntry(key, values.map((value) => value.url)),
-      ),
-    };
-  }
+  // static Map<String, Object?> toFirestore(Warrantor warrantor) {
+  //   return {
+  //     "firstname": warrantor.firstname,
+  //     "lastname": warrantor.lastname,
+  //     "dateOfBirth": Timestamp.fromDate(warrantor.dateOfBirth),
+  //     "income": warrantor.income,
+  //     "proSituation": warrantor.proSituation.str,
+  //     "homeSituation": warrantor.homeSituation.str,
+  //     "email": warrantor.email,
+  //     "phone": warrantor.phone,
+  //     "documents": warrantor.documents.map(
+  //       (key, values) => MapEntry(key, values.map((value) => value.url)),
+  //     ),
+  //   };
+  // }
 }

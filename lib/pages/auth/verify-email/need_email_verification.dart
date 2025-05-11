@@ -4,9 +4,7 @@ import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,14 +25,15 @@ class _NeedEmailVerificationState extends State<NeedEmailVerification> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
-      await FirebaseAuth.instance.currentUser?.reload();
-      if (FirebaseAuth.instance.currentUser != null) {
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          context.go(Dashboard.route);
-        });
-      }
-    });
+    // TODO FIREBASE REPLACEMENT
+    // timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
+    //   await FirebaseAuth.instance.currentUser?.reload();
+    //   if (FirebaseAuth.instance.currentUser != null) {
+    //     SchedulerBinding.instance.addPostFrameCallback((_) {
+    //       context.go(Dashboard.route);
+    //     });
+    //   }
+    // });
   }
 
   @override
@@ -69,7 +68,8 @@ class _NeedEmailVerificationState extends State<NeedEmailVerification> {
               ),
               CustomButton(
                 onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
+                  // TODO FIREBASE REPLACEMENT
+                  // await FirebaseAuth.instance.signOut();
                   SchedulerBinding.instance.addPostFrameCallback((_) {
                     context.go(Login.route);
                   });

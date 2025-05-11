@@ -4,7 +4,6 @@ import 'package:dossier_locataire/pages/dashboard/call_to_action.dart';
 import 'package:dossier_locataire/pages/dashboard/dash_cards.dart';
 import 'package:dossier_locataire/pages/dashboard/hero_section.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -17,7 +16,9 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
+  // TODO FIREBASE REPLACEMENT
+  // final String userId = FirebaseAuth.instance.currentUser!.uid;
+  final String userId = "";
   late Future<User?> dashboardData;
 
   @override

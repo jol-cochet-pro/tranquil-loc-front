@@ -1,4 +1,3 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:dossier_locataire/api/share_api.dart';
 import 'package:dossier_locataire/components/icon_button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
@@ -34,10 +33,11 @@ class _SharesCardState extends State<SharesCard> {
             title: locale.my_shares,
             emptyInfo: locale.no_shares_saved,
             onAdd: () async {
-              final result = await FirebaseFunctions.instance
-                  .httpsCallable("send")
-                  .call({"email": "jolan.cochet@yopmail.com"});
-              print(result.data);
+              // TODO FIREBASE REPLACEMENT
+              // final result = await FirebaseFunctions.instance
+              //     .httpsCallable("send")
+              //     .call({"email": "jolan.cochet@yopmail.com"});
+              // print(result.data);
             },
             hasData: snapshot.hasData,
             items: snapshot.data,

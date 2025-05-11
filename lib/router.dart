@@ -13,18 +13,18 @@ import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
 import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/update_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 String? redirectLoggedInWithEmail(BuildContext context, GoRouterState state) {
-  User? user = FirebaseAuth.instance.currentUser;
-  if (user == null) {
-    return (Login.route);
-  }
-  if (!user.emailVerified) {
-    return (NeedEmailVerification.route);
-  }
+  // TODO FIREBASE REPLACEMENT
+  // User? user = FirebaseAuth.instance.currentUser;
+  // if (user == null) {
+  //   return (Login.route);
+  // }
+  // if (!user.emailVerified) {
+  //   return (NeedEmailVerification.route);
+  // }
   return null;
 }
 
@@ -32,27 +32,33 @@ String? redirectLoggedInWithoutEmail(
   BuildContext context,
   GoRouterState state,
 ) {
-  User? user = FirebaseAuth.instance.currentUser;
-  if (user == null) {
-    return (Login.route);
-  }
-  if (user.emailVerified) {
-    return (Dashboard.route);
-  }
+  // TODO FIREBASE REPLACEMENT
+  // User? user = FirebaseAuth.instance.currentUser;
+  // if (user == null) {
+  //   return (Login.route);
+  // }
+  // if (user.emailVerified) {
+  //   return (Dashboard.route);
+  // }
   return null;
 }
 
 String? redirectLoggedOut(BuildContext context, GoRouterState state) {
-  User? user = FirebaseAuth.instance.currentUser;
-  return user != null ? Dashboard.route : null;
+  // TODO FIREBASE REPLACEMENT
+  // User? user = FirebaseAuth.instance.currentUser;
+  // return user != null ? Dashboard.route : null;
+  return null;
 }
 
 String? redirectFirstLog(BuildContext context, GoRouterState state) {
-  User? user = FirebaseAuth.instance.currentUser;
-  if (user == null) {
-    return Login.route;
-  }
-  return user.emailVerified ? Login.route : null;
+  // TODO FIREBASE REPLACEMENT
+
+  // User? user = FirebaseAuth.instance.currentUser;
+  // if (user == null) {
+  //   return Login.route;
+  // }
+  // return user.emailVerified ? Login.route : null;
+  return null;
 }
 
 final GoRouter router = GoRouter(

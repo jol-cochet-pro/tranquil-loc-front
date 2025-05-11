@@ -4,7 +4,6 @@ import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -24,23 +23,24 @@ class _VerifiyEmailState extends State<VerifiyEmail> {
   String whyError = "";
 
   Future<void> retrieveData(AppLocalizations locale) async {
-    try {
-      if (widget.actionCode != null) {
-        await FirebaseAuth.instance.applyActionCode(widget.actionCode!);
-        await FirebaseAuth.instance.currentUser?.reload();
-      } else {
-        setState(() => whyError = locale.invalid_verif_code);
-      }
-    } on FirebaseAuthException catch (error) {
-      switch (error.code) {
-        case 'expired-action-code':
-          setState(() => whyError = locale.expired_verif_code);
-        case 'invalid-action-code':
-          setState(() => whyError = locale.invalid_verif_code);
-        default:
-          setState(() => whyError = locale.user_not_found);
-      }
-    }
+    // TODO FIREBASE REPLACEMENT
+    // try {
+    //   if (widget.actionCode != null) {
+    //     await FirebaseAuth.instance.applyActionCode(widget.actionCode!);
+    //     await FirebaseAuth.instance.currentUser?.reload();
+    //   } else {
+    //     setState(() => whyError = locale.invalid_verif_code);
+    //   }
+    // } on FirebaseAuthException catch (error) {
+    //   switch (error.code) {
+    //     case 'expired-action-code':
+    //       setState(() => whyError = locale.expired_verif_code);
+    //     case 'invalid-action-code':
+    //       setState(() => whyError = locale.invalid_verif_code);
+    //     default:
+    //       setState(() => whyError = locale.user_not_found);
+    //   }
+    // }
   }
 
   @override

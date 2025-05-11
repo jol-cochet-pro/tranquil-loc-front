@@ -1,14 +1,17 @@
 import 'package:dossier_locataire/shared/models/share.dart';
-import 'package:dossier_locataire/shared/models/storage.dart';
 
 class ShareApi {
   static Future<List<Share>> getAll() async {
-    return await Storage.shares.get().then(
-      (value) => value.docs.map((doc) => doc.data()).toList(),
-    );
+    // TODO FIREBASE REPLACEMENT
+    // return await Storage.shares.get().then(
+    //   (value) => value.docs.map((doc) => doc.data()).toList(),
+    // );
+    return [];
   }
 
-  static Future<void> add(Share share) async {
-    await Storage.shares.add(share);
+  static Future<Share> add(Share share) async {
+    // TODO FIREBASE REPLACEMENT
+    // await Storage.shares.add(share);
+    return Share.empty;
   }
 }

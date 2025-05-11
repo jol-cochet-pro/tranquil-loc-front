@@ -21,6 +21,18 @@ class Share {
     required this.occupantPermission,
   });
 
+  static Share get empty {
+    return Share(
+      id: "",
+      description: "",
+      durationNum: -1,
+      durationPeriod: ShareDurationPeriod.day,
+      email: "",
+      occupantPermission: SharePermission.none,
+      warrantorPermission: SharePermission.none,
+    );
+  }
+
   String shareDurationToString(AppLocalizations locale) {
     switch (durationPeriod) {
       case ShareDurationPeriod.day:
@@ -31,49 +43,50 @@ class Share {
         return locale.n_months(durationNum);
     }
   }
+  // TODO FIREBASE REPLACEMENT
 
-  factory Share.fromFirestore(Map<String, dynamic>? data) {
-    ShareDurationPeriod durationPeriod = ShareDurationPeriod.day;
-    try {
-      durationPeriod = ShareDurationPeriod.values.byName(
-        data?["durationPeriod"],
-      );
-    } catch (_) {
-      durationPeriod = ShareDurationPeriod.day;
-    }
-    SharePermission occupantPerm = SharePermission.none;
-    try {
-      occupantPerm = SharePermission.values.byName(data?["occupantPermission"]);
-    } catch (_) {
-      occupantPerm = SharePermission.none;
-    }
-    SharePermission warrantorPerm = SharePermission.none;
-    try {
-      warrantorPerm = SharePermission.values.byName(
-        data?["warrantorPermission"],
-      );
-    } catch (_) {
-      warrantorPerm = SharePermission.none;
-    }
-    return Share(
-      id: data?["key"] ?? "",
-      description: data?["description"] ?? "",
-      email: data?["email"] ?? "",
-      durationNum: data?["durationNum"] ?? 0,
-      durationPeriod: durationPeriod,
-      occupantPermission: occupantPerm,
-      warrantorPermission: warrantorPerm,
-    );
-  }
+  // factory Share.fromFirestore(Map<String, dynamic>? data) {
+  //   ShareDurationPeriod durationPeriod = ShareDurationPeriod.day;
+  //   try {
+  //     durationPeriod = ShareDurationPeriod.values.byName(
+  //       data?["durationPeriod"],
+  //     );
+  //   } catch (_) {
+  //     durationPeriod = ShareDurationPeriod.day;
+  //   }
+  //   SharePermission occupantPerm = SharePermission.none;
+  //   try {
+  //     occupantPerm = SharePermission.values.byName(data?["occupantPermission"]);
+  //   } catch (_) {
+  //     occupantPerm = SharePermission.none;
+  //   }
+  //   SharePermission warrantorPerm = SharePermission.none;
+  //   try {
+  //     warrantorPerm = SharePermission.values.byName(
+  //       data?["warrantorPermission"],
+  //     );
+  //   } catch (_) {
+  //     warrantorPerm = SharePermission.none;
+  //   }
+  //   return Share(
+  //     id: data?["key"] ?? "",
+  //     description: data?["description"] ?? "",
+  //     email: data?["email"] ?? "",
+  //     durationNum: data?["durationNum"] ?? 0,
+  //     durationPeriod: durationPeriod,
+  //     occupantPermission: occupantPerm,
+  //     warrantorPermission: warrantorPerm,
+  //   );
+  // }
 
-  static Map<String, Object?> toFirestore(Share share) {
-    return {
-      "description": share.description,
-      "email": share.email,
-      "durationNum": share.durationNum,
-      "durationPeriod": share.durationPeriod.str,
-      "occupantPermission": share.occupantPermission.str,
-      "warrantorPermission": share.warrantorPermission.str,
-    };
-  }
+  // static Map<String, Object?> toFirestore(Share share) {
+  //   return {
+  //     "description": share.description,
+  //     "email": share.email,
+  //     "durationNum": share.durationNum,
+  //     "durationPeriod": share.durationPeriod.str,
+  //     "occupantPermission": share.occupantPermission.str,
+  //     "warrantorPermission": share.warrantorPermission.str,
+  //   };
+  // }
 }
