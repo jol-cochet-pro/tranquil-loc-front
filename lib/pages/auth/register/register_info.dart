@@ -40,12 +40,8 @@ class _RegisterInfosState extends State<RegisterInfos> {
         context.go(Dashboard.route);
       });
     } on ApiException catch (err) {
-      print(err.message);
+      print(err.response);
     }
-    // TODO FIREBASE REPLACEMENT
-    // try {
-    //   var currentUser = FirebaseAuth.instance.currentUser!;
-    //   await UserApi.update(currentUser.uid, user);
     //   if (user.type == UserType.occupant) {
     //     await OccupantApi.add(
     //       Occupant(
@@ -78,12 +74,6 @@ class _RegisterInfosState extends State<RegisterInfos> {
     //       ),
     //     );
     //   }
-    //   SchedulerBinding.instance.addPostFrameCallback((_) {
-    //     context.go(Dashboard.route);
-    //   });
-    // } catch (error) {
-    //   // TODO ADD THIS
-    // }
   }
 
   @override

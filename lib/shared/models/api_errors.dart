@@ -1,14 +1,5 @@
-
-class ApiExceptionResponse {
-  String code;
-
-  ApiExceptionResponse({
-    required this.code,
-  });
-}
-
 class ApiException extends Error {
-  ApiExceptionResponse response;
+  dynamic response;
   int status;
   Object options;
   String message;
@@ -25,16 +16,14 @@ class ApiException extends Error {
   factory ApiException.fromApi(Map<String, dynamic>? data) {
     return switch (data) {
       {
-        "response": {
-          "code": String code,
-        },
+        "response": var response,
         "status": int status,
         "options": var options,
         "message": String message,
         "name": String name,
       } =>
         ApiException(
-          response: ApiExceptionResponse(code: code),
+          response: response,
           status: status,
           options: options,
           message: message,
