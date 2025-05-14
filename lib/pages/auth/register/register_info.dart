@@ -7,12 +7,14 @@ import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
+import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/enums/user_type.dart';
 import 'package:dossier_locataire/shared/models/api_errors.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/types/form_errors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -34,6 +36,9 @@ class _RegisterInfosState extends State<RegisterInfos> {
     setState(() => errors.clear());
     try {
       await AuthApi.register(user);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context.go(Dashboard.route);
+      });
     } on ApiException catch (err) {
       print(err.message);
     }

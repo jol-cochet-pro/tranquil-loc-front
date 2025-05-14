@@ -23,33 +23,33 @@ extension DocumentTypeExtension on DocumentType {
   String get str {
     switch (this) {
       case DocumentType.IDENTITY_DOCUMENTS:
-        return "identityDocuments";
+        return "IDENTITY_DOCUMENTS";
       case DocumentType.PROOF_OF_ADDRESS:
-        return "proofOfAddress";
+        return "PROOF_OF_ADDRESS";
       case DocumentType.TAX_NOTICE:
-        return "taxNotice";
+        return "TAX_NOTICE";
       case DocumentType.EMPLOYMENT_CONTRACT:
-        return "employmentContract";
+        return "EMPLOYMENT_CONTRACT";
       case DocumentType.LAST_THREE_PAYSLIPS:
-        return "lastThreePayslips";
+        return "LAST_THREE_PAYSLIPS";
       case DocumentType.PENSION_CERTIFICATE:
-        return "pensionCertificate";
+        return "PENSION_CERTIFICATE";
       case DocumentType.APPRENTICESHIP_FORM:
-        return "apprenticeshipForm";
+        return "APPRENTICESHIP_FORM";
       case DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE:
-        return "schoolEnrollmentCertificate";
+        return "SCHOOL_ENROLLMENT_CERTIFICATE";
       case DocumentType.ARE_CERTIFICATE:
-        return "areCertificate";
+        return "ARE_CERTIFICATE";
       case DocumentType.JOB_OFFER:
-        return "jobOffer";
+        return "JOB_OFFER";
       case DocumentType.EMPLOYER_CERTIFICATE:
-        return "employerCertificate";
+        return "EMPLOYER_CERTIFICATE";
       case DocumentType.REGISTRATION_SIRENE:
-        return "registrationSirene";
+        return "REGISTRATION_SIRENE";
       case DocumentType.FINANCIAL_STATEMENT:
-        return "financialStatement";
+        return "FINANCIAL_STATEMENT";
       case DocumentType.OTHER:
-        return "other";
+        return "OTHER";
     }
   }
 

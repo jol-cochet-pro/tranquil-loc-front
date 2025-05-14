@@ -7,11 +7,11 @@ extension ShareDurationPeriodExtension on ShareDurationPeriod {
   String get str {
     switch (this) {
       case ShareDurationPeriod.DAY:
-        return "day";
+        return "DAY";
       case ShareDurationPeriod.WEEK:
-        return "week";
+        return "WEEK";
       case ShareDurationPeriod.MONTH:
-        return "month";
+        return "MONTH";
     }
   }
 

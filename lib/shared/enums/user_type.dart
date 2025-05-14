@@ -7,11 +7,11 @@ extension SearchStateExtension on UserType {
   String get str {
     switch (this) {
       case UserType.WARRANTOR:
-        return "occupant";
+        return "WARRANTOR";
       case UserType.OCCUPANT:
-        return "warrantor";
+        return "OCCUPANT";
       case UserType.OTHER:
-        return "other";
+        return "OTHER";
     }
   }
 

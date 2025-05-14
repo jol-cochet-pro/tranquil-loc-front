@@ -20,23 +20,23 @@ extension ProSituationExtension on ProSituation {
   String get str {
     switch (this) {
       case ProSituation.CDD:
-        return "cdd";
+        return "CDD";
       case ProSituation.CDI:
-        return "cdi";
+        return "CDI";
       case ProSituation.RETIRED:
-        return "retired";
+        return "RETIRED";
       case ProSituation.APPRENTICE:
-        return "coopStudent";
+        return "APPRENTICE";
       case ProSituation.UNEMPLOYED:
-        return "unemployed";
+        return "UNEMPLOYED";
       case ProSituation.STUDENT:
-        return "student";
+        return "STUDENT";
       case ProSituation.OFFICIAL:
-        return "official";
+        return "OFFICIAL";
       case ProSituation.FREELANCE:
-        return "freelance";
+        return "FREELANCE";
       case ProSituation.OTHER:
-        return "other";
+        return "OTHER";
     }
   }
 

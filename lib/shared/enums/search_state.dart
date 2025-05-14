@@ -5,9 +5,9 @@ extension SearchStateExtension on SearchState {
   String get str {
     switch (this) {
       case SearchState.PAUSED:
-        return "paused";
+        return "PAUSED";
       case SearchState.SEARCHING:
-        return "searching";
+        return "SEARCHING";
     }
   }
 }

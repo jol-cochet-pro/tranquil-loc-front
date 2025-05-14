@@ -7,11 +7,11 @@ extension HomeSituationExtension on HomeSituation {
   String get str {
     switch (this) {
       case HomeSituation.TENANT:
-        return "tenant";
+        return "TENANT";
       case HomeSituation.OWNER:
-        return "owner";
+        return "OWNER";
       case HomeSituation.OTHER:
-        return "other";
+        return "OTHER";
     }
   }
 

@@ -5,13 +5,13 @@ extension SharePermissionExtension on SharePermission {
   String get str {
     switch (this) {
       case SharePermission.WRITE:
-        return "write";
+        return "WRITE";
       case SharePermission.READ_FILE:
-        return "readFile";
+        return "READ_FILE";
       case SharePermission.READ_INFO:
-        return "readInfo";
+        return "READ_INFO";
       case SharePermission.NONE:
-        return "none";
+        return "NONE";
     }
   }
 }
