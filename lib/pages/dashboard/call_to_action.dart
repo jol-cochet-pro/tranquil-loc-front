@@ -34,7 +34,7 @@ class CallToAction extends StatelessWidget {
                           spacing: 24,
                           children: [
                             Icon(Icons.mark_email_read_outlined),
-                            Text("${snapshot.data!.opennedMail}%", style: h3),
+                            Text("${snapshot.data!.opennedEmail}%", style: h3),
                           ],
                         )
                         : Loader(),
@@ -83,7 +83,7 @@ class CallToAction extends StatelessWidget {
                         ? Row(
                           spacing: 24,
                           children:
-                              snapshot.data!.searchState == SearchState.paused
+                              snapshot.data!.searchState == SearchState.PAUSED
                                   ? [
                                     IconWithState(state: IconState.pause),
                                     Text(locale.paused, style: h3),

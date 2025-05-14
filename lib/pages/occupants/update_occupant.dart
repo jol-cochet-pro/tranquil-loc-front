@@ -32,7 +32,7 @@ class UpdateOccupant extends StatefulWidget {
 
 class _UpdateOccupantState extends State<UpdateOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<String, List<PlatformFile>> newDocuments = ProSituation.other.documents;
+  Map<String, List<PlatformFile>> newDocuments = ProSituation.OTHER.documents;
   final Map<String, List<File>> rmDocuments = {};
   late Future<Occupant?> occupant;
   bool isLoading = false;

@@ -1,13 +1,17 @@
+import 'package:dossier_locataire/api/auth_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
+import 'package:dossier_locataire/pages/auth/register/register_info.dart';
+import 'package:dossier_locataire/shared/models/api_errors.dart';
 import 'package:dossier_locataire/shared/models/credentials.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/types/form_errors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,37 +26,23 @@ class RegisterCred extends StatefulWidget {
 
 class _RegisterCredState extends State<RegisterCred> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Credentials user = Credentials(email: "", password: "");
+  final Credentials cred = Credentials(email: "", password: "");
   final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {
     setState(() => errors.clear());
-    // TODO FIREBASE REPLACEMENT
-    // try {
-    //   await FirebaseAuth.instance
-    //       .createUserWithEmailAndPassword(
-    //         email: user.email,
-    //         password: user.password,
-    //       )
-    //       .then((userCred) => userCred.user?.sendEmailVerification());
-    //   SchedulerBinding.instance.addPostFrameCallback((_) {
-    //     context.go(RegisterInfos.route);
-    //   });
-    // } on FirebaseAuthException catch (error) {
-    //   switch (error.code) {
-    //     case 'weak-password':
-    //       setState(() => errors["password"] = locale.password_is_weak);
-    //       break;
-    //     case 'email-already-in-use':
-    //       setState(() => errors["email"] = locale.email_already_used);
-    //       break;
-    //     case 'invalid-email':
-    //       setState(
-    //         () => errors["email"] = locale.must_be_well_formatted(locale.email),
-    //       );
-    //       break;
-    //   }
-    // }
+    try {
+      await AuthApi.preRegister(cred);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context.go(RegisterInfos.route);
+      });
+    } on ApiException catch (err) {
+      switch (err.response.code) {
+        case "conflict":
+            setState(() => errors["email"] = locale.email_already_used);
+            break ;
+      }
+    }
   }
 
   @override
@@ -83,7 +73,7 @@ class _RegisterCredState extends State<RegisterCred> {
                 ),
                 CustomTextField(
                   label: locale.email,
-                  onChanged: (newValue) => user.email = newValue!,
+                  onChanged: (newValue) => cred.email = newValue!,
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_email);
@@ -100,7 +90,7 @@ class _RegisterCredState extends State<RegisterCred> {
                 ),
                 CustomTextField(
                   label: locale.password,
-                  onChanged: (newValue) => user.password = newValue!,
+                  onChanged: (newValue) => cred.password = newValue!,
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_password);
@@ -121,7 +111,7 @@ class _RegisterCredState extends State<RegisterCred> {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_confirm_password);
                     }
-                    if (value != user.password) {
+                    if (value != cred.password) {
                       return locale.confirm_password_must_match;
                     }
                     return null;

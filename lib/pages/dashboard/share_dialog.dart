@@ -29,16 +29,16 @@ class _ShareDialogState extends State<ShareDialog> {
     description: "",
     email: "",
     durationNum: -1,
-    durationPeriod: ShareDurationPeriod.day,
-    occupantPermission: SharePermission.none,
-    warrantorPermission: SharePermission.none,
+    durationPeriod: ShareDurationPeriod.DAY,
+    occupantPermission: SharePermission.NONE,
+    warrantorPermission: SharePermission.NONE,
   );
   final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {
     setState(() => errors.clear());
-    if (share.warrantorPermission == SharePermission.none &&
-        share.occupantPermission == SharePermission.none) {
+    if (share.warrantorPermission == SharePermission.NONE &&
+        share.occupantPermission == SharePermission.NONE) {
       setState(() {
         errors["permissions"] = locale.must_have_at_least_one_perm;
       });
@@ -158,7 +158,7 @@ class _ShareDialogState extends State<ShareDialog> {
                       ),
                       Flexible(
                         child: CustomDropDown(
-                          initialValue: ShareDurationPeriod.day,
+                          initialValue: ShareDurationPeriod.DAY,
                           onSelected:
                               (value) =>
                                   setState(() => share.durationPeriod = value!),
@@ -187,7 +187,7 @@ class _ShareDialogState extends State<ShareDialog> {
                         ),
                         SharePermCell(
                           label: locale.read_infos,
-                          permission: SharePermission.readInfo,
+                          permission: SharePermission.READ_INFO,
                           value: share.warrantorPermission,
                           onChange: (newValue) {
                             setState(() {
@@ -197,7 +197,7 @@ class _ShareDialogState extends State<ShareDialog> {
                         ),
                         SharePermCell(
                           label: locale.read_files,
-                          permission: SharePermission.readFile,
+                          permission: SharePermission.READ_FILE,
                           value: share.warrantorPermission,
                           onChange: (newValue) {
                             setState(() {
@@ -207,7 +207,7 @@ class _ShareDialogState extends State<ShareDialog> {
                         ),
                         SharePermCell(
                           label: locale.write,
-                          permission: SharePermission.write,
+                          permission: SharePermission.WRITE,
                           value: share.warrantorPermission,
                           onChange: (newValue) {
                             setState(() {
@@ -230,7 +230,7 @@ class _ShareDialogState extends State<ShareDialog> {
                         ),
                         SharePermCell(
                           label: locale.read_infos,
-                          permission: SharePermission.readInfo,
+                          permission: SharePermission.READ_INFO,
                           value: share.occupantPermission,
                           onChange: (newValue) {
                             setState(() {
@@ -240,7 +240,7 @@ class _ShareDialogState extends State<ShareDialog> {
                         ),
                         SharePermCell(
                           label: locale.read_files,
-                          permission: SharePermission.readFile,
+                          permission: SharePermission.READ_FILE,
                           value: share.occupantPermission,
                           onChange: (newValue) {
                             setState(() {
@@ -250,7 +250,7 @@ class _ShareDialogState extends State<ShareDialog> {
                         ),
                         SharePermCell(
                           label: locale.write,
-                          permission: SharePermission.write,
+                          permission: SharePermission.WRITE,
                           value: share.occupantPermission,
                           onChange: (newValue) {
                             setState(() {

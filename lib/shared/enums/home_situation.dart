@@ -1,26 +1,27 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum HomeSituation { tenant, owner, other }
+// ignore: constant_identifier_names
+enum HomeSituation { TENANT, OWNER, OTHER }
 
 extension HomeSituationExtension on HomeSituation {
   String get str {
     switch (this) {
-      case HomeSituation.tenant:
+      case HomeSituation.TENANT:
         return "tenant";
-      case HomeSituation.owner:
+      case HomeSituation.OWNER:
         return "owner";
-      case HomeSituation.other:
+      case HomeSituation.OTHER:
         return "other";
     }
   }
 
   String locale(AppLocalizations locale) {
     switch (this) {
-      case HomeSituation.tenant:
+      case HomeSituation.TENANT:
         return locale.tenant;
-      case HomeSituation.owner:
+      case HomeSituation.OWNER:
         return locale.owner;
-      case HomeSituation.other:
+      case HomeSituation.OTHER:
         return locale.other;
     }
   }

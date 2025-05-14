@@ -26,20 +26,20 @@ class Share {
       id: "",
       description: "",
       durationNum: -1,
-      durationPeriod: ShareDurationPeriod.day,
+      durationPeriod: ShareDurationPeriod.DAY,
       email: "",
-      occupantPermission: SharePermission.none,
-      warrantorPermission: SharePermission.none,
+      occupantPermission: SharePermission.NONE,
+      warrantorPermission: SharePermission.NONE,
     );
   }
 
   String shareDurationToString(AppLocalizations locale) {
     switch (durationPeriod) {
-      case ShareDurationPeriod.day:
+      case ShareDurationPeriod.DAY:
         return locale.n_days(durationNum);
-      case ShareDurationPeriod.week:
+      case ShareDurationPeriod.WEEK:
         return locale.n_weeks(durationNum);
-      case ShareDurationPeriod.month:
+      case ShareDurationPeriod.MONTH:
         return locale.n_months(durationNum);
     }
   }

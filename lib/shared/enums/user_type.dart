@@ -1,26 +1,27 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum UserType { warrantor, occupant, other }
+// ignore: constant_identifier_names
+enum UserType { WARRANTOR, OCCUPANT, OTHER }
 
 extension SearchStateExtension on UserType {
   String get str {
     switch (this) {
-      case UserType.occupant:
+      case UserType.WARRANTOR:
         return "occupant";
-      case UserType.warrantor:
+      case UserType.OCCUPANT:
         return "warrantor";
-      case UserType.other:
+      case UserType.OTHER:
         return "other";
     }
   }
 
   String locale(AppLocalizations locale) {
     switch (this) {
-      case UserType.occupant:
+      case UserType.OCCUPANT:
         return locale.occupant;
-      case UserType.warrantor:
+      case UserType.WARRANTOR:
         return locale.warrantor;
-      case UserType.other:
+      case UserType.OTHER:
         return locale.other;
     }
   }

@@ -25,7 +25,7 @@ class SharePermCell extends StatelessWidget {
           value: Enum.compareByIndex(permission, value) >= 0,
           onChanged: (newValue) {
             if (Enum.compareByIndex(permission, value) >= 0) {
-              onChange(SharePermission.none);
+              onChange(SharePermission.NONE);
             } else {
               onChange(permission);
             }

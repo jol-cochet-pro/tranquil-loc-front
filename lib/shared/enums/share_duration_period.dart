@@ -1,26 +1,27 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum ShareDurationPeriod { day, week, month }
+// ignore: constant_identifier_names
+enum ShareDurationPeriod { DAY, WEEK, MONTH }
 
 extension ShareDurationPeriodExtension on ShareDurationPeriod {
   String get str {
     switch (this) {
-      case ShareDurationPeriod.day:
+      case ShareDurationPeriod.DAY:
         return "day";
-      case ShareDurationPeriod.week:
+      case ShareDurationPeriod.WEEK:
         return "week";
-      case ShareDurationPeriod.month:
+      case ShareDurationPeriod.MONTH:
         return "month";
     }
   }
 
   String locale(AppLocalizations locale) {
     switch (this) {
-      case ShareDurationPeriod.day:
+      case ShareDurationPeriod.DAY:
         return locale.days;
-      case ShareDurationPeriod.week:
+      case ShareDurationPeriod.WEEK:
         return locale.weeks;
-      case ShareDurationPeriod.month:
+      case ShareDurationPeriod.MONTH:
         return locale.months;
     }
   }

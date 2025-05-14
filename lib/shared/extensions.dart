@@ -1,3 +1,4 @@
+import 'package:http/http.dart' as http;
 import 'package:analyzer_plugin/utilities/pair.dart';
 
 extension StringExtension on String {
@@ -37,5 +38,11 @@ extension MapExtension on Map {
 extension MapEntryExtension<T, K> on MapEntry<T, K> {
   Pair<T, K> toPair() {
     return Pair(key, value);
+  }
+}
+
+extension HttpResponseExtension on http.Response {
+  bool get isOK {
+    return (statusCode ~/ 100) == 2;
   }
 }

@@ -1,101 +1,103 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:dossier_locataire/shared/enums/document_type.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ProSituation {
-  cdd,
-  cdi,
-  retired,
-  apprentice,
-  unemployed,
-  student,
-  official,
-  freelance,
-  other,
+  CDD,
+  CDI,
+  RETIRED,
+  APPRENTICE,
+  UNEMPLOYED,
+  STUDENT,
+  OFFICIAL,
+  FREELANCE,
+  OTHER,
 }
 
 extension ProSituationExtension on ProSituation {
   String get str {
     switch (this) {
-      case ProSituation.cdd:
+      case ProSituation.CDD:
         return "cdd";
-      case ProSituation.cdi:
+      case ProSituation.CDI:
         return "cdi";
-      case ProSituation.retired:
+      case ProSituation.RETIRED:
         return "retired";
-      case ProSituation.apprentice:
+      case ProSituation.APPRENTICE:
         return "coopStudent";
-      case ProSituation.unemployed:
+      case ProSituation.UNEMPLOYED:
         return "unemployed";
-      case ProSituation.student:
+      case ProSituation.STUDENT:
         return "student";
-      case ProSituation.official:
+      case ProSituation.OFFICIAL:
         return "official";
-      case ProSituation.freelance:
+      case ProSituation.FREELANCE:
         return "freelance";
-      case ProSituation.other:
+      case ProSituation.OTHER:
         return "other";
     }
   }
 
   String locale(AppLocalizations locale) {
     switch (this) {
-      case ProSituation.cdd:
+      case ProSituation.CDD:
         return locale.cdd;
-      case ProSituation.cdi:
+      case ProSituation.CDI:
         return locale.cdi;
-      case ProSituation.retired:
+      case ProSituation.RETIRED:
         return locale.retired;
-      case ProSituation.apprentice:
+      case ProSituation.APPRENTICE:
         return locale.apprentice;
-      case ProSituation.unemployed:
+      case ProSituation.UNEMPLOYED:
         return locale.unemployed;
-      case ProSituation.student:
+      case ProSituation.STUDENT:
         return locale.student;
-      case ProSituation.official:
+      case ProSituation.OFFICIAL:
         return locale.official;
-      case ProSituation.freelance:
+      case ProSituation.FREELANCE:
         return locale.freelance;
-      case ProSituation.other:
+      case ProSituation.OTHER:
         return locale.other;
     }
   }
 
   Map<String, List<PlatformFile>> get documents {
     Map<String, List<PlatformFile>> documents = {
-      DocumentType.identityDocuments.str: [],
-      DocumentType.proofOfAddress.str: [],
-      DocumentType.taxNotice.str: [],
-      DocumentType.other.str: [],
+      DocumentType.IDENTITY_DOCUMENTS.str: [],
+      DocumentType.PROOF_OF_ADDRESS.str: [],
+      DocumentType.TAX_NOTICE.str: [],
+      DocumentType.OTHER.str: [],
     };
     switch (this) {
-      case ProSituation.cdd:
-      case ProSituation.cdi:
-        documents[DocumentType.employmentContract.str] = [];
-        documents[DocumentType.lastThreePayslips.str] = [];
+      case ProSituation.CDD:
+      case ProSituation.CDI:
+        documents[DocumentType.EMPLOYMENT_CONTRACT.str] = [];
+        documents[DocumentType.LAST_THREE_PAYSLIPS.str] = [];
         break;
-      case ProSituation.retired:
-        documents[DocumentType.pensionCertificate.str] = [];
+      case ProSituation.RETIRED:
+        documents[DocumentType.PENSION_CERTIFICATE.str] = [];
         break;
-      case ProSituation.apprentice:
-        documents[DocumentType.apprenticeshipForm.str] = [];
-        documents[DocumentType.schoolEnrollmentCertificate.str] = [];
+      case ProSituation.APPRENTICE:
+        documents[DocumentType.APPRENTICESHIP_FORM.str] = [];
+        documents[DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE.str] = [];
         break;
-      case ProSituation.unemployed:
-        documents[DocumentType.areCertificate.str] = [];
-        documents[DocumentType.jobOffer.str] = [];
+      case ProSituation.UNEMPLOYED:
+        documents[DocumentType.ARE_CERTIFICATE.str] = [];
+        documents[DocumentType.JOB_OFFER.str] = [];
         break;
-      case ProSituation.student:
-        documents[DocumentType.schoolEnrollmentCertificate.str] = [];
+      case ProSituation.STUDENT:
+        documents[DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE.str] = [];
         break;
-      case ProSituation.official:
-        documents[DocumentType.employerCertificate.str] = [];
+      case ProSituation.OFFICIAL:
+        documents[DocumentType.EMPLOYER_CERTIFICATE.str] = [];
         break;
-      case ProSituation.freelance:
-        documents[DocumentType.registrationSirene.str] = [];
-        documents[DocumentType.financialStatement.str] = [];
+      case ProSituation.FREELANCE:
+        documents[DocumentType.REGISTRATION_SIRENE.str] = [];
+        documents[DocumentType.FINANCIAL_STATEMENT.str] = [];
         break;
-      case ProSituation.other:
+      case ProSituation.OTHER:
         break;
     }
     return documents;

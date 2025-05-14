@@ -28,7 +28,7 @@ class AddOccupant extends StatefulWidget {
 
 class _AddOccupantState extends State<AddOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<String, List<PlatformFile>> documents = ProSituation.other.documents;
+  Map<String, List<PlatformFile>> documents = ProSituation.OTHER.documents;
   final Occupant occupant = Occupant.empty;
   bool isLoading = false;
 

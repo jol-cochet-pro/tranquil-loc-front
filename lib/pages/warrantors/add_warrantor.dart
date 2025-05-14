@@ -28,7 +28,7 @@ class AddWarrantor extends StatefulWidget {
 
 class _AddWarrantorState extends State<AddWarrantor> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<String, List<PlatformFile>> documents = ProSituation.other.documents;
+  Map<String, List<PlatformFile>> documents = ProSituation.OTHER.documents;
   final Warrantor warrantor = Warrantor.empty;
   bool isLoading = false;
 

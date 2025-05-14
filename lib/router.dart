@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/api/auth_api.dart';
 import 'package:dossier_locataire/components/navbar.dart';
 import 'package:dossier_locataire/pages/auth/forgot-password/forgot_password.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
@@ -13,52 +14,65 @@ import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
 import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/update_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
+import 'package:dossier_locataire/shared/models/user_jwt.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-String? redirectLoggedInWithEmail(BuildContext context, GoRouterState state) {
-  // TODO FIREBASE REPLACEMENT
-  // User? user = FirebaseAuth.instance.currentUser;
-  // if (user == null) {
-  //   return (Login.route);
-  // }
-  // if (!user.emailVerified) {
-  //   return (NeedEmailVerification.route);
-  // }
-  return null;
-}
-
-String? redirectLoggedInWithoutEmail(
+Future<String?> redirectLoggedInWithEmail(
   BuildContext context,
   GoRouterState state,
-) {
-  // TODO FIREBASE REPLACEMENT
-  // User? user = FirebaseAuth.instance.currentUser;
-  // if (user == null) {
-  //   return (Login.route);
-  // }
-  // if (user.emailVerified) {
-  //   return (Dashboard.route);
-  // }
-  return null;
+) async {
+  try {
+    UserJwt user = await AuthApi.getMe();
+    if (!user.emailVerified) {
+      return (NeedEmailVerification.route);
+    }
+    return null;
+  } catch (_) {
+    return (Login.route);
+  }
 }
 
-String? redirectLoggedOut(BuildContext context, GoRouterState state) {
-  // TODO FIREBASE REPLACEMENT
-  // User? user = FirebaseAuth.instance.currentUser;
-  // return user != null ? Dashboard.route : null;
-  return null;
+Future<String?> redirectLoggedInWithoutEmail(
+  BuildContext context,
+  GoRouterState state,
+) async {
+  try {
+    UserJwt user = await AuthApi.getMe();
+    if (user.emailVerified) {
+      return (NeedEmailVerification.route);
+    }
+    return null;
+  } catch (err) {
+    return (Login.route);
+  }
 }
 
-String? redirectFirstLog(BuildContext context, GoRouterState state) {
-  // TODO FIREBASE REPLACEMENT
+Future<String?> redirectLoggedOut(
+  BuildContext context,
+  GoRouterState state,
+) async {
+  try {
+    await AuthApi.getMe();
+    return Dashboard.route;
+  } catch (_) {
+    return (null);
+  }
+}
 
-  // User? user = FirebaseAuth.instance.currentUser;
-  // if (user == null) {
-  //   return Login.route;
-  // }
-  // return user.emailVerified ? Login.route : null;
-  return null;
+Future<String?> redirectFirstLog(
+  BuildContext context,
+  GoRouterState state,
+) async {
+  try {
+    UserJwt user = await AuthApi.getMe();
+    if (user.emailVerified) {
+      return (Login.route);
+    }
+    return null;
+  } catch (_) {
+    return (Login.route);
+  }
 }
 
 final GoRouter router = GoRouter(

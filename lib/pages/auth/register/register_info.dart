@@ -1,3 +1,4 @@
+import 'package:dossier_locataire/api/auth_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/date_field.dart';
 import 'package:dossier_locataire/components/dropdown.dart';
@@ -6,8 +7,8 @@ import 'package:dossier_locataire/components/shadow_container.dart';
 import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/shared/enums/search_state.dart';
 import 'package:dossier_locataire/shared/enums/user_type.dart';
+import 'package:dossier_locataire/shared/models/api_errors.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/types/form_errors.dart';
@@ -26,19 +27,16 @@ class RegisterInfos extends StatefulWidget {
 
 class _RegisterInfosState extends State<RegisterInfos> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final User user = User(
-    firstname: "",
-    lastname: "",
-    phone: "",
-    dateOfBirth: DateTime.now(),
-    opennedMail: 0,
-    searchState: SearchState.searching,
-    type: UserType.other,
-  );
+  final User user = User.empty;
   final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {
     setState(() => errors.clear());
+    try {
+      await AuthApi.register(user);
+    } on ApiException catch (err) {
+      print(err.message);
+    }
     // TODO FIREBASE REPLACEMENT
     // try {
     //   var currentUser = FirebaseAuth.instance.currentUser!;
@@ -168,7 +166,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
                   isRequired: true,
                   onSelected:
                       (newValue) => setState(() => user.type = newValue!),
-                  initialValue: UserType.other,
+                  initialValue: UserType.OTHER,
                 ),
                 Center(
                   child: Column(
