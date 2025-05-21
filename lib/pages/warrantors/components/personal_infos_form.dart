@@ -87,6 +87,12 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                 (newValue) =>
                     setState(() => widget.warrantor.dateOfBirth = newValue),
             isRequired: true,
+            validator: (value) {
+              if (value == null) {
+                return locale.cant_be_empty(locale.the_date_of_birth);
+              }
+              return null;
+            },
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,

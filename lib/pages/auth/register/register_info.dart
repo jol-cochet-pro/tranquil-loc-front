@@ -149,6 +149,12 @@ class _RegisterInfosState extends State<RegisterInfos> {
                   onChanged:
                       (newValue) => setState(() => user.dateOfBirth = newValue),
                   isRequired: true,
+                  validator: (value) {
+                    if (value == null) {
+                      return locale.cant_be_empty(locale.date_of_birth);
+                    }
+                    return null;
+                  },
                 ),
                 CustomDropDown(
                   label: locale.type,

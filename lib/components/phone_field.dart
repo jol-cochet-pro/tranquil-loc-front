@@ -4,42 +4,6 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
-// class CustomPhoneField extends StatefulWidget {
-//   final String? initialValue;
-//   final String? label;
-//   final bool isRequired;
-//   final String? errorText;
-//   final String? Function(PhoneNumber?)? validator;
-
-//   const CustomPhoneField({
-//     super.key,
-//     required this.isRequired,
-//     this.initialValue,
-//     this.label,
-//     this.validator,
-//     this.errorText,
-//   });
-
-//   @override
-//   State<CustomPhoneField> createState() => _CustomPhoneFieldState();
-// }
-
-// class _CustomPhoneFieldState extends State<CustomPhoneField> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final PhoneNumber? phoneNumber =
-//         widget.initialValue != null && widget.initialValue!.isNotEmpty
-//             ? PhoneNumber.fromCompleteNumber(
-//               completeNumber: widget.initialValue!,
-//             )
-//             : null;
-//     final AppLocalizations locale = AppLocalizations.of(context)!;
-//     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-//     final InputDecoration decoration = ;
-//     return
-//   }
-// }
-
 class CustomPhoneField extends FormField<PhoneNumber> {
   final String? label;
   final bool isRequired;
