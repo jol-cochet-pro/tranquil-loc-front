@@ -9,7 +9,7 @@ import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/shared/enums/user_type.dart';
-import 'package:dossier_locataire/shared/models/api_errors.dart';
+import 'package:dossier_locataire/shared/models/api_exception.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:dossier_locataire/shared/types/form_errors.dart';
@@ -133,13 +133,14 @@ class _RegisterInfosState extends State<RegisterInfos> {
                 CustomPhoneField(
                   label: locale.phone,
                   validator: (value) {
-                    if (value == null || value == "") {
+                    if (value == null || value.number.isEmpty) {
                       return locale.cant_be_empty(locale.the_phone);
                     }
                     return null;
                   },
                   onChanged:
-                      (newValue) => setState(() => user.phone = newValue!),
+                      (newValue) =>
+                          setState(() => user.phone = newValue.completeNumber),
                   isRequired: true,
                   errorText: errors["phone"],
                 ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dossier_locataire/shared/extensions.dart';
-import 'package:dossier_locataire/shared/models/api_errors.dart';
+import 'package:dossier_locataire/shared/models/api_exception.dart';
 import 'package:dossier_locataire/shared/models/credentials.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/models/user_jwt.dart';

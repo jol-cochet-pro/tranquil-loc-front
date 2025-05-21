@@ -5,7 +5,7 @@ import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
 import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/auth/register/register_info.dart';
-import 'package:dossier_locataire/shared/models/api_errors.dart';
+import 'package:dossier_locataire/shared/models/api_exception.dart';
 import 'package:dossier_locataire/shared/models/credentials.dart';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
@@ -39,8 +39,8 @@ class _RegisterCredState extends State<RegisterCred> {
     } on ApiException catch (err) {
       switch (err.response.code) {
         case "conflict":
-            setState(() => errors["email"] = locale.email_already_used);
-            break ;
+          setState(() => errors["email"] = locale.email_already_used);
+          break;
       }
     }
   }

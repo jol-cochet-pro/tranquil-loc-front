@@ -114,20 +114,20 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               ),
               Flexible(
                 child: CustomPhoneField(
-                  initialValue: widget.occupant.phone,
+                  initialValue: PhoneNumber.fromCompleteNumber(
+                    completeNumber: widget.occupant.phone,
+                  ),
                   label: locale.phone,
                   validator: (value) {
-                    if (value != null &&
-                        !PhoneNumber.fromCompleteNumber(
-                          completeNumber: value,
-                        ).isValidNumber()) {
+                    if (value != null && !value.isValidNumber()) {
                       return locale.invalid_phone_number;
                     }
                     return null;
                   },
                   onChanged:
-                      (newValue) =>
-                          setState(() => widget.occupant.phone = newValue!),
+                      (newValue) => setState(
+                        () => widget.occupant.phone = newValue.completeNumber,
+                      ),
                   isRequired: false,
                 ),
               ),

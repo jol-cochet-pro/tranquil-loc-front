@@ -52,8 +52,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                     return null;
                   },
                   onChanged:
-                      (newValue) =>
-                          setState(() => widget.warrantor.firstname = newValue!),
+                      (newValue) => setState(
+                        () => widget.warrantor.firstname = newValue!,
+                      ),
                   hint: locale.firstname_hint,
                   isRequired: true,
                   type: TextFieldType.text,
@@ -114,20 +115,20 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               ),
               Flexible(
                 child: CustomPhoneField(
-                  initialValue: widget.warrantor.phone,
+                  initialValue: PhoneNumber.fromCompleteNumber(
+                    completeNumber: widget.warrantor.phone,
+                  ),
                   label: locale.phone,
                   validator: (value) {
-                    if (value != null &&
-                        !PhoneNumber.fromCompleteNumber(
-                          completeNumber: value,
-                        ).isValidNumber()) {
+                    if (value != null && !value.isValidNumber()) {
                       return locale.invalid_phone_number;
                     }
                     return null;
                   },
                   onChanged:
-                      (newValue) =>
-                          setState(() => widget.warrantor.phone = newValue!),
+                      (newValue) => setState(
+                        () => widget.warrantor.phone = newValue.completeNumber,
+                      ),
                   isRequired: false,
                 ),
               ),
