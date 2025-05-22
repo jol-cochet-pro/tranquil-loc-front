@@ -52,9 +52,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                     return null;
                   },
                   onChanged:
-                      (newValue) => setState(
-                        () => widget.warrantor.firstname = newValue!,
-                      ),
+                      (newValue) =>
+                          setState(() => widget.warrantor.firstname = newValue),
                   hint: locale.firstname_hint,
                   isRequired: true,
                   type: TextFieldType.text,
@@ -72,7 +71,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   },
                   onChanged:
                       (newValue) =>
-                          setState(() => widget.warrantor.lastname = newValue!),
+                          setState(() => widget.warrantor.lastname = newValue),
                   hint: locale.lastname_hint,
                   isRequired: true,
                   type: TextFieldType.text,
@@ -113,7 +112,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   },
                   onChanged:
                       (newValue) =>
-                          setState(() => widget.warrantor.email = newValue!),
+                          setState(() => widget.warrantor.email = newValue),
                   hint: locale.email_hint,
                   isRequired: true,
                   type: TextFieldType.text,
@@ -186,7 +185,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             },
             onChanged:
                 (newValue) => setState(
-                  () => widget.warrantor.income = int.parse(newValue!),
+                  () => widget.warrantor.income = int.parse(newValue),
                 ),
             hint: "1000",
             isRequired: true,

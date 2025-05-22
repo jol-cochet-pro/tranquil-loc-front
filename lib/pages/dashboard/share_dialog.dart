@@ -82,7 +82,7 @@ class _ShareDialogState extends State<ShareDialog> {
                 children: [
                   CustomTextField(
                     onChanged: (newValue) {
-                      share.description = newValue!;
+                      share.description = newValue;
                     },
                     validator: (value) {
                       if (value == null || value == "") {
@@ -97,7 +97,7 @@ class _ShareDialogState extends State<ShareDialog> {
                   ),
                   CustomTextField(
                     onChanged: (newValue) {
-                      share.email = newValue!;
+                      share.email = newValue;
                     },
                     label: locale.email,
                     hint: locale.email_hint,
@@ -121,7 +121,7 @@ class _ShareDialogState extends State<ShareDialog> {
                         flex: 2,
                         child: CustomTextField(
                           onChanged: (newValue) {
-                            if (newValue == null || newValue == "") {
+                            if (newValue == "") {
                               share.durationNum = -1;
                             } else {
                               share.durationNum = int.parse(newValue);

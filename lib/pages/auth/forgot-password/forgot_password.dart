@@ -88,7 +88,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   },
                   onChanged:
                       (newValue) =>
-                          setState(() => resetEmail.email = newValue!),
+                          setState(() => resetEmail.email = newValue),
                   hint: locale.email_hint,
                   isRequired: true,
                   type: TextFieldType.text,

@@ -92,7 +92,7 @@ class _LoginState extends State<Login> {
                 CustomTextField(
                   label: locale.email,
                   onChanged:
-                      (newValue) => setState(() => user.email = newValue!),
+                      (newValue) => setState(() => user.email = newValue),
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_email);
@@ -112,7 +112,7 @@ class _LoginState extends State<Login> {
                 CustomTextField(
                   label: locale.password,
                   onChanged:
-                      (newValue) => setState(() => user.password = newValue!),
+                      (newValue) => setState(() => user.password = newValue),
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_password);
