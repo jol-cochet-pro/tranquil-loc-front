@@ -6,7 +6,7 @@ enum TextFieldType { text, number, password, currency, date }
 
 class CustomTextField extends StatefulWidget {
   final TextFieldType type;
-  final void Function(String?)? onChanged;
+  final void Function(String)? onChanged;
   final String? initialValue;
   final String? label;
   final String hint;

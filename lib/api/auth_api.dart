@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dossier_locataire/shared/extensions.dart';
 import 'package:dossier_locataire/shared/models/api_exception.dart';
 import 'package:dossier_locataire/shared/models/credentials.dart';
+import 'package:dossier_locataire/shared/models/otp.dart';
 import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/models/user_jwt.dart';
 import 'package:http/http.dart' as http;
@@ -24,7 +25,6 @@ class AuthApi {
       body: User.toApi(user),
       headers: await AuthApi.defaultHeaders,
     );
-
     if (response.isOK) {
       return User.fromApi(jsonDecode(response.body));
     }
@@ -64,6 +64,18 @@ class AuthApi {
     throw ApiException.fromApi(jsonDecode(response.body));
   }
 
+  static Future<void> checkEmail(Otp otp) async {
+    http.Response response = await http.post(
+      Uri.parse("http://localhost:3000/auth/check-email"),
+      body: Otp.toApi(otp),
+      headers: await AuthApi.defaultHeaders,
+    );
+    if (response.isOK) {
+      return;
+    }
+    throw ApiException.fromApi(jsonDecode(response.body));
+  }
+
   static Future<UserJwt> getMe() async {
     final headers = await AuthApi.defaultHeaders;
     if (headers == null) {
@@ -71,7 +83,7 @@ class AuthApi {
     }
     http.Response response = await http.get(
       Uri.parse("http://localhost:3000/auth/me"),
-      headers: await AuthApi.defaultHeaders,
+      headers: headers,
     );
     if (response.isOK) {
       return UserJwt.fromApi(jsonDecode(response.body));

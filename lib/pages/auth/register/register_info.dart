@@ -104,7 +104,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
                 ),
                 CustomTextField(
                   label: locale.firstname,
-                  onChanged: (newValue) => user.firstname = newValue!,
+                  onChanged: (newValue) => user.firstname = newValue,
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_firstname);
@@ -118,7 +118,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
                 ),
                 CustomTextField(
                   label: locale.lastname,
-                  onChanged: (newValue) => user.lastname = newValue!,
+                  onChanged: (newValue) => user.lastname = newValue,
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_lastname);

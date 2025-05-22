@@ -5,7 +5,6 @@ import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/auth/register/register_cred.dart';
 import 'package:dossier_locataire/pages/auth/register/register_info.dart';
 import 'package:dossier_locataire/pages/auth/verify-email/need_email_verification.dart';
-import 'package:dossier_locataire/pages/auth/verify-email/verify_email.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
 import 'package:dossier_locataire/pages/landing/landing.dart';
 import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
@@ -24,6 +23,9 @@ Future<String?> redirectLoggedInWithEmail(
 ) async {
   try {
     UserJwt user = await AuthApi.getMe();
+    if (!user.infosFilled) {
+      return (RegisterInfos.route);
+    }
     if (!user.emailVerified) {
       return (NeedEmailVerification.route);
     }
@@ -39,7 +41,7 @@ Future<String?> redirectLoggedInWithoutEmail(
 ) async {
   try {
     UserJwt user = await AuthApi.getMe();
-    if (user.emailVerified) {
+    if (!user.emailVerified) {
       return (NeedEmailVerification.route);
     }
     return null;
@@ -147,13 +149,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: NeedEmailVerification.route,
       builder: (_, state) => NeedEmailVerification(),
-      redirect: redirectLoggedInWithoutEmail,
-    ),
-    GoRoute(
-      path: VerifiyEmail.route,
-      builder:
-          (_, state) =>
-              VerifiyEmail(actionCode: state.uri.queryParameters["oobCode"]),
       redirect: redirectLoggedInWithoutEmail,
     ),
     GoRoute(path: Landing.route, builder: (_, state) => Landing()),

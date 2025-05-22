@@ -75,7 +75,7 @@ class _RegisterCredState extends State<RegisterCred> {
                 ),
                 CustomTextField(
                   label: locale.email,
-                  onChanged: (newValue) => cred.email = newValue!,
+                  onChanged: (newValue) => cred.email = newValue,
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_email);
@@ -92,7 +92,7 @@ class _RegisterCredState extends State<RegisterCred> {
                 ),
                 CustomTextField(
                   label: locale.password,
-                  onChanged: (newValue) => cred.password = newValue!,
+                  onChanged: (newValue) => cred.password = newValue,
                   validator: (value) {
                     if (value == null || value == "") {
                       return locale.cant_be_empty(locale.the_password);

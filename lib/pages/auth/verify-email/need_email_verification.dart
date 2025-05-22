@@ -1,11 +1,15 @@
-import 'dart:async';
+import 'dart:io';
+
 import 'package:dossier_locataire/api/auth_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:dossier_locataire/components/text_field.dart';
 import 'package:dossier_locataire/layout/page_layout.dart';
-import 'package:dossier_locataire/pages/auth/login/login.dart';
 import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
+import 'package:dossier_locataire/shared/models/api_exception.dart';
+import 'package:dossier_locataire/shared/models/otp.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:dossier_locataire/shared/types/form_errors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,30 +25,35 @@ class NeedEmailVerification extends StatefulWidget {
 }
 
 class _NeedEmailVerificationState extends State<NeedEmailVerification> {
-  Timer? timer;
+  final FormErrors errors = FormErrors();
+  final Otp otp = Otp.empty;
 
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
-      try {
-        await AuthApi.getMe();
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          context.go(Dashboard.route);
-        });
-      } catch (_) {}
-    });
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
+  void submit(AppLocalizations locale) async {
+    setState(() => errors.clear());
+    try {
+      await AuthApi.checkEmail(otp);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context.go(Dashboard.route);
+      });
+    } on ApiException catch (err) {
+      switch (err.statusCode) {
+        case HttpStatus.notFound:
+          setState(() => errors["otp"] = locale.email_not_sent);
+          break;
+        case HttpStatus.forbidden:
+          setState(() => errors["otp"] = locale.email_already_verified);
+          break;
+        case HttpStatus.badRequest:
+          setState(() => errors["otp"] = locale.invalid_otp_code);
+          break;
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return PageLayout(
       hideNavbar: true,
@@ -53,31 +62,52 @@ class _NeedEmailVerificationState extends State<NeedEmailVerification> {
           constraints: BoxConstraints.loose(Size(500, double.infinity)),
           padding: EdgeInsets.all(48),
           radius: Radius.circular(10),
-          child: Column(
-            spacing: 32,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(locale.email_not_verified, style: h2),
-                  Text(locale.your_email_needs_verif, style: p2),
-                ],
-              ),
-              CustomButton(
-                onPressed: () async {
-                  await AuthApi.signOut();
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    context.go(Login.route);
-                  });
-                },
-                padding: EdgeInsets.all(12),
-                type: ButtonType.primary,
-                child: Text(locale.go_to_login),
-              ),
-            ],
+          child: Form(
+            key: formKey,
+            child: Column(
+              spacing: 32,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(locale.verify_email, style: h2),
+                    Text(locale.your_email_needs_verif, style: p2),
+                  ],
+                ),
+                CustomTextField(
+                  initialValue: null,
+                  hint: "111111",
+                  onChanged:
+                      (newValue) => otp.code = (int.tryParse(newValue) ?? -1),
+                  isRequired: false,
+                  type: TextFieldType.number,
+                  validator: (value) {
+                    if (value == null) {
+                      return locale.cant_be_empty(locale.the_otp_code);
+                    }
+                    int? code = int.tryParse(value);
+                    if (code == null || code < 10000 || code > 99999) {
+                      return locale.invalid_otp_code;
+                    }
+                    return null;
+                  },
+                  errorText: errors["otp"],
+                ),
+                CustomButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      submit(locale);
+                    }
+                  },
+                  padding: EdgeInsets.all(12),
+                  type: ButtonType.primary,
+                  child: Text(locale.lets_go),
+                ),
+              ],
+            ),
           ),
         ),
       ),
