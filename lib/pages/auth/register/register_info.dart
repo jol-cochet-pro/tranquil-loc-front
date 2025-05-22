@@ -40,7 +40,7 @@ class _RegisterInfosState extends State<RegisterInfos> {
         context.go(Dashboard.route);
       });
     } on ApiException catch (err) {
-      print(err.response);
+      print(err.message);
     }
     //   if (user.type == UserType.occupant) {
     //     await OccupantApi.add(

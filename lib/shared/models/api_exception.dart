@@ -1,40 +1,15 @@
-class ApiExceptionResponse {
-  String code;
-
-  ApiExceptionResponse({required this.code});
-}
-
 class ApiException extends Error {
-  ApiExceptionResponse response;
-  int status;
-  Object options;
   String message;
-  String name;
+  int statusCode;
 
-  ApiException({
-    required this.response,
-    required this.status,
-    required this.options,
-    required this.message,
-    required this.name,
-  });
+  ApiException({required this.message, required this.statusCode});
 
   factory ApiException.fromApi(Map<String, dynamic>? data) {
     return switch (data) {
-      {
-        "response": {"code": String code},
-        "status": int status,
-        "options": var options,
-        "message": String message,
-        "name": String name,
-      } =>
-        ApiException(
-          response: ApiExceptionResponse(code: code),
-          status: status,
-          options: options,
-          message: message,
-          name: name,
-        ),
+      {"statusCode": int statusCode, "message": String message} => ApiException(
+        statusCode: statusCode,
+        message: message,
+      ),
       _ => throw const FormatException("Failed to load Error"),
     };
   }

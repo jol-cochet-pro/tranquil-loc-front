@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dossier_locataire/api/auth_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
@@ -26,7 +28,7 @@ class RegisterCred extends StatefulWidget {
 
 class _RegisterCredState extends State<RegisterCred> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Credentials cred = Credentials(email: "", password: "");
+  final Credentials cred = Credentials.empty;
   final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {
@@ -37,8 +39,8 @@ class _RegisterCredState extends State<RegisterCred> {
         context.go(RegisterInfos.route);
       });
     } on ApiException catch (err) {
-      switch (err.response.code) {
-        case "conflict":
+      switch (err.statusCode) {
+        case HttpStatus.conflict:
           setState(() => errors["email"] = locale.email_already_used);
           break;
       }
