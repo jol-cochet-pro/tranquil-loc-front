@@ -1,4 +1,10 @@
+import 'dart:convert';
+
+import 'package:dossier_locataire/api/auth_api.dart';
+import 'package:dossier_locataire/shared/extensions.dart';
+import 'package:dossier_locataire/shared/models/api_exception.dart';
 import 'package:dossier_locataire/shared/models/warrantor.dart';
+import 'package:http/http.dart' as http;
 
 class WarrantorApi {
   static Future<Warrantor> add(Warrantor warrantor) async {
@@ -20,10 +26,15 @@ class WarrantorApi {
   }
 
   static Future<List<Warrantor>> getAll() async {
-    // TODO FIREBASE REPLACEMENT
-    // return await Storage.warrantors.get().then(
-    //   (value) => value.docs.map((doc) => doc.data()).toList(),
-    // );
-    return [];
+    http.Response response = await http.get(
+      Uri.parse('http://localhost:3000/warrantors'),
+      headers: await AuthApi.defaultHeaders,
+    );
+    if (response.isOK) {
+      return jsonDecode(
+        response.body,
+      ).map<Warrantor>((data) => Warrantor.fromApi(data)).toList();
+    }
+    throw ApiException.fromApi(jsonDecode(response.body));
   }
 }

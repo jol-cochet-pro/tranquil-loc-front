@@ -64,45 +64,35 @@ class Warrantor {
       documents: {},
     );
   }
-  // TODO FIREBASE REPLACEMENT
 
-  // factory Warrantor.fromFirestore(
-  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
-  // ) {
-  //   Map<String, dynamic>? data = snapshot.data();
-  //   if (data == null) return Warrantor.defaultWarrantor;
-  //   ProSituation proSituation = ProSituation.unemployed;
-  //   try {
-  //     proSituation = ProSituation.values.byName(data["proSituation"]);
-  //   } catch (_) {
-  //     proSituation = ProSituation.unemployed;
-  //   }
-  //   HomeSituation homeSituation = HomeSituation.tenant;
-  //   try {
-  //     homeSituation = HomeSituation.values.byName(data["proSituation"]);
-  //   } catch (_) {
-  //     homeSituation = HomeSituation.tenant;
-  //   }
-  //   Map<String, List<File>> documents = {};
-  //   for (final entry in data["documents"].entries) {
-  //     List<String> refs =
-  //         (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
-  //     documents[entry.key] =
-  //         refs.map((ref) => File(name: ref.split('/').last, url: ref)).toList();
-  //   }
-  //   return Warrantor(
-  //     id: snapshot.id,
-  //     firstname: data["firstname"] ?? "",
-  //     lastname: data["lastname"] ?? "",
-  //     dateOfBirth: data["dateOfBirth"].toDate(),
-  //     income: data["income"] ?? 0,
-  //     proSituation: proSituation,
-  //     homeSituation: homeSituation,
-  //     email: data["email"] ?? "",
-  //     phone: data["phone"] ?? "",
-  //     documents: documents,
-  //   );
-  // }
+  factory Warrantor.fromApi(Map<String, dynamic> data) {
+    return switch (data) {
+      {
+        "id": String id,
+        "firstname": String firstname,
+        "lastname": String lastname,
+        "email": String email,
+        "homeSituation": String homeSituation,
+        "proSituation": String proSituation,
+        "income": int income,
+        "dateOfBirth": String dateOfBirth,
+        "phone": String phone,
+      } =>
+        Warrantor(
+          id: id,
+          firstname: firstname,
+          lastname: lastname,
+          income: income,
+          dateOfBirth: DateTime.parse(dateOfBirth),
+          proSituation: ProSituation.values.byName(proSituation),
+          homeSituation: HomeSituation.values.byName(homeSituation),
+          email: email,
+          phone: phone,
+          documents: {},
+        ),
+      _ => throw const FormatException("Failed to load Occupant"),
+    };
+  }
 
   // static Map<String, Object?> toFirestore(Warrantor warrantor) {
   //   return {
