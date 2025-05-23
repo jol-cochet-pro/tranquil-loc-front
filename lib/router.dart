@@ -13,7 +13,7 @@ import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
 import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/update_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
-import 'package:dossier_locataire/shared/models/user_jwt.dart';
+import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,11 +22,13 @@ Future<String?> redirectLoggedInWithEmail(
   GoRouterState state,
 ) async {
   try {
-    UserJwt user = await AuthApi.getMe();
-    if (!user.infosFilled) {
+    if (AuthApi.user == null) {
+      return (Login.route);
+    }
+    if (!AuthApi.user!.infosFilled) {
       return (RegisterInfos.route);
     }
-    if (!user.emailVerified) {
+    if (!AuthApi.user!.emailVerified) {
       return (NeedEmailVerification.route);
     }
     return null;
@@ -40,8 +42,10 @@ Future<String?> redirectLoggedInWithoutEmail(
   GoRouterState state,
 ) async {
   try {
-    UserJwt user = await AuthApi.getMe();
-    if (!user.emailVerified) {
+    if (AuthApi.user == null) {
+      return (Login.route);
+    }
+    if (!AuthApi.user!.emailVerified) {
       return (NeedEmailVerification.route);
     }
     return null;
@@ -50,24 +54,12 @@ Future<String?> redirectLoggedInWithoutEmail(
   }
 }
 
-Future<String?> redirectLoggedOut(
-  BuildContext context,
-  GoRouterState state,
-) async {
-  try {
-    await AuthApi.getMe();
-    return Dashboard.route;
-  } catch (_) {
-    return (null);
-  }
-}
-
 Future<String?> redirectFirstLog(
   BuildContext context,
   GoRouterState state,
 ) async {
   try {
-    UserJwt user = await AuthApi.getMe();
+    User user = await AuthApi.getMe();
     if (user.emailVerified) {
       return (Login.route);
     }
@@ -79,8 +71,13 @@ Future<String?> redirectFirstLog(
 
 final GoRouter router = GoRouter(
   initialLocation: Login.route,
-  redirect: (context, state) {
+  redirect: (context, state) async {
     Navbar.setSelected(state.matchedLocation);
+    try {
+      AuthApi.user = await AuthApi.getMe();
+    } catch (_) {
+      return (Login.route);
+    }
     return null;
   },
   routes: [
@@ -125,21 +122,9 @@ final GoRouter router = GoRouter(
       redirect: redirectLoggedInWithEmail,
     ),
     // Logged out
-    GoRoute(
-      path: Login.route,
-      builder: (_, _) => Login(),
-      redirect: redirectLoggedOut,
-    ),
-    GoRoute(
-      path: RegisterCred.route,
-      builder: (_, _) => RegisterCred(),
-      redirect: redirectLoggedOut,
-    ),
-    GoRoute(
-      path: ForgotPassword.route,
-      builder: (_, _) => ForgotPassword(),
-      redirect: redirectLoggedOut,
-    ),
+    GoRoute(path: Login.route, builder: (_, _) => Login()),
+    GoRoute(path: RegisterCred.route, builder: (_, _) => RegisterCred()),
+    GoRoute(path: ForgotPassword.route, builder: (_, _) => ForgotPassword()),
     // Logged in without validated email
     GoRoute(
       path: RegisterInfos.route,

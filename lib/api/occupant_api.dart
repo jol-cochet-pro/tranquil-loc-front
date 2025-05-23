@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'package:dossier_locataire/api/auth_api.dart';
+import 'package:dossier_locataire/shared/extensions.dart';
+import 'package:dossier_locataire/shared/models/api_exception.dart';
 import 'package:dossier_locataire/shared/models/occupant.dart';
+import 'package:http/http.dart' as http;
 
 class OccupantApi {
   static Future<Occupant> add(Occupant occupant) async {
@@ -20,10 +25,13 @@ class OccupantApi {
   }
 
   static Future<List<Occupant>> getAll() async {
-    // TODO FIREBASE REPLACEMENT
-    //   return await Storage.occupants.get().then(
-    // (value) => value.docs.map((doc) => doc.data()).toList(),
-    // );
-    return [];
+    http.Response response = await http.get(
+      Uri.parse('http://localhost:3000/occupants'),
+      headers: await AuthApi.defaultHeaders,
+    );
+    if (response.isOK) {
+      return jsonDecode(response.body).map((data) => Occupant.fromApi(data));
+    }
+    throw ApiException.fromApi(jsonDecode(response.body));
   }
 }

@@ -21,25 +21,14 @@ class UserJwt {
         "emailVerified": bool emailVerified,
         "infosFilled": bool infosFilled,
         "accessToken": String accessToken,
-      } => UserJwt(
-        id: id,
-        email: email,
-        emailVerified: emailVerified,
-        infosFilled: infosFilled,
-        accessToken: accessToken
-      ),
-      {
-        "id": String id,
-        "email": String email,
-        "emailVerified": bool emailVerified,
-        "infosFilled": bool infosFilled,
-      } => UserJwt(
-        id: id,
-        email: email,
-        emailVerified: emailVerified,
-        infosFilled: infosFilled,
-        accessToken: ""
-      ),
+      } =>
+        UserJwt(
+          id: id,
+          email: email,
+          emailVerified: emailVerified,
+          infosFilled: infosFilled,
+          accessToken: accessToken,
+        ),
       _ => throw const FormatException("Failed to load UserJwt"),
     };
   }

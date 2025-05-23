@@ -12,6 +12,8 @@ class User {
   int opennedEmail;
   SearchState searchState;
   UserType type;
+  bool emailVerified;
+  bool infosFilled;
 
   User({
     required this.id,
@@ -24,6 +26,8 @@ class User {
     required this.opennedEmail,
     required this.searchState,
     required this.type,
+    required this.infosFilled,
+    required this.emailVerified,
   });
 
   static User get empty {
@@ -38,6 +42,8 @@ class User {
       opennedEmail: 0,
       searchState: SearchState.SEARCHING,
       type: UserType.OTHER,
+      emailVerified: false,
+      infosFilled: false,
     );
   }
 
@@ -53,6 +59,8 @@ class User {
         "opennedEmail": int opennedEmail,
         "searchState": String searchState,
         "type": String type,
+        "emailVerified": bool emailVerified,
+        "infosFilled": bool infosFilled,
       } =>
         User(
           id: id,
@@ -65,11 +73,13 @@ class User {
           opennedEmail: opennedEmail,
           searchState: SearchState.values.byName(searchState),
           type: UserType.values.byName(type),
+          emailVerified: emailVerified,
+          infosFilled: infosFilled,
         ),
       _ => throw const FormatException("Failed to load User"),
     };
   }
-  
+
   static Map<String, String> toApi(User user) {
     return {
       "firstname": user.firstname,

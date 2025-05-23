@@ -1,19 +1,16 @@
+import 'package:dossier_locataire/api/auth_api.dart';
 import 'package:dossier_locataire/components/button.dart';
 import 'package:dossier_locataire/components/icon_with_state.dart';
 import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/pages/dashboard/components/action_card.dart';
 import 'package:dossier_locataire/pages/dashboard/share_dialog.dart';
 import 'package:dossier_locataire/shared/enums/search_state.dart';
-import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CallToAction extends StatelessWidget {
-  final AsyncSnapshot<User?> snapshot;
-  final void Function() reload;
-
-  const CallToAction({super.key, required this.snapshot, required this.reload});
+  const CallToAction({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +26,12 @@ class CallToAction extends StatelessWidget {
               Text(locale.mail_openned_percentage, style: p2),
               Expanded(
                 child:
-                    snapshot.hasData
+                    AuthApi.user != null
                         ? Row(
                           spacing: 24,
                           children: [
                             Icon(Icons.mark_email_read_outlined),
-                            Text("${snapshot.data!.opennedEmail}%", style: h3),
+                            Text("${AuthApi.user!.opennedEmail}%", style: h3),
                           ],
                         )
                         : Loader(),
@@ -55,7 +52,6 @@ class CallToAction extends StatelessWidget {
                       context: context,
                       builder: (context) => ShareDialog(),
                     );
-                    reload();
                   },
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                   child: Text(locale.share_my_folder),
@@ -79,11 +75,11 @@ class CallToAction extends StatelessWidget {
               Text(locale.search_state, style: p2),
               Expanded(
                 child:
-                    snapshot.hasData
+                    AuthApi.user != null
                         ? Row(
                           spacing: 24,
                           children:
-                              snapshot.data!.searchState == SearchState.PAUSED
+                              AuthApi.user!.searchState == SearchState.PAUSED
                                   ? [
                                     IconWithState(state: IconState.pause),
                                     Text(locale.paused, style: h3),

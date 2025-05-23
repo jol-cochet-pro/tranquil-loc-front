@@ -1,15 +1,13 @@
+import 'package:dossier_locataire/api/auth_api.dart';
 import 'package:dossier_locataire/components/loader.dart';
 import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:dossier_locataire/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HeroSection extends StatelessWidget {
-  final AsyncSnapshot<User?> snapshot;
-
-  const HeroSection({super.key, required this.snapshot});
+  const HeroSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class HeroSection extends StatelessWidget {
       radius: Radius.circular(10),
       padding: EdgeInsets.all(12),
       child:
-          snapshot.hasData
+          AuthApi.user != null
               ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -35,7 +33,7 @@ class HeroSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            locale.hey_username(snapshot.data!.firstname),
+                            locale.hey_username(AuthApi.user!.firstname),
                             style: h2,
                           ),
                           Text(locale.happy_to_see_you, style: p2),

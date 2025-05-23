@@ -64,44 +64,40 @@ class Occupant {
       documents: {},
     );
   }
-  // TODO FIREBASE REPLACEMENT
-  // factory Occupant.fromFirestore(
-  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
-  // ) {
-  //   Map<String, dynamic>? data = snapshot.data();
-  //   if (data == null) return Occupant.defaultOccupant;
-  //   ProSituation proSituation = ProSituation.unemployed;
-  //   try {
-  //     proSituation = ProSituation.values.byName(data["proSituation"]);
-  //   } catch (_) {
-  //     proSituation = ProSituation.unemployed;
-  //   }
-  //   HomeSituation homeSituation = HomeSituation.tenant;
-  //   try {
-  //     homeSituation = HomeSituation.values.byName(data["proSituation"]);
-  //   } catch (_) {
-  //     homeSituation = HomeSituation.tenant;
-  //   }
-  //   Map<String, List<File>> documents = {};
-  //   for (final entry in data["documents"].entries) {
-  //     List<String> refs =
-  //         (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
-  //     documents[entry.key] =
-  //         refs.map((ref) => File(name: ref.split('/').last, url: ref)).toList();
-  //   }
-  //   return Occupant(
-  //     id: snapshot.id,
-  //     firstname: data["firstname"] ?? "",
-  //     lastname: data["lastname"] ?? "",
-  //     dateOfBirth: data["dateOfBirth"].toDate(),
-  //     income: data["income"] ?? 0,
-  //     proSituation: proSituation,
-  //     homeSituation: homeSituation,
-  //     email: data["email"] ?? "",
-  //     phone: data["phone"] ?? "",
-  //     documents: documents,
-  //   );
-  // }
+
+  factory Occupant.fromApi(Map<String, dynamic> data) {
+    ProSituation proSituation = ProSituation.UNEMPLOYED;
+    try {
+      proSituation = ProSituation.values.byName(data["proSituation"]);
+    } catch (_) {
+      proSituation = ProSituation.UNEMPLOYED;
+    }
+    HomeSituation homeSituation = HomeSituation.TENANT;
+    try {
+      homeSituation = HomeSituation.values.byName(data["proSituation"]);
+    } catch (_) {
+      homeSituation = HomeSituation.TENANT;
+    }
+    // Map<String, List<File>> documents = {};
+    // for (final entry in data["documents"].entries) {
+    //   List<String> refs =
+    //       (entry.value as JSArray).toDart.map((el) => el.toString()).toList();
+    //   documents[entry.key] =
+    //       refs.map((ref) => File(name: ref.split('/').last, url: ref)).toList();
+    // }
+    return Occupant(
+      id: data["id"],
+      firstname: data["firstname"] ?? "",
+      lastname: data["lastname"] ?? "",
+      dateOfBirth: data["dateOfBirth"].toDate(),
+      income: data["income"] ?? 0,
+      proSituation: proSituation,
+      homeSituation: homeSituation,
+      email: data["email"] ?? "",
+      phone: data["phone"] ?? "",
+      documents: {},
+    );
+  }
 
   // static Map<String, Object?> toFirestore(Occupant occupant) {
   //   return {
