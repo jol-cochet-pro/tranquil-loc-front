@@ -32,13 +32,7 @@ class _SharesCardState extends State<SharesCard> {
           (context, snapshot) => DashCard(
             title: locale.my_shares,
             emptyInfo: locale.no_shares_saved,
-            onAdd: () async {
-              // TODO FIREBASE REPLACEMENT
-              // final result = await FirebaseFunctions.instance
-              //     .httpsCallable("send")
-              //     .call({"email": "jolan.cochet@yopmail.com"});
-              // print(result.data);
-            },
+            onAdd: () async {},
             hasData: snapshot.hasData,
             items: snapshot.data,
             itemBuilder:

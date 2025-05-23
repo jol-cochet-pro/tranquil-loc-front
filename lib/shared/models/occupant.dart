@@ -6,8 +6,8 @@ class Occupant {
   String id;
   String firstname;
   String lastname;
-  DateTime dateOfBirth;
   int income;
+  DateTime dateOfBirth;
   ProSituation proSituation;
   HomeSituation homeSituation;
   String email;
@@ -18,8 +18,8 @@ class Occupant {
     required this.id,
     required this.firstname,
     required this.lastname,
-    required this.dateOfBirth,
     required this.income,
+    required this.dateOfBirth,
     required this.proSituation,
     required this.homeSituation,
     required this.email,
@@ -55,8 +55,8 @@ class Occupant {
       id: "",
       firstname: "",
       lastname: "",
-      dateOfBirth: DateTime.now(),
       income: 0,
+      dateOfBirth: DateTime.now(),
       proSituation: ProSituation.OTHER,
       homeSituation: HomeSituation.TENANT,
       email: "",
@@ -66,18 +66,32 @@ class Occupant {
   }
 
   factory Occupant.fromApi(Map<String, dynamic> data) {
-    ProSituation proSituation = ProSituation.UNEMPLOYED;
-    try {
-      proSituation = ProSituation.values.byName(data["proSituation"]);
-    } catch (_) {
-      proSituation = ProSituation.UNEMPLOYED;
-    }
-    HomeSituation homeSituation = HomeSituation.TENANT;
-    try {
-      homeSituation = HomeSituation.values.byName(data["proSituation"]);
-    } catch (_) {
-      homeSituation = HomeSituation.TENANT;
-    }
+    return switch (data) {
+      {
+        "id": String id,
+        "firstname": String firstname,
+        "lastname": String lastname,
+        "email": String email,
+        "homeSituation": String homeSituation,
+        "proSituation": String proSituation,
+        "income": int income,
+        "dateOfBirth": String dateOfBirth,
+        "phone": String phone,
+      } =>
+        Occupant(
+          id: id,
+          firstname: firstname,
+          lastname: lastname,
+          income: income,
+          dateOfBirth: DateTime.parse(dateOfBirth),
+          proSituation: ProSituation.values.byName(proSituation),
+          homeSituation: HomeSituation.values.byName(homeSituation),
+          email: email,
+          phone: phone,
+          documents: {},
+        ),
+      _ => throw const FormatException("Failed to load Occupant"),
+    };
     // Map<String, List<File>> documents = {};
     // for (final entry in data["documents"].entries) {
     //   List<String> refs =
@@ -85,18 +99,6 @@ class Occupant {
     //   documents[entry.key] =
     //       refs.map((ref) => File(name: ref.split('/').last, url: ref)).toList();
     // }
-    return Occupant(
-      id: data["id"],
-      firstname: data["firstname"] ?? "",
-      lastname: data["lastname"] ?? "",
-      dateOfBirth: data["dateOfBirth"].toDate(),
-      income: data["income"] ?? 0,
-      proSituation: proSituation,
-      homeSituation: homeSituation,
-      email: data["email"] ?? "",
-      phone: data["phone"] ?? "",
-      documents: {},
-    );
   }
 
   // static Map<String, Object?> toFirestore(Occupant occupant) {

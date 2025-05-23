@@ -13,60 +13,50 @@ import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
 import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/update_warrantor.dart';
 import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
-import 'package:dossier_locataire/shared/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-Future<String?> redirectLoggedInWithEmail(
-  BuildContext context,
-  GoRouterState state,
-) async {
-  try {
-    if (AuthApi.user == null) {
-      return (Login.route);
-    }
-    if (!AuthApi.user!.infosFilled) {
-      return (RegisterInfos.route);
-    }
-    if (!AuthApi.user!.emailVerified) {
-      return (NeedEmailVerification.route);
-    }
-    return null;
-  } catch (_) {
-    return (Login.route);
+String? redirectLoggedIn(BuildContext _, GoRouterState _) {
+  if (AuthApi.user == null) {
+    return Login.route;
   }
+  if (!AuthApi.user!.infosFilled) {
+    return RegisterInfos.route;
+  }
+  if (!AuthApi.user!.emailVerified) {
+    return NeedEmailVerification.route;
+  }
+  return null;
 }
 
-Future<String?> redirectLoggedInWithoutEmail(
-  BuildContext context,
-  GoRouterState state,
-) async {
-  try {
-    if (AuthApi.user == null) {
-      return (Login.route);
-    }
-    if (!AuthApi.user!.emailVerified) {
-      return (NeedEmailVerification.route);
-    }
-    return null;
-  } catch (err) {
-    return (Login.route);
+String? redirectLoggedOut(BuildContext _, GoRouterState _) {
+  if (AuthApi.user != null) {
+    return Dashboard.route;
   }
+  return null;
 }
 
-Future<String?> redirectFirstLog(
-  BuildContext context,
-  GoRouterState state,
-) async {
-  try {
-    User user = await AuthApi.getMe();
-    if (user.emailVerified) {
-      return (Login.route);
-    }
-    return null;
-  } catch (_) {
-    return (Login.route);
+String? redirectLoggedInWithoutValidInfos(BuildContext _, GoRouterState _) {
+  if (AuthApi.user == null) {
+    return Login.route;
   }
+  if (AuthApi.user!.infosFilled) {
+    return Dashboard.route;
+  }
+  return null;
+}
+
+String? redirectLoggedInWithoutValidEmail(BuildContext _, GoRouterState _) {
+  if (AuthApi.user == null) {
+    return Login.route;
+  }
+  if (!AuthApi.user!.infosFilled) {
+    return RegisterInfos.route;
+  }
+  if (AuthApi.user!.emailVerified) {
+    return Dashboard.route;
+  }
+  return null;
 }
 
 final GoRouter router = GoRouter(
@@ -76,7 +66,7 @@ final GoRouter router = GoRouter(
     try {
       AuthApi.user = await AuthApi.getMe();
     } catch (_) {
-      return (Login.route);
+      AuthApi.user = null;
     }
     return null;
   },
@@ -86,55 +76,67 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Dashboard.route,
       builder: (_, _) => Dashboard(),
-      redirect: redirectLoggedInWithEmail,
+      redirect: redirectLoggedIn,
     ),
     GoRoute(
       path: Warrantors.route,
       builder: (_, _) => Warrantors(),
-      redirect: redirectLoggedInWithEmail,
+      redirect: redirectLoggedIn,
     ),
     GoRoute(
       path: AddWarrantor.route,
       builder: (_, _) => AddWarrantor(),
-      redirect: redirectLoggedInWithEmail,
+      redirect: redirectLoggedIn,
     ),
     GoRoute(
       path: UpdateWarrantor.route,
       builder:
           (_, state) =>
               UpdateWarrantor(warrantorId: state.pathParameters["id"]!),
-      redirect: redirectLoggedInWithEmail,
+      redirect: redirectLoggedIn,
     ),
     GoRoute(
       path: Occupants.route,
       builder: (_, _) => Occupants(),
-      redirect: redirectLoggedInWithEmail,
+      redirect: redirectLoggedIn,
     ),
     GoRoute(
       path: AddOccupant.route,
       builder: (_, _) => AddOccupant(),
-      redirect: redirectLoggedInWithEmail,
+      redirect: redirectLoggedIn,
     ),
     GoRoute(
       path: UpdateOccupant.route,
       builder:
           (_, state) => UpdateOccupant(occupantId: state.pathParameters["id"]!),
-      redirect: redirectLoggedInWithEmail,
+      redirect: redirectLoggedIn,
     ),
     // Logged out
-    GoRoute(path: Login.route, builder: (_, _) => Login()),
-    GoRoute(path: RegisterCred.route, builder: (_, _) => RegisterCred()),
-    GoRoute(path: ForgotPassword.route, builder: (_, _) => ForgotPassword()),
+    GoRoute(
+      path: Login.route,
+      builder: (_, _) => Login(),
+      redirect: redirectLoggedOut,
+    ),
+    GoRoute(
+      path: RegisterCred.route,
+      builder: (_, _) => RegisterCred(),
+      redirect: redirectLoggedOut,
+    ),
+    GoRoute(
+      path: ForgotPassword.route,
+      builder: (_, _) => ForgotPassword(),
+      redirect: redirectLoggedOut,
+    ),
     // Logged in without validated email
     GoRoute(
       path: RegisterInfos.route,
       builder: (_, _) => RegisterInfos(),
-      redirect: redirectLoggedInWithoutEmail,
+      redirect: redirectLoggedInWithoutValidInfos,
     ),
     GoRoute(
       path: NeedEmailVerification.route,
       builder: (_, state) => NeedEmailVerification(),
-      redirect: redirectLoggedInWithoutEmail,
+      redirect: redirectLoggedInWithoutValidEmail,
     ),
     GoRoute(path: Landing.route, builder: (_, state) => Landing()),
   ],

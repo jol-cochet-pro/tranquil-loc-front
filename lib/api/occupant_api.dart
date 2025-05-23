@@ -30,7 +30,9 @@ class OccupantApi {
       headers: await AuthApi.defaultHeaders,
     );
     if (response.isOK) {
-      return jsonDecode(response.body).map((data) => Occupant.fromApi(data));
+      return jsonDecode(
+        response.body,
+      ).map<Occupant>((data) => Occupant.fromApi(data)).toList();
     }
     throw ApiException.fromApi(jsonDecode(response.body));
   }
