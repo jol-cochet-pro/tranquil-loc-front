@@ -107,4 +107,24 @@ class UserContact {
     required this.email,
     required this.phone,
   });
+
+  factory UserContact.fromApi(Map<String, dynamic> data) {
+    return switch (data) {
+      {
+        "id": String id,
+        "firstname": String firstname,
+        "lastname": String lastname,
+        "email": String email,
+        "phone": String phone,
+      } =>
+        UserContact(
+          id: id,
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          phone: phone,
+        ),
+      _ => throw const FormatException("Failed to load UserContact"),
+    };
+  }
 }

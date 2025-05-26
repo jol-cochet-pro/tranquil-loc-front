@@ -13,15 +13,38 @@ class SharedInfos {
     required this.warrantors,
   });
 
+  static SharedInfos get empty {
+    return SharedInfos(
+      user: UserContact(
+        id: "",
+        firstname: "",
+        lastname: "",
+        email: "",
+        phone: "",
+      ),
+      occupants: [],
+      warrantors: [],
+    );
+  }
+
   factory SharedInfos.fromApi(Map<String, dynamic> data) {
-    return switch (data) {
-      {
-        "user": UserContact user,
-        "occupants": List<Occupant> occupants,
-        "warrantors": List<Warrantor> warrantors,
-      } =>
-        SharedInfos(user: user, occupants: occupants, warrantors: warrantors),
-      _ => throw const FormatException("Failed to load SharedInfos"),
-    };
+    try {
+      final user = UserContact.fromApi(data["user"]);
+      final occupants =
+          data["occupants"]
+              .map<Occupant>((occupant) => Occupant.fromApi(occupant))
+              .toList();
+      final warrantors =
+          data["warrantors"]
+              .map<Warrantor>((warrantor) => Warrantor.fromApi(warrantor))
+              .toList();
+      return SharedInfos(
+        user: user,
+        occupants: occupants,
+        warrantors: warrantors,
+      );
+    } catch (err) {
+      throw const FormatException("Failed to load SharedInfos");
+    }
   }
 }

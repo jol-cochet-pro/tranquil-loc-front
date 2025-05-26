@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tranquil_loc/api/share_infos_api.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/pages/auth/login/login.dart';
+import 'package:tranquil_loc/shared/models/api_exception.dart';
 import 'package:tranquil_loc/shared/models/shared_infos.dart';
 
 class SharedFolder extends StatefulWidget {
@@ -21,17 +22,26 @@ class _SharedFolderState extends State<SharedFolder> {
 
   @override
   void initState() {
-    if (widget.token == null) {
-      context.go(Login.route);
-      return;
-    }
-    sharedInfos = ShareInfosApi.get(widget.token!);
+    sharedInfos = ShareInfosApi.get(widget.token!).catchError((err) {
+      if (err is ApiException) {
+        switch (err.statusCode) {
+          default:
+            context.go(Login.route);
+        }
+      }
+      return SharedInfos.empty;
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(sharedInfos);
-    return PageLayout(hideNavbar: true, child: Text("Coucou"));
+    return PageLayout(
+      hideNavbar: true,
+      child: FutureBuilder(
+        future: sharedInfos,
+        builder: (context, snapshot) => Text("coucou"),
+      ),
+    );
   }
 }
