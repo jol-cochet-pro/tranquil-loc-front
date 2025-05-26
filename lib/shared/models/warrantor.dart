@@ -1,6 +1,6 @@
-import 'package:dossier_locataire/shared/enums/home_situation.dart';
-import 'package:dossier_locataire/shared/enums/pro_situation.dart';
-import 'package:dossier_locataire/shared/models/file.dart';
+import 'package:tranquil_loc/shared/enums/home_situation.dart';
+import 'package:tranquil_loc/shared/enums/pro_situation.dart';
+import 'package:tranquil_loc/shared/models/file.dart';
 
 class Warrantor {
   String id;

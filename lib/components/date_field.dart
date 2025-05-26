@@ -1,5 +1,5 @@
 import 'package:date_format_field/date_format_field.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

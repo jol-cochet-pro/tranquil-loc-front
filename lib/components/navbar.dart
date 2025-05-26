@@ -1,13 +1,13 @@
-import 'package:dossier_locataire/components/nav_button.dart';
-import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
-import 'package:dossier_locataire/pages/occupants/occupants.dart';
-import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/components/nav_button.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/pages/auth/login/login.dart';
+import 'package:tranquil_loc/pages/dashboard/dashboard.dart';
+import 'package:tranquil_loc/pages/occupants/occupants.dart';
+import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class Navbar extends StatefulWidget {

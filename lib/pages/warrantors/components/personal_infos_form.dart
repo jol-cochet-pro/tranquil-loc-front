@@ -1,16 +1,16 @@
-import 'package:dossier_locataire/components/date_field.dart';
-import 'package:dossier_locataire/components/dropdown.dart';
-import 'package:dossier_locataire/components/phone_field.dart';
-import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/components/text_field.dart';
-import 'package:dossier_locataire/shared/enums/home_situation.dart';
-import 'package:dossier_locataire/shared/enums/pro_situation.dart';
-import 'package:dossier_locataire/shared/extensions.dart';
-import 'package:dossier_locataire/shared/models/warrantor.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/components/date_field.dart';
+import 'package:tranquil_loc/components/dropdown.dart';
+import 'package:tranquil_loc/components/phone_field.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/components/text_field.dart';
+import 'package:tranquil_loc/shared/enums/home_situation.dart';
+import 'package:tranquil_loc/shared/enums/pro_situation.dart';
+import 'package:tranquil_loc/shared/extensions.dart';
+import 'package:tranquil_loc/shared/models/warrantor.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 class PersonalInfoForm extends StatefulWidget {
   final Warrantor warrantor;

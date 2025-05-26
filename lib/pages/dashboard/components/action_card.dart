@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/components/shadow_container.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:flutter/material.dart';
 
 class ActionCard extends StatelessWidget {

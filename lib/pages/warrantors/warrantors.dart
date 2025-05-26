@@ -1,15 +1,15 @@
-import 'package:dossier_locataire/api/warrantor_api.dart';
-import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/loader.dart';
-import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/layout/page_layout.dart';
-import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
-import 'package:dossier_locataire/pages/warrantors/components/warrantor_card.dart';
-import 'package:dossier_locataire/shared/models/warrantor.dart';
-import 'package:dossier_locataire/shared/scroll_controller.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/api/warrantor_api.dart';
+import 'package:tranquil_loc/components/button.dart';
+import 'package:tranquil_loc/components/loader.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
+import 'package:tranquil_loc/layout/page_layout.dart';
+import 'package:tranquil_loc/pages/warrantors/add_warrantor.dart';
+import 'package:tranquil_loc/pages/warrantors/components/warrantor_card.dart';
+import 'package:tranquil_loc/shared/models/warrantor.dart';
+import 'package:tranquil_loc/shared/scroll_controller.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class Warrantors extends StatefulWidget {

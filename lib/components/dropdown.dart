@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropDown<T> extends StatelessWidget {

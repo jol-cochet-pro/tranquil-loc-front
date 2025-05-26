@@ -1,6 +1,6 @@
-import 'package:dossier_locataire/shared/enums/share_duration_period.dart';
-import 'package:dossier_locataire/shared/enums/share_permission.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/shared/enums/share_duration_period.dart';
+import 'package:tranquil_loc/shared/enums/share_permission.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 class Share {
   String id;

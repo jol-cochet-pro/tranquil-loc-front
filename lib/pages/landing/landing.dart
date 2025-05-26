@@ -1,7 +1,7 @@
-import 'package:dossier_locataire/layout/page_layout.dart';
-import 'package:dossier_locataire/pages/landing/components/landing_call_to_action.dart';
-import 'package:dossier_locataire/pages/landing/components/landing_description.dart';
-import 'package:dossier_locataire/pages/landing/components/landing_navbar.dart';
+import 'package:tranquil_loc/layout/page_layout.dart';
+import 'package:tranquil_loc/pages/landing/components/landing_call_to_action.dart';
+import 'package:tranquil_loc/pages/landing/components/landing_description.dart';
+import 'package:tranquil_loc/pages/landing/components/landing_navbar.dart';
 import 'package:flutter/material.dart';
 
 class Landing extends StatefulWidget {

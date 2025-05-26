@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:dossier_locataire/api/auth_api.dart';
-import 'package:dossier_locataire/shared/extensions.dart';
-import 'package:dossier_locataire/shared/models/api_exception.dart';
-import 'package:dossier_locataire/shared/models/warrantor.dart';
+import 'package:tranquil_loc/api/auth_api.dart';
+import 'package:tranquil_loc/shared/extensions.dart';
+import 'package:tranquil_loc/shared/models/api_exception.dart';
+import 'package:tranquil_loc/shared/models/warrantor.dart';
 import 'package:http/http.dart' as http;
 
 class WarrantorApi {

@@ -1,21 +1,21 @@
-import 'package:dossier_locataire/api/auth_api.dart';
-import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/date_field.dart';
-import 'package:dossier_locataire/components/dropdown.dart';
-import 'package:dossier_locataire/components/phone_field.dart';
-import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/components/text_field.dart';
-import 'package:dossier_locataire/layout/page_layout.dart';
-import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
-import 'package:dossier_locataire/shared/enums/user_type.dart';
-import 'package:dossier_locataire/shared/models/api_exception.dart';
-import 'package:dossier_locataire/shared/models/user.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
-import 'package:dossier_locataire/shared/types/form_errors.dart';
+import 'package:tranquil_loc/api/auth_api.dart';
+import 'package:tranquil_loc/components/button.dart';
+import 'package:tranquil_loc/components/date_field.dart';
+import 'package:tranquil_loc/components/dropdown.dart';
+import 'package:tranquil_loc/components/phone_field.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/components/text_field.dart';
+import 'package:tranquil_loc/layout/page_layout.dart';
+import 'package:tranquil_loc/pages/auth/login/login.dart';
+import 'package:tranquil_loc/pages/dashboard/dashboard.dart';
+import 'package:tranquil_loc/shared/enums/user_type.dart';
+import 'package:tranquil_loc/shared/models/api_exception.dart';
+import 'package:tranquil_loc/shared/models/user.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
+import 'package:tranquil_loc/shared/types/form_errors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterInfos extends StatefulWidget {

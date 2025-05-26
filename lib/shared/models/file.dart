@@ -1,5 +1,5 @@
-import 'package:dossier_locataire/shared/enums/document_type.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/shared/enums/document_type.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 class File {
   final String name;

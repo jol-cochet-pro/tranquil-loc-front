@@ -1,5 +1,5 @@
-import 'package:dossier_locataire/shared/enums/search_state.dart';
-import 'package:dossier_locataire/shared/enums/user_type.dart';
+import 'package:tranquil_loc/shared/enums/search_state.dart';
+import 'package:tranquil_loc/shared/enums/user_type.dart';
 
 class User {
   String id;
@@ -91,4 +91,20 @@ class User {
       "type": user.type.str,
     };
   }
+}
+
+class UserContact {
+  final String id;
+  final String firstname;
+  final String lastname;
+  final String email;
+  final String phone;
+
+  const UserContact({
+    required this.id,
+    required this.firstname,
+    required this.lastname,
+    required this.email,
+    required this.phone,
+  });
 }

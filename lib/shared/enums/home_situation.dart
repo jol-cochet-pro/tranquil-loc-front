@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 // ignore: constant_identifier_names
 enum HomeSituation { TENANT, OWNER, OTHER }

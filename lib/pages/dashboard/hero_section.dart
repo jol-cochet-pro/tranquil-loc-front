@@ -1,10 +1,10 @@
-import 'package:dossier_locataire/api/auth_api.dart';
-import 'package:dossier_locataire/components/loader.dart';
-import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/api/auth_api.dart';
+import 'package:tranquil_loc/components/loader.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});

@@ -1,7 +1,7 @@
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
 class CustomPhoneField extends FormField<PhoneNumber> {

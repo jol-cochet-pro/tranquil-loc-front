@@ -1,18 +1,19 @@
-import 'package:dossier_locataire/api/auth_api.dart';
-import 'package:dossier_locataire/components/navbar.dart';
-import 'package:dossier_locataire/pages/auth/forgot-password/forgot_password.dart';
-import 'package:dossier_locataire/pages/auth/login/login.dart';
-import 'package:dossier_locataire/pages/auth/register/register_cred.dart';
-import 'package:dossier_locataire/pages/auth/register/register_info.dart';
-import 'package:dossier_locataire/pages/auth/verify-email/need_email_verification.dart';
-import 'package:dossier_locataire/pages/dashboard/dashboard.dart';
-import 'package:dossier_locataire/pages/landing/landing.dart';
-import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
-import 'package:dossier_locataire/pages/occupants/occupants.dart';
-import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
-import 'package:dossier_locataire/pages/warrantors/add_warrantor.dart';
-import 'package:dossier_locataire/pages/warrantors/update_warrantor.dart';
-import 'package:dossier_locataire/pages/warrantors/warrantors.dart';
+import 'package:tranquil_loc/api/auth_api.dart';
+import 'package:tranquil_loc/components/navbar.dart';
+import 'package:tranquil_loc/pages/auth/forgot-password/forgot_password.dart';
+import 'package:tranquil_loc/pages/auth/login/login.dart';
+import 'package:tranquil_loc/pages/auth/register/register_cred.dart';
+import 'package:tranquil_loc/pages/auth/register/register_info.dart';
+import 'package:tranquil_loc/pages/auth/verify-email/need_email_verification.dart';
+import 'package:tranquil_loc/pages/dashboard/dashboard.dart';
+import 'package:tranquil_loc/pages/landing/landing.dart';
+import 'package:tranquil_loc/pages/occupants/add_occupant.dart';
+import 'package:tranquil_loc/pages/occupants/occupants.dart';
+import 'package:tranquil_loc/pages/occupants/update_occupant.dart';
+import 'package:tranquil_loc/pages/share/shared_folder.dart';
+import 'package:tranquil_loc/pages/warrantors/add_warrantor.dart';
+import 'package:tranquil_loc/pages/warrantors/update_warrantor.dart';
+import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,7 +30,7 @@ String? redirectLoggedIn(BuildContext _, GoRouterState _) {
   return null;
 }
 
-String? redirectLoggedOut(BuildContext _, GoRouterState _) {
+String? redirectLoggedOut(BuildContext _, GoRouterState state) {
   if (AuthApi.user != null) {
     return Dashboard.route;
   }
@@ -112,6 +113,12 @@ final GoRouter router = GoRouter(
       redirect: redirectLoggedIn,
     ),
     // Logged out
+    GoRoute(
+      path: SharedFolder.route,
+      builder:
+          (_, state) => SharedFolder(token: state.uri.queryParameters["token"]),
+      redirect: redirectLoggedOut,
+    ),
     GoRoute(
       path: Login.route,
       builder: (_, _) => Login(),

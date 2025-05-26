@@ -1,18 +1,18 @@
-import 'package:dossier_locataire/api/share_api.dart';
-import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/dropdown.dart';
-import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/components/text_field.dart';
-import 'package:dossier_locataire/pages/dashboard/components/share_perm_cell.dart';
-import 'package:dossier_locataire/shared/enums/share_duration_period.dart';
-import 'package:dossier_locataire/shared/enums/share_permission.dart';
-import 'package:dossier_locataire/shared/models/share.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
-import 'package:dossier_locataire/shared/extensions.dart';
-import 'package:dossier_locataire/shared/types/form_errors.dart';
+import 'package:tranquil_loc/api/share_api.dart';
+import 'package:tranquil_loc/components/button.dart';
+import 'package:tranquil_loc/components/dropdown.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/components/text_field.dart';
+import 'package:tranquil_loc/pages/dashboard/components/share_perm_cell.dart';
+import 'package:tranquil_loc/shared/enums/share_duration_period.dart';
+import 'package:tranquil_loc/shared/enums/share_permission.dart';
+import 'package:tranquil_loc/shared/models/share.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
+import 'package:tranquil_loc/shared/extensions.dart';
+import 'package:tranquil_loc/shared/types/form_errors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class ShareDialog extends StatefulWidget {

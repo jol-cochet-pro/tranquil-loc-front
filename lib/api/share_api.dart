@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/shared/models/share.dart';
+import 'package:tranquil_loc/shared/models/share.dart';
 
 class ShareApi {
   static Future<List<Share>> getAll() async {

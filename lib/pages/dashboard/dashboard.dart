@@ -1,7 +1,7 @@
-import 'package:dossier_locataire/layout/page_layout.dart';
-import 'package:dossier_locataire/pages/dashboard/call_to_action.dart';
-import 'package:dossier_locataire/pages/dashboard/dash_cards.dart';
-import 'package:dossier_locataire/pages/dashboard/hero_section.dart';
+import 'package:tranquil_loc/layout/page_layout.dart';
+import 'package:tranquil_loc/pages/dashboard/call_to_action.dart';
+import 'package:tranquil_loc/pages/dashboard/dash_cards.dart';
+import 'package:tranquil_loc/pages/dashboard/hero_section.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {

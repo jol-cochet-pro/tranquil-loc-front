@@ -1,5 +1,5 @@
-import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class LandingDescription extends StatelessWidget {

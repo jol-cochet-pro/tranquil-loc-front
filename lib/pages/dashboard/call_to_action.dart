@@ -1,13 +1,13 @@
-import 'package:dossier_locataire/api/auth_api.dart';
-import 'package:dossier_locataire/components/button.dart';
-import 'package:dossier_locataire/components/icon_with_state.dart';
-import 'package:dossier_locataire/components/loader.dart';
-import 'package:dossier_locataire/pages/dashboard/components/action_card.dart';
-import 'package:dossier_locataire/pages/dashboard/share_dialog.dart';
-import 'package:dossier_locataire/shared/enums/search_state.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/api/auth_api.dart';
+import 'package:tranquil_loc/components/button.dart';
+import 'package:tranquil_loc/components/icon_with_state.dart';
+import 'package:tranquil_loc/components/loader.dart';
+import 'package:tranquil_loc/pages/dashboard/components/action_card.dart';
+import 'package:tranquil_loc/pages/dashboard/share_dialog.dart';
+import 'package:tranquil_loc/shared/enums/search_state.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 class CallToAction extends StatelessWidget {
   const CallToAction({super.key});

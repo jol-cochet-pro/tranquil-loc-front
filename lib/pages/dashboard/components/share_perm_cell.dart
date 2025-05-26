@@ -1,5 +1,5 @@
-import 'package:dossier_locataire/shared/enums/share_permission.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/shared/enums/share_permission.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class SharePermCell extends StatelessWidget {

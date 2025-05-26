@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/components/navbar.dart';
+import 'package:tranquil_loc/components/navbar.dart';
 import 'package:flutter/material.dart';
 
 class PageLayout extends StatelessWidget {

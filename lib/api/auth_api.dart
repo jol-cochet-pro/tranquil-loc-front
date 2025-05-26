@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dossier_locataire/shared/extensions.dart';
-import 'package:dossier_locataire/shared/models/api_exception.dart';
-import 'package:dossier_locataire/shared/models/credentials.dart';
-import 'package:dossier_locataire/shared/models/otp.dart';
-import 'package:dossier_locataire/shared/models/user.dart';
-import 'package:dossier_locataire/shared/models/user_jwt.dart';
+import 'package:tranquil_loc/shared/extensions.dart';
+import 'package:tranquil_loc/shared/models/api_exception.dart';
+import 'package:tranquil_loc/shared/models/credentials.dart';
+import 'package:tranquil_loc/shared/models/otp.dart';
+import 'package:tranquil_loc/shared/models/user.dart';
+import 'package:tranquil_loc/shared/models/user_jwt.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

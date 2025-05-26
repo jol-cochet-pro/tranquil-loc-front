@@ -1,16 +1,16 @@
-import 'package:dossier_locataire/api/occupant_api.dart';
-import 'package:dossier_locataire/components/icon_button.dart';
-import 'package:dossier_locataire/components/shadow_container.dart';
-import 'package:dossier_locataire/pages/dashboard/components/dash_card.dart';
-import 'package:dossier_locataire/pages/dashboard/components/dash_state_cell.dart';
-import 'package:dossier_locataire/pages/occupants/add_occupant.dart';
-import 'package:dossier_locataire/pages/occupants/update_occupant.dart';
-import 'package:dossier_locataire/shared/models/occupant.dart';
-import 'package:dossier_locataire/shared/text_styles.dart';
+import 'package:tranquil_loc/api/occupant_api.dart';
+import 'package:tranquil_loc/components/icon_button.dart';
+import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/pages/dashboard/components/dash_card.dart';
+import 'package:tranquil_loc/pages/dashboard/components/dash_state_cell.dart';
+import 'package:tranquil_loc/pages/occupants/add_occupant.dart';
+import 'package:tranquil_loc/pages/occupants/update_occupant.dart';
+import 'package:tranquil_loc/shared/models/occupant.dart';
+import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 class OccupantsCard extends StatefulWidget {
   const OccupantsCard({super.key});

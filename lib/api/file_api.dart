@@ -1,4 +1,4 @@
-import 'package:dossier_locataire/shared/models/file.dart';
+import 'package:tranquil_loc/shared/models/file.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:analyzer_plugin/utilities/pair.dart';
 
