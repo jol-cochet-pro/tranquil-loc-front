@@ -10,7 +10,7 @@ import 'package:tranquil_loc/pages/landing/landing.dart';
 import 'package:tranquil_loc/pages/occupants/add_occupant.dart';
 import 'package:tranquil_loc/pages/occupants/occupants.dart';
 import 'package:tranquil_loc/pages/occupants/update_occupant.dart';
-import 'package:tranquil_loc/pages/share/shared_folder.dart';
+import 'package:tranquil_loc/pages/shared_folder/shared_folder.dart';
 import 'package:tranquil_loc/pages/warrantors/add_warrantor.dart';
 import 'package:tranquil_loc/pages/warrantors/update_warrantor.dart';
 import 'package:tranquil_loc/pages/warrantors/warrantors.dart';

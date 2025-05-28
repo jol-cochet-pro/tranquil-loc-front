@@ -14,8 +14,15 @@ import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 class PersonCard extends StatelessWidget {
   final Person person;
+  final bool isSmall;
 
-  const PersonCard({super.key, required this.person});
+  const PersonCard({super.key, required this.person, this.isSmall = false});
+
+  int getAge(DateTime dateOfBirth) {
+    DateTime now = DateTime.now();
+    Duration duration = now.difference(dateOfBirth);
+    return (duration.inDays / 365.25).toInt();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +47,19 @@ class PersonCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("${person.firstname} ${person.lastname}", style: h3),
-                  Text(formatter.format(person.dateOfBirth), style: p2),
+                  Text(
+                    "${formatter.format(person.dateOfBirth)} - ${getAge(person.dateOfBirth)} ans",
+                    style: p2,
+                  ),
                 ],
               ),
-              CustomIconButton(
-                onPressed: () {
-                  context.go(UpdateOccupant.routeId(person.id));
-                },
-                icon: Icons.settings_outlined,
-              ),
+              if (!isSmall)
+                CustomIconButton(
+                  onPressed: () {
+                    context.go(UpdateOccupant.routeId(person.id));
+                  },
+                  icon: Icons.settings_outlined,
+                ),
             ],
           ),
           PersonInfoCard(
@@ -63,6 +74,7 @@ class PersonCard extends StatelessWidget {
               info: person.proSituation.locale(locale),
             ),
             title: locale.pro_situation,
+            isSmall: isSmall,
           ),
           PersonInfoCard(
             first: PersonInfo(
@@ -76,69 +88,72 @@ class PersonCard extends StatelessWidget {
               info: person.phone,
             ),
             title: locale.contact_details,
+            isSmall: isSmall,
           ),
-          Expanded(
-            child: Column(
-              spacing: 4,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("${locale.documents}:", style: h4),
-                if (person.documents.isNotEmpty)
-                  Expanded(
-                    child: ShadowContainer(
-                      padding: EdgeInsets.all(10),
-                      radius: Radius.circular(10),
-                      child: SingleChildScrollView(
-                        child: Wrap(
-                          runSpacing: 4,
-                          children:
-                              person.documents.entries.map((entry) {
-                                return Row(
-                                  spacing: 4,
-                                  children: [
-                                    IconWithState(
-                                      state:
-                                          entry.value.isNotEmpty
-                                              ? IconState.valid
-                                              : IconState.wrong,
-                                    ),
-                                    Text(
-                                      DocumentType.values
-                                          .byName(entry.key)
-                                          .locale(locale),
-                                      style: p3,
-                                    ),
-                                  ],
-                                );
-                              }).toList(),
+          if (!isSmall)
+            Expanded(
+              child: Column(
+                spacing: 4,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("${locale.documents}:", style: h4),
+                  if (person.documents.isNotEmpty)
+                    Expanded(
+                      child: ShadowContainer(
+                        padding: EdgeInsets.all(10),
+                        radius: Radius.circular(10),
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            runSpacing: 4,
+                            children:
+                                person.documents.entries.map((entry) {
+                                  return Row(
+                                    spacing: 4,
+                                    children: [
+                                      IconWithState(
+                                        state:
+                                            entry.value.isNotEmpty
+                                                ? IconState.valid
+                                                : IconState.wrong,
+                                      ),
+                                      Text(
+                                        DocumentType.values
+                                            .byName(entry.key)
+                                            .locale(locale),
+                                        style: p3,
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
+                          ),
                         ),
                       ),
                     ),
+                ],
+              ),
+            ),
+          if (!isSmall)
+            Row(
+              spacing: 4,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconWithState(
+                  state: person.isCompleted ? IconState.valid : IconState.wrong,
+                ),
+                Text(
+                  person.isCompleted ? locale.complete : locale.incomplete,
+                  style: TextStyle(
+                    color:
+                        person.isCompleted
+                            ? colorScheme.tertiary
+                            : colorScheme.error,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
+                ),
               ],
             ),
-          ),
-          Row(
-            spacing: 4,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconWithState(
-                state: person.isCompleted ? IconState.valid : IconState.wrong,
-              ),
-              Text(
-                person.isCompleted ? locale.complete : locale.incomplete,
-                style: TextStyle(
-                  color:
-                      person.isCompleted
-                          ? colorScheme.tertiary
-                          : colorScheme.error,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );

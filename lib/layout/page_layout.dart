@@ -4,8 +4,14 @@ import 'package:flutter/material.dart';
 class PageLayout extends StatelessWidget {
   final Widget child;
   final bool? hideNavbar;
+  final bool? isScrollable;
 
-  const PageLayout({super.key, required this.child, this.hideNavbar});
+  const PageLayout({
+    super.key,
+    required this.child,
+    this.hideNavbar,
+    this.isScrollable,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,10 @@ class PageLayout extends StatelessWidget {
                 top: isVisiblenav ? 74 : 24,
                 bottom: 24,
               ),
-              child: child,
+              child:
+                  isScrollable != null && isScrollable!
+                      ? SingleChildScrollView(child: child)
+                      : child,
             ),
           ],
         ),

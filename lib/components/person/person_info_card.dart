@@ -18,88 +18,82 @@ class PersonInfoCard extends StatelessWidget {
   final String title;
   final PersonInfo first;
   final PersonInfo second;
+  final bool isSmall;
 
   const PersonInfoCard({
     super.key,
     required this.first,
     required this.second,
     required this.title,
+    this.isSmall = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    return Expanded(
-      child: Column(
-        spacing: 4,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text("$title:", style: h4),
-          Expanded(
-            child: ShadowContainer(
-              padding: EdgeInsets.all(10),
-              radius: Radius.circular(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(first.name, style: p3),
-                            Icon(first.icon, size: 20),
-                          ],
-                        ),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              first.info,
-                              overflow: TextOverflow.ellipsis,
-                              style: p2,
-                            ),
+    return Column(
+      spacing: 4,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (!isSmall) Text("$title:", style: h4),
+        Expanded(
+          child: ShadowContainer(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              spacing: 12,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(first.name, style: p3),
+                          Icon(first.icon, size: 20),
+                        ],
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            first.info,
+                            overflow: TextOverflow.ellipsis,
+                            style: p2,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12),
-                    child: VerticalDivider(
-                      width: 1,
-                      color: colorScheme.outline,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(second.name, style: p3),
-                            Icon(second.icon, size: 20),
-                          ],
-                        ),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              second.info,
-                              overflow: TextOverflow.ellipsis,
-                              style: p2,
-                            ),
+                ),
+                VerticalDivider(color: colorScheme.outline),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(second.name, style: p3),
+                          Icon(second.icon, size: 20),
+                        ],
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            second.info,
+                            overflow: TextOverflow.ellipsis,
+                            style: p2,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

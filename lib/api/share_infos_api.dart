@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
 import 'package:tranquil_loc/shared/extensions.dart';
 import 'package:tranquil_loc/shared/models/api_exception.dart';
