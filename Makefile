@@ -1,8 +1,8 @@
 debug:
-	flutter run -d --web-port=8080 --dart-define=ENVIRONMENT=DEVELOPMENT
+	flutter run --dart-define=ENVIRONMENT=DEVELOPMENT
 
 debug-prod:
-	flutter run -d --web-port=8080 --dart-define=ENVIRONMENT=PRODUCTION
+	flutter run --dart-define=ENVIRONMENT=PRODUCTION
 
 deploy-funcs:
 	npm run --prefix functions/ build

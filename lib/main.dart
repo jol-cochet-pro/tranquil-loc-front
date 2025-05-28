@@ -4,7 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
@@ -41,10 +41,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
-        Locale('fr'), // French
-        Locale('en'), // English
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         fontFamily: "Inter",
         fontFamilyFallback: ["Inter"],

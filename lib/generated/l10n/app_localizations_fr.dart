@@ -33,6 +33,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get occupant => 'Occupant';
 
   @override
+  String folder_of(Object firstname, Object lastname) {
+    return 'Dossier de $firstname $lastname';
+  }
+
+  @override
+  String get transmit_folder => 'Un candidat à la location vous a transmis son dossier ! Vous trouverez ici l’ensemble des documents nécessaires à l’étude de sa candidature : pièces d’identité, justificatifs de revenus, documents liés à l’emploi, etc. Vous pouvez, via cet espace télécharger tous les documents pour chacun des futur occupants / garants.';
+
+  @override
   String hey_username(Object username) {
     return 'Hey $username !';
   }
@@ -62,8 +70,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get future_occupants => 'Futur occupants';
 
   @override
-  String get no_future_occupants_saved =>
-      'Pas de futur occupants enregistrés...';
+  String get no_future_occupants_saved => 'Pas de futur occupants enregistrés...';
 
   @override
   String get no_warrantors_saved => 'Pas de garants enregistrés...';
@@ -114,8 +121,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get share => 'Partager';
 
   @override
-  String get share_dialog_description =>
-      'Ici vous pouvez ajouter des partages pour faire en sorte\nque votre dossier soit vu par d’autre personnes. (changer ce texte)';
+  String get share_dialog_description => 'Ici vous pouvez ajouter des partages pour faire en sorte\nque votre dossier soit vu par d’autre personnes. (changer ce texte)';
 
   @override
   String get description => 'Description';
@@ -277,8 +283,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mistake_happens => 'Un oubli, ça arrive !';
 
   @override
-  String get an_email_will_be_sent =>
-      'un e-mail va vous êtes envoyé pour modifier votre mot de passe';
+  String get an_email_will_be_sent => 'un e-mail va vous êtes envoyé pour modifier votre mot de passe';
 
   @override
   String get no_account => 'Pas encore de compte ?';
@@ -371,8 +376,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get verify_email => 'Vérifier votre email !';
 
   @override
-  String get your_email_needs_verif =>
-      'Vous avez reçu un mail pour faire la vérification de votre email. Récupérer le code envoyé par email pour finaliser votre inscription !';
+  String get your_email_needs_verif => 'Vous avez reçu un mail pour faire la vérification de votre email. Récupérer le code envoyé par email pour finaliser votre inscription !';
 
   @override
   String get go_to_dashboard => 'Aller au dashboard';
@@ -384,12 +388,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get expired_verif_code => 'le code de vérification à expiré.';
 
   @override
-  String get invalid_verif_code =>
-      'le code de vérification à déjà été utilisé.';
+  String get invalid_verif_code => 'le code de vérification à déjà été utilisé.';
 
   @override
-  String get invalid_phone_number =>
-      'le numéro de téléphone n\'est pas valide.';
+  String get invalid_phone_number => 'le numéro de téléphone n\'est pas valide.';
 
   @override
   String get user_not_found => 'l\'utilisateur n\'a pas été trouvé.';
@@ -401,8 +403,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get account_deactivated => 'Le compte a été désactivé.';
 
   @override
-  String get invalid_email_or_password =>
-      'L\'email ou le mot de passe est invalide.';
+  String get invalid_email_or_password => 'L\'email ou le mot de passe est invalide.';
 
   @override
   String get invalid_otp_code => 'Le code d\'authentification est invalide.';
@@ -414,12 +415,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get email_already_verified => 'L\'email a déjà été vérifié.';
 
   @override
-  String get confirm_password_must_match =>
-      'La confirmation du mot de passe est incorrecte.';
+  String get confirm_password_must_match => 'La confirmation du mot de passe est incorrecte.';
 
   @override
-  String get password_is_weak =>
-      'Le mot de passe doit contenir un combinaisons contenant minimum 8 lettres, une majuscule, une minuscule, un chiffre et un caractère spécial.';
+  String get password_is_weak => 'Le mot de passe doit contenir un combinaisons contenant minimum 8 lettres, une majuscule, une minuscule, un chiffre et un caractère spécial.';
 
   @override
   String cant_be_empty(Object what) {
@@ -447,8 +446,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get must_have_at_least_one_perm =>
-      'Vous devez avoir au moins une permission pour partager votre dossier.';
+  String get must_have_at_least_one_perm => 'Vous devez avoir au moins une permission pour partager votre dossier.';
 
   @override
   String get must_has_extension => 'Formats acceptés : .jpg, .png, .pdf.';
