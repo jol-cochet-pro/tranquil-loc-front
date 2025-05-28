@@ -4,8 +4,8 @@ import 'package:tranquil_loc/components/button.dart';
 import 'package:tranquil_loc/components/loader.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
-import 'package:tranquil_loc/pages/occupants/components/documents_info_form.dart';
-import 'package:tranquil_loc/pages/occupants/components/personal_infos_form.dart';
+import 'package:tranquil_loc/components/person/documents_info_form.dart';
+import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/occupants/occupants.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/extensions.dart';
@@ -105,7 +105,7 @@ class _AddOccupantState extends State<AddOccupant> {
                 children: [
                   Expanded(
                     child: PersonalInfoForm(
-                      occupant: occupant,
+                      person: occupant,
                       onSituationUpdate:
                           (situation) =>
                               setState(() => documents = situation.documents),
@@ -113,7 +113,7 @@ class _AddOccupantState extends State<AddOccupant> {
                   ),
                   Expanded(
                     child: DocumentsInfoForm(
-                      occupant: occupant,
+                      person: occupant,
                       newDocuments: documents,
                       rmDocuments: {},
                     ),

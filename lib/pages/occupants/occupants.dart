@@ -4,7 +4,7 @@ import 'package:tranquil_loc/components/loader.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/pages/occupants/add_occupant.dart';
-import 'package:tranquil_loc/pages/occupants/components/occupant_card.dart';
+import 'package:tranquil_loc/components/person/person_card.dart';
 import 'package:tranquil_loc/shared/models/occupant.dart';
 import 'package:tranquil_loc/shared/scroll_controller.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
@@ -71,8 +71,8 @@ class _OccupantsState extends State<Occupants> {
                                   itemCount: snapshot.data!.length,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder:
-                                      (context, index) => OccupantCard(
-                                        occupant: snapshot.data![index],
+                                      (context, index) => PersonCard(
+                                        person: snapshot.data![index],
                                       ),
                                   separatorBuilder:
                                       (context, index) => SizedBox(width: 24),

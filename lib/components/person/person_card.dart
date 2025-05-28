@@ -1,21 +1,21 @@
 import 'package:tranquil_loc/components/icon_button.dart';
 import 'package:tranquil_loc/components/icon_with_state.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
-import 'package:tranquil_loc/pages/occupants/components/occupant_info_card.dart';
+import 'package:tranquil_loc/components/person/person_info_card.dart';
 import 'package:tranquil_loc/pages/occupants/update_occupant.dart';
 import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/models/occupant.dart';
+import 'package:tranquil_loc/shared/models/person.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
-class OccupantCard extends StatelessWidget {
-  final Occupant occupant;
+class PersonCard extends StatelessWidget {
+  final Person person;
 
-  const OccupantCard({super.key, required this.occupant});
+  const PersonCard({super.key, required this.person});
 
   @override
   Widget build(BuildContext context) {
@@ -39,41 +39,41 @@ class OccupantCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${occupant.firstname} ${occupant.lastname}", style: h3),
-                  Text(formatter.format(occupant.dateOfBirth), style: p2),
+                  Text("${person.firstname} ${person.lastname}", style: h3),
+                  Text(formatter.format(person.dateOfBirth), style: p2),
                 ],
               ),
               CustomIconButton(
                 onPressed: () {
-                  context.go(UpdateOccupant.routeId(occupant.id));
+                  context.go(UpdateOccupant.routeId(person.id));
                 },
                 icon: Icons.settings_outlined,
               ),
             ],
           ),
-          OccupantInfoCard(
-            first: OccupantInfo(
+          PersonInfoCard(
+            first: PersonInfo(
               icon: Icons.euro_outlined,
               name: locale.monthly_income,
-              info: "${occupant.income}€ / ${locale.months}",
+              info: "${person.income}€ / ${locale.months}",
             ),
-            second: OccupantInfo(
+            second: PersonInfo(
               icon: Icons.person_outline,
               name: locale.situation,
-              info: occupant.proSituation.locale(locale),
+              info: person.proSituation.locale(locale),
             ),
             title: locale.pro_situation,
           ),
-          OccupantInfoCard(
-            first: OccupantInfo(
+          PersonInfoCard(
+            first: PersonInfo(
               icon: Icons.email_outlined,
               name: locale.email,
-              info: occupant.email,
+              info: person.email,
             ),
-            second: OccupantInfo(
+            second: PersonInfo(
               icon: Icons.phone_outlined,
               name: locale.phone,
-              info: occupant.phone,
+              info: person.phone,
             ),
             title: locale.contact_details,
           ),
@@ -84,7 +84,7 @@ class OccupantCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text("${locale.documents}:", style: h4),
-                if (occupant.documents.isNotEmpty)
+                if (person.documents.isNotEmpty)
                   Expanded(
                     child: ShadowContainer(
                       padding: EdgeInsets.all(10),
@@ -93,7 +93,7 @@ class OccupantCard extends StatelessWidget {
                         child: Wrap(
                           runSpacing: 4,
                           children:
-                              occupant.documents.entries.map((entry) {
+                              person.documents.entries.map((entry) {
                                 return Row(
                                   spacing: 4,
                                   children: [
@@ -124,13 +124,13 @@ class OccupantCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconWithState(
-                state: occupant.isCompleted ? IconState.valid : IconState.wrong,
+                state: person.isCompleted ? IconState.valid : IconState.wrong,
               ),
               Text(
-                occupant.isCompleted ? locale.complete : locale.incomplete,
+                person.isCompleted ? locale.complete : locale.incomplete,
                 style: TextStyle(
                   color:
-                      occupant.isCompleted
+                      person.isCompleted
                           ? colorScheme.tertiary
                           : colorScheme.error,
                   fontSize: 14,

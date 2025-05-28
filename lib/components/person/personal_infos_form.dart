@@ -6,19 +6,19 @@ import 'package:tranquil_loc/components/text_field.dart';
 import 'package:tranquil_loc/shared/enums/home_situation.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/extensions.dart';
-import 'package:tranquil_loc/shared/models/occupant.dart';
+import 'package:tranquil_loc/shared/models/person.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
 class PersonalInfoForm extends StatefulWidget {
-  final Occupant occupant;
+  final Person person;
   final void Function(ProSituation) onSituationUpdate;
 
   const PersonalInfoForm({
     super.key,
-    required this.occupant,
+    required this.person,
     required this.onSituationUpdate,
   });
 
@@ -43,7 +43,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             children: [
               Flexible(
                 child: CustomTextField(
-                  initialValue: widget.occupant.firstname,
+                  initialValue: widget.person.firstname,
                   label: locale.firstname,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -53,7 +53,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   },
                   onChanged:
                       (newValue) =>
-                          setState(() => widget.occupant.firstname = newValue),
+                          setState(() => widget.person.firstname = newValue),
                   hint: locale.firstname_hint,
                   isRequired: true,
                   type: TextFieldType.text,
@@ -61,7 +61,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               ),
               Flexible(
                 child: CustomTextField(
-                  initialValue: widget.occupant.lastname,
+                  initialValue: widget.person.lastname,
                   label: locale.lastname,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -71,7 +71,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   },
                   onChanged:
                       (newValue) =>
-                          setState(() => widget.occupant.lastname = newValue),
+                          setState(() => widget.person.lastname = newValue),
                   hint: locale.lastname_hint,
                   isRequired: true,
                   type: TextFieldType.text,
@@ -80,11 +80,11 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             ],
           ),
           CustomDateField(
-            initialValue: widget.occupant.dateOfBirth,
+            initialValue: widget.person.dateOfBirth,
             label: locale.date_of_birth,
             onChanged:
                 (newValue) =>
-                    setState(() => widget.occupant.dateOfBirth = newValue),
+                    setState(() => widget.person.dateOfBirth = newValue),
             isRequired: true,
             validator: (value) {
               if (value == null) {
@@ -99,7 +99,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             children: [
               Flexible(
                 child: CustomTextField(
-                  initialValue: widget.occupant.email,
+                  initialValue: widget.person.email,
                   label: locale.email,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -112,7 +112,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   },
                   onChanged:
                       (newValue) =>
-                          setState(() => widget.occupant.email = newValue),
+                          setState(() => widget.person.email = newValue),
                   hint: locale.email_hint,
                   isRequired: true,
                   type: TextFieldType.text,
@@ -121,7 +121,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               Flexible(
                 child: CustomPhoneField(
                   initialValue: PhoneNumber.fromCompleteNumber(
-                    completeNumber: widget.occupant.phone,
+                    completeNumber: widget.person.phone,
                   ),
                   label: locale.phone,
                   validator: (value) {
@@ -132,7 +132,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   },
                   onChanged:
                       (newValue) => setState(
-                        () => widget.occupant.phone = newValue.completeNumber,
+                        () => widget.person.phone = newValue.completeNumber,
                       ),
                   isRequired: false,
                 ),
@@ -142,10 +142,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           Text("${locale.situation}:", style: h3),
           CustomDropDown(
             label: locale.home_situation,
-            initialValue: widget.occupant.homeSituation,
+            initialValue: widget.person.homeSituation,
             onSelected:
-                (value) =>
-                    setState(() => widget.occupant.homeSituation = value!),
+                (value) => setState(() => widget.person.homeSituation = value!),
             items:
                 HomeSituation.values.map((el) {
                   return DropdownMenuEntry(value: el, label: el.locale(locale));
@@ -154,10 +153,10 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           ),
           CustomDropDown(
             label: locale.pro_situation,
-            initialValue: widget.occupant.proSituation,
+            initialValue: widget.person.proSituation,
             onSelected: (value) {
               widget.onSituationUpdate(value!);
-              setState(() => widget.occupant.proSituation = value);
+              setState(() => widget.person.proSituation = value);
             },
             items:
                 ProSituation.values.map((el) {
@@ -166,7 +165,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             isRequired: true,
           ),
           CustomTextField(
-            initialValue: widget.occupant.income.toString(),
+            initialValue: widget.person.income.toString(),
             label: locale.monthly_income,
             validator: (value) {
               if (value == null || value == "") {
@@ -184,9 +183,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               return null;
             },
             onChanged:
-                (newValue) => setState(
-                  () => widget.occupant.income = int.parse(newValue),
-                ),
+                (newValue) =>
+                    setState(() => widget.person.income = int.parse(newValue)),
             hint: "1000",
             isRequired: true,
             type: TextFieldType.currency,

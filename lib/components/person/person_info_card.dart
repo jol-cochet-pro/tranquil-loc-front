@@ -2,24 +2,24 @@ import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 
-class WarrantorInfo {
+class PersonInfo {
   final IconData icon;
   final String name;
   final String info;
 
-  const WarrantorInfo({
+  const PersonInfo({
     required this.icon,
     required this.name,
     required this.info,
   });
 }
 
-class WarrantorInfoCard extends StatelessWidget {
+class PersonInfoCard extends StatelessWidget {
   final String title;
-  final WarrantorInfo first;
-  final WarrantorInfo second;
+  final PersonInfo first;
+  final PersonInfo second;
 
-  const WarrantorInfoCard({
+  const PersonInfoCard({
     super.key,
     required this.first,
     required this.second,

@@ -3,20 +3,20 @@ import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/extensions.dart';
 import 'package:tranquil_loc/shared/models/file.dart';
-import 'package:tranquil_loc/shared/models/warrantor.dart';
+import 'package:tranquil_loc/shared/models/person.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 class DocumentsInfoForm extends StatefulWidget {
-  final Warrantor warrantor;
+  final Person person;
   final Map<String, List<PlatformFile>> newDocuments;
   final Map<String, List<File>>? rmDocuments;
 
   const DocumentsInfoForm({
     super.key,
-    required this.warrantor,
+    required this.person,
     required this.newDocuments,
     required this.rmDocuments,
   });
@@ -46,15 +46,13 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
               child: Wrap(
                 spacing: 24,
                 runSpacing: 12,
-                clipBehavior: Clip.hardEdge,
                 children:
                     widget.newDocuments.entries.map((entry) {
                       return CustomFileInput(
                         label: DocumentType.values
                             .byName(entry.key)
                             .locale(locale),
-                        initialFiles:
-                            widget.warrantor.documents[entry.key] ?? [],
+                        initialFiles: widget.person.documents[entry.key] ?? [],
                         files: entry.value,
                         onDownload: (file) => file.download(),
                         onAdd:

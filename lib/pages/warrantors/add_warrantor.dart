@@ -2,10 +2,10 @@ import 'package:tranquil_loc/api/file_api.dart';
 import 'package:tranquil_loc/api/warrantor_api.dart';
 import 'package:tranquil_loc/components/button.dart';
 import 'package:tranquil_loc/components/loader.dart';
+import 'package:tranquil_loc/components/person/documents_info_form.dart';
+import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
-import 'package:tranquil_loc/pages/warrantors/components/documents_info_form.dart';
-import 'package:tranquil_loc/pages/warrantors/components/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/extensions.dart';
@@ -105,7 +105,7 @@ class _AddWarrantorState extends State<AddWarrantor> {
                 children: [
                   Expanded(
                     child: PersonalInfoForm(
-                      warrantor: warrantor,
+                      person: warrantor,
                       onSituationUpdate:
                           (situation) =>
                               setState(() => documents = situation.documents),
@@ -113,7 +113,7 @@ class _AddWarrantorState extends State<AddWarrantor> {
                   ),
                   Expanded(
                     child: DocumentsInfoForm(
-                      warrantor: warrantor,
+                      person: warrantor,
                       newDocuments: documents,
                       rmDocuments: {},
                     ),
