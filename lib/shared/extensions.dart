@@ -26,7 +26,7 @@ extension MapExtension on Map {
     }
   }
 
-  void createAdd<T>(String key, T value) {
+  void createAdd<K, T>(K key, T value) {
     if (this[key] == null) {
       this[key] = [value];
     } else {

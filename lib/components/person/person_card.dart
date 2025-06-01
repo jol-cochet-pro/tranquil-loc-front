@@ -3,7 +3,6 @@ import 'package:tranquil_loc/components/icon_with_state.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/components/person/person_info_card.dart';
 import 'package:tranquil_loc/pages/occupants/update_occupant.dart';
-import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/models/person.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
@@ -106,26 +105,27 @@ class PersonCard extends StatelessWidget {
                         child: SingleChildScrollView(
                           child: Wrap(
                             runSpacing: 4,
-                            children:
-                                person.documents.entries.map((entry) {
-                                  return Row(
-                                    spacing: 4,
-                                    children: [
-                                      IconWithState(
-                                        state:
-                                            entry.value.isNotEmpty
-                                                ? IconState.valid
-                                                : IconState.wrong,
-                                      ),
-                                      Text(
-                                        DocumentType.values
-                                            .byName(entry.key)
-                                            .locale(locale),
-                                        style: p3,
-                                      ),
-                                    ],
-                                  );
-                                }).toList(),
+                            children: [Text("Change this")],
+                            // TODO CHANGE THIS
+                            // person.documents.entries.map((entry) {
+                            //   return Row(
+                            //     spacing: 4,
+                            //     children: [
+                            //       IconWithState(
+                            //         state:
+                            //             entry.value.isNotEmpty
+                            //                 ? IconState.valid
+                            //                 : IconState.wrong,
+                            //       ),
+                            //       Text(
+                            //         DocumentType.values
+                            //             .byName(entry.key)
+                            //             .locale(locale),
+                            //         style: p3,
+                            //       ),
+                            //     ],
+                            //   );
+                            // }).toList(),
                           ),
                         ),
                       ),

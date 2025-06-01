@@ -62,13 +62,13 @@ class CustomPhoneField extends FormField<PhoneNumber> {
                ),
                IntlPhoneField(
                  autovalidateMode: AutovalidateMode.disabled,
-                 initialValue: field.value?.completeNumber,
+                 initialValue: field.value?.number,
                  decoration: decoration,
                  onChanged: (newValue) {
                    field.didChange(newValue);
                    onChanged(newValue);
                  },
-                 initialCountryCode: field.value?.countryCode ?? "FR",
+                 initialCountryCode: field.value?.countryISOCode ?? "FR",
                  invalidNumberMessage: locale.invalid_phone_number,
                  keyboardType: TextInputType.phone,
                ),

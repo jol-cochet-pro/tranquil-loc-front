@@ -6,6 +6,7 @@ import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
+import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/models/warrantor.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
@@ -26,7 +27,8 @@ class AddWarrantor extends StatefulWidget {
 
 class _AddWarrantorState extends State<AddWarrantor> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<String, List<PlatformFile>> documents = ProSituation.OTHER.documents;
+  Map<DocumentType, List<PlatformFile>> documents =
+      ProSituation.OTHER.documents;
   final Warrantor warrantor = Warrantor.empty;
   bool isLoading = false;
 
@@ -112,7 +114,7 @@ class _AddWarrantorState extends State<AddWarrantor> {
                   ),
                   Expanded(
                     child: DocumentsInfoForm(
-                      person: warrantor,
+                      initialFiles: {},
                       newDocuments: documents,
                       rmDocuments: {},
                     ),

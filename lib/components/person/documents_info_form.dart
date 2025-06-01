@@ -1,22 +1,23 @@
+import 'package:tranquil_loc/api/document_api.dart';
 import 'package:tranquil_loc/components/file_input.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/extensions.dart';
 import 'package:tranquil_loc/shared/models/file.dart';
-import 'package:tranquil_loc/shared/models/person.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DocumentsInfoForm extends StatefulWidget {
-  final Person person;
-  final Map<String, List<PlatformFile>> newDocuments;
-  final Map<String, List<File>>? rmDocuments;
+  final Map<DocumentType, List<File>> initialFiles;
+  final Map<DocumentType, List<PlatformFile>> newDocuments;
+  final Map<DocumentType, List<File>>? rmDocuments;
 
   const DocumentsInfoForm({
     super.key,
-    required this.person,
+    required this.initialFiles,
     required this.newDocuments,
     required this.rmDocuments,
   });
@@ -49,12 +50,13 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
                 children:
                     widget.newDocuments.entries.map((entry) {
                       return CustomFileInput(
-                        label: DocumentType.values
-                            .byName(entry.key)
-                            .locale(locale),
-                        initialFiles: widget.person.documents[entry.key] ?? [],
+                        label: entry.key.locale(locale),
+                        initialFiles: widget.initialFiles[entry.key] ?? [],
                         files: entry.value,
-                        onDownload: (file) => file.download(),
+                        onClick: (file) async {
+                          final document = await DocumentApi.get(file.id);
+                          launchUrl(Uri.parse(document.url));
+                        },
                         onAdd:
                             (file) => setState(() => entry.value.addAll(file)),
                         onRemove:

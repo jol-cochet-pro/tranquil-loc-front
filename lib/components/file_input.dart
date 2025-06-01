@@ -9,7 +9,7 @@ class CustomFileInput extends StatefulWidget {
   final List<File> initialFiles;
   final List<PlatformFile> files;
   final void Function(List<PlatformFile>) onAdd;
-  final void Function(File) onDownload;
+  final void Function(File) onClick;
   final void Function(PlatformFile) onRemove;
   final void Function(File) onInitialRemove;
 
@@ -18,7 +18,7 @@ class CustomFileInput extends StatefulWidget {
     this.label,
     required this.initialFiles,
     required this.files,
-    required this.onDownload,
+    required this.onClick,
     required this.onAdd,
     required this.onRemove,
     required this.onInitialRemove,
@@ -95,8 +95,7 @@ class _FileInputState extends State<CustomFileInput> {
           children: [
             ...widget.initialFiles
                 .where(
-                  (file) =>
-                      !removed.map((file) => file.name).contains(file.name),
+                  (file) => !removed.map((file) => file.id).contains(file.id),
                 )
                 .map(
                   (file) => Row(
@@ -104,7 +103,7 @@ class _FileInputState extends State<CustomFileInput> {
                     spacing: 4,
                     children: [
                       GestureDetector(
-                        onTap: () => widget.onDownload(file),
+                        onTap: () => widget.onClick(file),
                         child: Text(
                           file.locale(locale),
                           style: TextStyle(

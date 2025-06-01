@@ -1,6 +1,6 @@
 import 'package:tranquil_loc/shared/enums/home_situation.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/models/file.dart';
+import 'package:tranquil_loc/shared/models/document.dart';
 
 class Person {
   String id;
@@ -12,7 +12,7 @@ class Person {
   HomeSituation homeSituation;
   String email;
   String phone;
-  Map<String, List<File>> documents;
+  List<Document> documents;
 
   Person({
     required this.id,
@@ -28,9 +28,7 @@ class Person {
   });
 
   bool get isCompleted {
-    return (email.isNotEmpty &&
-        phone.isNotEmpty &&
-        documents.values.every((value) => value.isNotEmpty));
+    return (email.isNotEmpty && phone.isNotEmpty);
   }
 
   bool getInfoCompleted(String info) {
@@ -44,7 +42,7 @@ class Person {
       case "hasPhoneFilled":
         return phone != "";
       case "hasAllDocumentsFilled":
-        return documents.values.every((value) => value.isNotEmpty);
+        return true; // TODO CHANGE THIS
       default:
         return false;
     }

@@ -19,9 +19,14 @@ class OccupantApi {
   }
 
   static Future<Occupant?> get(String id) async {
-    // TODO FIREBASE REPLACEMENT
-    // return await Storage.occupant(id).get().then((value) => value.data());
-    return Occupant.empty;
+    http.Response response = await http.get(
+      Uri.parse('http://localhost:3000/occupants/$id'),
+      headers: await AuthApi.defaultHeaders,
+    );
+    if (response.isOK) {
+      return Occupant.fromApi(jsonDecode(response.body));
+    }
+    throw ApiException.fromApi(jsonDecode(response.body));
   }
 
   static Future<List<Occupant>> getAll() async {

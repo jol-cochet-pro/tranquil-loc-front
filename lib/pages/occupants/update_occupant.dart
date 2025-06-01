@@ -6,7 +6,10 @@ import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/components/person/documents_info_form.dart';
 import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/occupants/occupants.dart';
+import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
+import 'package:tranquil_loc/shared/extensions.dart';
+import 'package:tranquil_loc/shared/models/document.dart';
 import 'package:tranquil_loc/shared/models/file.dart';
 import 'package:tranquil_loc/shared/models/occupant.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
@@ -30,14 +33,24 @@ class UpdateOccupant extends StatefulWidget {
 
 class _UpdateOccupantState extends State<UpdateOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<String, List<PlatformFile>> newDocuments = ProSituation.OTHER.documents;
-  final Map<String, List<File>> rmDocuments = {};
+  final Map<DocumentType, List<File>> initialFiles = {};
+  Map<DocumentType, List<PlatformFile>> newDocuments =
+      ProSituation.OTHER.documents;
+  final Map<DocumentType, List<File>> rmDocuments = {};
   late Future<Occupant?> occupant;
   bool isLoading = false;
 
   @override
   void initState() {
-    occupant = OccupantApi.get(widget.occupantId);
+    occupant = OccupantApi.get(widget.occupantId).then((occupant) {
+      for (Document document in occupant?.documents ?? []) {
+        initialFiles.createAdd(
+          document.type,
+          File(id: document.id, name: document.name),
+        );
+      }
+      return occupant;
+    });
     super.initState();
   }
 
@@ -150,7 +163,7 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
                               ),
                               Expanded(
                                 child: DocumentsInfoForm(
-                                  person: snapshot.data!,
+                                  initialFiles: initialFiles,
                                   newDocuments: newDocuments,
                                   rmDocuments: rmDocuments,
                                 ),

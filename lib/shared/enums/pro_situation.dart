@@ -63,39 +63,39 @@ extension ProSituationExtension on ProSituation {
     }
   }
 
-  Map<String, List<PlatformFile>> get documents {
-    Map<String, List<PlatformFile>> documents = {
-      DocumentType.IDENTITY_DOCUMENTS.str: [],
-      DocumentType.PROOF_OF_ADDRESS.str: [],
-      DocumentType.TAX_NOTICE.str: [],
-      DocumentType.OTHER.str: [],
+  Map<DocumentType, List<PlatformFile>> get documents {
+    Map<DocumentType, List<PlatformFile>> documents = {
+      DocumentType.IDENTITY_DOCUMENTS: [],
+      DocumentType.PROOF_OF_ADDRESS: [],
+      DocumentType.TAX_NOTICE: [],
+      DocumentType.OTHER: [],
     };
     switch (this) {
       case ProSituation.CDD:
       case ProSituation.CDI:
-        documents[DocumentType.EMPLOYMENT_CONTRACT.str] = [];
-        documents[DocumentType.LAST_THREE_PAYSLIPS.str] = [];
+        documents[DocumentType.EMPLOYMENT_CONTRACT] = [];
+        documents[DocumentType.LAST_THREE_PAYSLIPS] = [];
         break;
       case ProSituation.RETIRED:
-        documents[DocumentType.PENSION_CERTIFICATE.str] = [];
+        documents[DocumentType.PENSION_CERTIFICATE] = [];
         break;
       case ProSituation.APPRENTICE:
-        documents[DocumentType.APPRENTICESHIP_FORM.str] = [];
-        documents[DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE.str] = [];
+        documents[DocumentType.APPRENTICESHIP_FORM] = [];
+        documents[DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE] = [];
         break;
       case ProSituation.UNEMPLOYED:
-        documents[DocumentType.ARE_CERTIFICATE.str] = [];
-        documents[DocumentType.JOB_OFFER.str] = [];
+        documents[DocumentType.ARE_CERTIFICATE] = [];
+        documents[DocumentType.JOB_OFFER] = [];
         break;
       case ProSituation.STUDENT:
-        documents[DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE.str] = [];
+        documents[DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE] = [];
         break;
       case ProSituation.OFFICIAL:
-        documents[DocumentType.EMPLOYER_CERTIFICATE.str] = [];
+        documents[DocumentType.EMPLOYER_CERTIFICATE] = [];
         break;
       case ProSituation.FREELANCE:
-        documents[DocumentType.REGISTRATION_SIRENE.str] = [];
-        documents[DocumentType.FINANCIAL_STATEMENT.str] = [];
+        documents[DocumentType.REGISTRATION_SIRENE] = [];
+        documents[DocumentType.FINANCIAL_STATEMENT] = [];
         break;
       case ProSituation.OTHER:
         break;

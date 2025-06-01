@@ -6,6 +6,7 @@ import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/components/person/documents_info_form.dart';
 import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/occupants/occupants.dart';
+import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/models/occupant.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
@@ -26,7 +27,8 @@ class AddOccupant extends StatefulWidget {
 
 class _AddOccupantState extends State<AddOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<String, List<PlatformFile>> documents = ProSituation.OTHER.documents;
+  Map<DocumentType, List<PlatformFile>> documents =
+      ProSituation.OTHER.documents;
   final Occupant occupant = Occupant.empty;
   bool isLoading = false;
 
@@ -112,7 +114,7 @@ class _AddOccupantState extends State<AddOccupant> {
                   ),
                   Expanded(
                     child: DocumentsInfoForm(
-                      person: occupant,
+                      initialFiles: {},
                       newDocuments: documents,
                       rmDocuments: {},
                     ),

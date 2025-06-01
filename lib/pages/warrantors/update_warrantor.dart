@@ -6,6 +6,7 @@ import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
+import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/models/file.dart';
 import 'package:tranquil_loc/shared/models/warrantor.dart';
@@ -30,8 +31,10 @@ class UpdateWarrantor extends StatefulWidget {
 
 class _UpdateWarrantorState extends State<UpdateWarrantor> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<String, List<PlatformFile>> newDocuments = ProSituation.OTHER.documents;
-  final Map<String, List<File>> rmDocuments = {};
+  final Map<DocumentType, List<File>> initialFiles = {};
+  Map<DocumentType, List<PlatformFile>> newDocuments =
+      ProSituation.OTHER.documents;
+  final Map<DocumentType, List<File>> rmDocuments = {};
   late Future<Warrantor?> warrantor;
   bool isLoading = false;
 
@@ -150,7 +153,7 @@ class _UpdateWarrantorState extends State<UpdateWarrantor> {
                               ),
                               Expanded(
                                 child: DocumentsInfoForm(
-                                  person: snapshot.data!,
+                                  initialFiles: initialFiles,
                                   newDocuments: newDocuments,
                                   rmDocuments: rmDocuments,
                                 ),

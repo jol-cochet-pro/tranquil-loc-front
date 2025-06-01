@@ -1,5 +1,4 @@
 // ignore_for_file: constant_identifier_names
-
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 enum DocumentType {
