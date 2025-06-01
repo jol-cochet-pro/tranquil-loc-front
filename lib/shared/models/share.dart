@@ -10,6 +10,7 @@ class Share {
   ShareDurationPeriod durationPeriod;
   SharePermission warrantorPermission;
   SharePermission occupantPermission;
+  DateTime createdAt;
 
   Share({
     required this.id,
@@ -19,6 +20,7 @@ class Share {
     required this.durationPeriod,
     required this.warrantorPermission,
     required this.occupantPermission,
+    required this.createdAt,
   });
 
   static Share get empty {
@@ -30,6 +32,7 @@ class Share {
       email: "",
       occupantPermission: SharePermission.NONE,
       warrantorPermission: SharePermission.NONE,
+      createdAt: DateTime.now(),
     );
   }
 
@@ -43,41 +46,34 @@ class Share {
         return locale.n_months(durationNum);
     }
   }
-  // TODO FIREBASE REPLACEMENT
 
-  // factory Share.fromFirestore(Map<String, dynamic>? data) {
-  //   ShareDurationPeriod durationPeriod = ShareDurationPeriod.day;
-  //   try {
-  //     durationPeriod = ShareDurationPeriod.values.byName(
-  //       data?["durationPeriod"],
-  //     );
-  //   } catch (_) {
-  //     durationPeriod = ShareDurationPeriod.day;
-  //   }
-  //   SharePermission occupantPerm = SharePermission.none;
-  //   try {
-  //     occupantPerm = SharePermission.values.byName(data?["occupantPermission"]);
-  //   } catch (_) {
-  //     occupantPerm = SharePermission.none;
-  //   }
-  //   SharePermission warrantorPerm = SharePermission.none;
-  //   try {
-  //     warrantorPerm = SharePermission.values.byName(
-  //       data?["warrantorPermission"],
-  //     );
-  //   } catch (_) {
-  //     warrantorPerm = SharePermission.none;
-  //   }
-  //   return Share(
-  //     id: data?["key"] ?? "",
-  //     description: data?["description"] ?? "",
-  //     email: data?["email"] ?? "",
-  //     durationNum: data?["durationNum"] ?? 0,
-  //     durationPeriod: durationPeriod,
-  //     occupantPermission: occupantPerm,
-  //     warrantorPermission: warrantorPerm,
-  //   );
-  // }
+  factory Share.fromApi(Map<String, dynamic>? data) {
+    return switch (data) {
+      {
+        "id": String id,
+        "description": String description,
+        "email": String email,
+        "durationNum": int durationNum,
+        "durationPeriod": String durationPeriod,
+        "warrantorPermission": String warrantorPermission,
+        "occupantPermission": String occupantPermission,
+        "createdAt": String createdAt,
+      } =>
+        Share(
+          id: id,
+          description: description,
+          email: email,
+          durationNum: durationNum,
+          durationPeriod: ShareDurationPeriod.values.byName(durationPeriod),
+          warrantorPermission: SharePermission.values.byName(
+            warrantorPermission,
+          ),
+          occupantPermission: SharePermission.values.byName(occupantPermission),
+          createdAt: DateTime.parse(createdAt),
+        ),
+      _ => throw const FormatException("Failed to load Share"),
+    };
+  }
 
   // static Map<String, Object?> toFirestore(Share share) {
   //   return {

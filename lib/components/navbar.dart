@@ -48,7 +48,7 @@ class _NavbarState extends State<Navbar> {
             children: [
               NavButton(
                 isSelected: Navbar.selected == 0,
-                onPressed: () => context.go(Dashboard.route, extra: "occupant"),
+                onPressed: () => context.go(Dashboard.route),
                 child: Text(locale.dashboard),
               ),
               NavButton(
@@ -119,7 +119,7 @@ class _NavbarState extends State<Navbar> {
               child: Row(
                 spacing: 8,
                 children: [
-                  Image(image: NetworkImage('https://fakeimg.pl/40/')),
+                  Icon(Icons.person_outline_outlined, size: 40),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

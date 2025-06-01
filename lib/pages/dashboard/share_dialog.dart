@@ -24,15 +24,7 @@ class ShareDialog extends StatefulWidget {
 
 class _ShareDialogState extends State<ShareDialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Share share = Share(
-    id: "",
-    description: "",
-    email: "",
-    durationNum: -1,
-    durationPeriod: ShareDurationPeriod.DAY,
-    occupantPermission: SharePermission.NONE,
-    warrantorPermission: SharePermission.NONE,
-  );
+  final Share share = Share.empty;
   final FormErrors errors = FormErrors();
 
   void submit(AppLocalizations locale) async {
