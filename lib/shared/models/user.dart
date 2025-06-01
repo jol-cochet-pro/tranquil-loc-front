@@ -108,6 +108,16 @@ class UserContact {
     required this.phone,
   });
 
+  static UserContact get empty {
+    return UserContact(
+      id: '',
+      firstname: '',
+      lastname: '',
+      email: '',
+      phone: '',
+    );
+  }
+
   factory UserContact.fromApi(Map<String, dynamic> data) {
     return switch (data) {
       {

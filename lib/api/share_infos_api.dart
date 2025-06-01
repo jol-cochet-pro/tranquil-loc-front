@@ -17,4 +17,6 @@ class ShareInfosApi {
     }
     throw ApiException.fromApi(jsonDecode(response.body));
   }
+
+  
 }

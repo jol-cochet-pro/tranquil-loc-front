@@ -1,3 +1,5 @@
+import 'package:tranquil_loc/shared/enums/home_situation.dart';
+import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/models/person.dart';
 
 class Occupant extends Person {
@@ -15,10 +17,46 @@ class Occupant extends Person {
   });
 
   static Occupant get empty {
-    return Person.empty as Occupant;
+    return Occupant(
+      id: "",
+      firstname: "",
+      lastname: "",
+      dateOfBirth: DateTime.now(),
+      income: 0,
+      proSituation: ProSituation.OTHER,
+      homeSituation: HomeSituation.TENANT,
+      email: "",
+      phone: "",
+      documents: {},
+    );
   }
 
   factory Occupant.fromApi(Map<String, dynamic> data) {
-    return Person.fromApi(data) as Occupant;
+    return switch (data) {
+      {
+        "id": String id,
+        "firstname": String firstname,
+        "lastname": String lastname,
+        "email": String email,
+        "homeSituation": String homeSituation,
+        "proSituation": String proSituation,
+        "income": int income,
+        "dateOfBirth": String dateOfBirth,
+        "phone": String phone,
+      } =>
+        Occupant(
+          id: id,
+          firstname: firstname,
+          lastname: lastname,
+          income: income,
+          dateOfBirth: DateTime.parse(dateOfBirth),
+          proSituation: ProSituation.values.byName(proSituation),
+          homeSituation: HomeSituation.values.byName(homeSituation),
+          email: email,
+          phone: phone,
+          documents: {},
+        ),
+      _ => throw const FormatException("Failed to load Occupant"),
+    };
   }
 }

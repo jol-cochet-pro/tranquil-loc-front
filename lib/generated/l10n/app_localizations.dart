@@ -645,6 +645,12 @@ abstract class AppLocalizations {
   /// **'Envoyer le mail'**
   String get send_mail;
 
+  /// No description provided for @download_complete_folder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Télécharger le dossier locatif complet'**
+  String get download_complete_folder;
+
   /// No description provided for @i_remember.
   ///
   /// In fr, this message translates to:

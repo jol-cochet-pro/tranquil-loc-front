@@ -307,6 +307,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get send_mail => 'Envoyer le mail';
 
   @override
+  String get download_complete_folder => 'Télécharger le dossier locatif complet';
+
+  @override
   String get i_remember => 'Je m\'en souviens ?';
 
   @override

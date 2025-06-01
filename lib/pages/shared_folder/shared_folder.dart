@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tranquil_loc/api/share_infos_api.dart';
+import 'package:tranquil_loc/components/button.dart';
 import 'package:tranquil_loc/components/loader.dart';
 import 'package:tranquil_loc/components/person/person_info_card.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
@@ -11,6 +12,8 @@ import 'package:tranquil_loc/pages/shared_folder/components/persons_infos.dart';
 import 'package:tranquil_loc/shared/models/api_exception.dart';
 import 'package:tranquil_loc/shared/models/shared_infos.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
+// ignore: deprecated_member_use, avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 
 class SharedFolder extends StatefulWidget {
   final String? token;
@@ -66,6 +69,7 @@ class _SharedFolderState extends State<SharedFolder> {
               spacing: 48,
               children: [
                 Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 8,
                   children: [
@@ -81,25 +85,29 @@ class _SharedFolderState extends State<SharedFolder> {
                   child: Row(
                     spacing: 24,
                     children: [
-                      Expanded(child: PersonsInfos(persons: occupants)),
+                      PersonsInfos(persons: occupants),
                       SizedBox(
                         height: 400,
                         child: VerticalDivider(color: colorScheme.outline),
                       ),
-                      Expanded(child: PersonsInfos(persons: warrantors)),
+                      PersonsInfos(persons: warrantors),
                     ],
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image(image: AssetImage("assets/file_bundle.png")),
+                    if (MediaQuery.of(context).size.width > 1250)
+                      Image(image: AssetImage("assets/file_bundle.png")),
                     Column(
+                      spacing: 64,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SizedBox(
-                          height: 100,
-                          width: 400,
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 500,
+                            maxHeight: 150,
+                          ),
                           child: PersonInfoCard(
                             first: PersonInfo(
                               icon: Icons.email_outlined,
@@ -112,7 +120,19 @@ class _SharedFolderState extends State<SharedFolder> {
                               info: user.phone,
                             ),
                             title: locale.contact_details,
+                            flex: 0,
                           ),
+                        ),
+                        CustomButton(
+                          onPressed: () {
+                            html.AnchorElement anchorElement =
+                                html.AnchorElement(href: snapshot.data!.zipUrl);
+                            anchorElement.download = snapshot.data!.zipUrl;
+                            anchorElement.click();
+                          },
+                          type: ButtonType.primary,
+                          padding: EdgeInsets.all(24),
+                          child: Text(locale.download_complete_folder),
                         ),
                       ],
                     ),

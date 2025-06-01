@@ -6,24 +6,21 @@ class SharedInfos {
   final UserContact user;
   final List<Occupant> occupants;
   final List<Warrantor> warrantors;
+  final String zipUrl;
 
   const SharedInfos({
     required this.user,
     required this.occupants,
     required this.warrantors,
+    required this.zipUrl,
   });
 
   static SharedInfos get empty {
     return SharedInfos(
-      user: UserContact(
-        id: "",
-        firstname: "",
-        lastname: "",
-        email: "",
-        phone: "",
-      ),
+      user: UserContact.empty,
       occupants: [],
       warrantors: [],
+      zipUrl: "",
     );
   }
 
@@ -42,6 +39,7 @@ class SharedInfos {
         user: user,
         occupants: occupants,
         warrantors: warrantors,
+        zipUrl: data["zipUrl"],
       );
     } catch (err) {
       throw const FormatException("Failed to load SharedInfos");

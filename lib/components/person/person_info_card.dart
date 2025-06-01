@@ -19,6 +19,7 @@ class PersonInfoCard extends StatelessWidget {
   final PersonInfo first;
   final PersonInfo second;
   final bool isSmall;
+  final int flex;
 
   const PersonInfoCard({
     super.key,
@@ -26,12 +27,13 @@ class PersonInfoCard extends StatelessWidget {
     required this.second,
     required this.title,
     this.isSmall = false,
+    this.flex = 1,
   });
 
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    return Column(
+    final content = Column(
       spacing: 4,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -95,5 +97,6 @@ class PersonInfoCard extends StatelessWidget {
         ),
       ],
     );
+    return flex != 0 ? Expanded(child: content) : content;
   }
 }

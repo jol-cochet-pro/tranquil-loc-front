@@ -50,50 +50,6 @@ class Person {
     }
   }
 
-  static Person get empty {
-    return Person(
-      id: "",
-      firstname: "",
-      lastname: "",
-      dateOfBirth: DateTime.now(),
-      income: 0,
-      proSituation: ProSituation.OTHER,
-      homeSituation: HomeSituation.TENANT,
-      email: "",
-      phone: "",
-      documents: {},
-    );
-  }
-
-  factory Person.fromApi(Map<String, dynamic> data) {
-    return switch (data) {
-      {
-        "id": String id,
-        "firstname": String firstname,
-        "lastname": String lastname,
-        "email": String email,
-        "homeSituation": String homeSituation,
-        "proSituation": String proSituation,
-        "income": int income,
-        "dateOfBirth": String dateOfBirth,
-        "phone": String phone,
-      } =>
-        Person(
-          id: id,
-          firstname: firstname,
-          lastname: lastname,
-          income: income,
-          dateOfBirth: DateTime.parse(dateOfBirth),
-          proSituation: ProSituation.values.byName(proSituation),
-          homeSituation: HomeSituation.values.byName(homeSituation),
-          email: email,
-          phone: phone,
-          documents: {},
-        ),
-      _ => throw const FormatException("Failed to load Occupant"),
-    };
-  }
-
   // static Map<String, Object?> toFirestore(Warrantor warrantor) {
   //   return {
   //     "firstname": warrantor.firstname,
