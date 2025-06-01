@@ -20,8 +20,14 @@ class ShareApi {
   }
 
   static Future<Share> add(Share share) async {
-    // TODO FIREBASE REPLACEMENT
-    // await Storage.shares.add(share);
-    return Share.empty;
+    http.Response response = await http.post(
+      Uri.parse('http://localhost:3000/shares'),
+      headers: await AuthApi.defaultHeaders,
+      body: jsonEncode(Share.toApi(share)),
+    );
+    if (response.isOK) {
+      return Share.fromApi(jsonDecode(response.body));
+    }
+    throw ApiException.fromApi(jsonDecode(response.body));
   }
 }

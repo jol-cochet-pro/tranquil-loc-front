@@ -1,4 +1,3 @@
-import 'package:tranquil_loc/api/file_api.dart';
 import 'package:tranquil_loc/api/warrantor_api.dart';
 import 'package:tranquil_loc/components/button.dart';
 import 'package:tranquil_loc/components/loader.dart';
@@ -8,7 +7,6 @@ import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/extensions.dart';
 import 'package:tranquil_loc/shared/models/file.dart';
 import 'package:tranquil_loc/shared/models/warrantor.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
@@ -48,28 +46,29 @@ class _UpdateWarrantorState extends State<UpdateWarrantor> {
     if (loadedWarrantor == null) return;
     try {
       setState(() => isLoading = true);
+      // TODO CHANGE THIS
       // Remove old documents that where removed
-      for (final document in rmDocuments.entries) {
-        await FileApi.remove(document.toPair());
-        loadedWarrantor.documents[document.key]!.removeWhere(
-          (wfile) => document.value.map((file) => file.url).contains(wfile.url),
-        );
-      }
+      // for (final document in rmDocuments.entries) {
+      //   await FileApi.remove(document.toPair());
+      //   loadedWarrantor.documents[document.key]!.removeWhere(
+      //     (wfile) => document.value.map((file) => file.url).contains(wfile.url),
+      //   );
+      // }
       // Remove old documents with pro-situation
-      for (final document in Map.of(loadedWarrantor.documents).entries) {
-        if (!loadedWarrantor.proSituation.documents.containsKey(document.key)) {
-          await FileApi.remove(document.toPair());
-          loadedWarrantor.documents.remove(document.key);
-        }
-      }
+      // for (final document in Map.of(loadedWarrantor.documents).entries) {
+      //   if (!loadedWarrantor.proSituation.documents.containsKey(document.key)) {
+      //     await FileApi.remove(document.toPair());
+      //     loadedWarrantor.documents.remove(document.key);
+      //   }
+      // }
       // Create new documents
-      for (final document in newDocuments.entries) {
-        List<File> uploadedFiles = await FileApi.add(
-          document.toPair(),
-          "warrantors/${widget.warrantorId}",
-        );
-        loadedWarrantor.documents.createAddAll(document.key, uploadedFiles);
-      }
+      // for (final document in newDocuments.entries) {
+      //   List<File> uploadedFiles = await FileApi.add(
+      //     document.toPair(),
+      //     "warrantors/${widget.warrantorId}",
+      //   );
+      //   loadedWarrantor.documents.createAddAll(document.key, uploadedFiles);
+      // }
       await WarrantorApi.update(widget.warrantorId, loadedWarrantor);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Warrantors.route);

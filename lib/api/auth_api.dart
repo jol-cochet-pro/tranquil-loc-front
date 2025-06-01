@@ -18,7 +18,10 @@ class AuthApi {
     if (token == null) {
       return null;
     }
-    return {HttpHeaders.authorizationHeader: 'Bearer $token'};
+    return {
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
   }
 
   static Future<User> register(User user) async {

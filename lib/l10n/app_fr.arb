@@ -23,7 +23,7 @@
   "no_future_occupants_saved": "Pas de futur occupants enregistrés...",
   "no_warrantors_saved": "Pas de garants enregistrés...",
   "n_days": "{count, plural, =1{1 jour} other{{count} jours}}",
-  "n_weeks": "{count, plural, =1{1 semaine} other{{count} semaine}}",
+  "n_weeks": "{count, plural, =1{1 semaine} other{{count} semaines}}",
   "n_months": "{count} mois",
   "my_shares": "Mes partages",
   "no_shares_saved": "Pas de partages enregistrés...",

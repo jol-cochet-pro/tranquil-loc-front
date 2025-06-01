@@ -1,4 +1,3 @@
-import 'package:tranquil_loc/api/file_api.dart';
 import 'package:tranquil_loc/api/warrantor_api.dart';
 import 'package:tranquil_loc/components/button.dart';
 import 'package:tranquil_loc/components/loader.dart';
@@ -8,7 +7,6 @@ import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/extensions.dart';
 import 'package:tranquil_loc/shared/models/warrantor.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
@@ -36,12 +34,13 @@ class _AddWarrantorState extends State<AddWarrantor> {
     try {
       setState(() => isLoading = true);
       Warrantor newWarrantor = await WarrantorApi.add(warrantor);
-      for (final document in documents.entries) {
-        warrantor.documents[document.key] = await FileApi.add(
-          document.toPair(),
-          "warrantors/${newWarrantor.id}",
-        );
-      }
+      // TODO CHANGE THIS
+      // for (final document in documents.entries) {
+      //   warrantor.documents[document.key] = await FileApi.add(
+      //     document.toPair(),
+      //     "warrantors/${newWarrantor.id}",
+      //   );
+      // }
       await WarrantorApi.update(newWarrantor.id, warrantor);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Warrantors.route);

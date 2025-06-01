@@ -75,14 +75,14 @@ class Share {
     };
   }
 
-  // static Map<String, Object?> toFirestore(Share share) {
-  //   return {
-  //     "description": share.description,
-  //     "email": share.email,
-  //     "durationNum": share.durationNum,
-  //     "durationPeriod": share.durationPeriod.str,
-  //     "occupantPermission": share.occupantPermission.str,
-  //     "warrantorPermission": share.warrantorPermission.str,
-  //   };
-  // }
+  static Map<String, dynamic> toApi(Share share) {
+    return {
+      "description": share.description,
+      "email": share.email,
+      "durationNum": share.durationNum,
+      "durationPeriod": share.durationPeriod.str,
+      "occupantPermission": share.occupantPermission.str,
+      "warrantorPermission": share.warrantorPermission.str,
+    };
+  }
 }

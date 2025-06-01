@@ -228,7 +228,7 @@ abstract class AppLocalizations {
   /// No description provided for @n_weeks.
   ///
   /// In fr, this message translates to:
-  /// **'{count, plural, =1{1 semaine} other{{count} semaine}}'**
+  /// **'{count, plural, =1{1 semaine} other{{count} semaines}}'**
   String n_weeks(num count);
 
   /// No description provided for @n_months.

@@ -1,4 +1,3 @@
-import 'package:tranquil_loc/api/file_api.dart';
 import 'package:tranquil_loc/api/occupant_api.dart';
 import 'package:tranquil_loc/components/button.dart';
 import 'package:tranquil_loc/components/loader.dart';
@@ -8,7 +7,6 @@ import 'package:tranquil_loc/components/person/documents_info_form.dart';
 import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/occupants/occupants.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/extensions.dart';
 import 'package:tranquil_loc/shared/models/occupant.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
@@ -36,12 +34,13 @@ class _AddOccupantState extends State<AddOccupant> {
     try {
       setState(() => isLoading = true);
       Occupant newOccupant = await OccupantApi.add(occupant);
-      for (final document in documents.entries) {
-        occupant.documents[document.key] = await FileApi.add(
-          document.toPair(),
-          "occupants/${newOccupant.id}",
-        );
-      }
+      // TODO ADD FILE API
+      // for (final document in documents.entries) {
+      //   occupant.documents[document.key] = await FileApi.add(
+      //     document.toPair(),
+      //     "occupants/${newOccupant.id}",
+      //   );
+      // }
       await OccupantApi.update(newOccupant.id, occupant);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Occupants.route);

@@ -42,14 +42,12 @@ class _SharesCardState extends State<SharesCard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: 180,
-                        child: Text(
-                          snapshot.data![index].description,
-                          overflow: TextOverflow.ellipsis,
-                          style: h4,
-                        ),
+                      Text(
+                        snapshot.data![index].description,
+                        overflow: TextOverflow.ellipsis,
+                        style: h4,
                       ),
+
                       Row(
                         spacing: 4,
                         children: [
