@@ -1,25 +1,24 @@
 import 'package:tranquil_loc/api/document_api.dart';
 import 'package:tranquil_loc/components/file_input.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
-import 'package:tranquil_loc/shared/enums/document_type.dart';
-import 'package:tranquil_loc/shared/extensions.dart';
+import 'package:tranquil_loc/shared/enums/pro_situation.dart';
+import 'package:tranquil_loc/shared/models/document/create_document.dart';
 import 'package:tranquil_loc/shared/models/file.dart';
+import 'package:tranquil_loc/shared/models/person/create_person.dart';
+import 'package:tranquil_loc/shared/models/person/person.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DocumentsInfoForm extends StatefulWidget {
-  final Map<DocumentType, List<File>> initialFiles;
-  final Map<DocumentType, List<PlatformFile>> newDocuments;
-  final Map<DocumentType, List<File>>? rmDocuments;
+  final Person oldPerson;
+  final CreatePerson person;
 
   const DocumentsInfoForm({
     super.key,
-    required this.initialFiles,
-    required this.newDocuments,
-    required this.rmDocuments,
+    required this.oldPerson,
+    required this.person,
   });
 
   @override
@@ -48,26 +47,55 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
                 spacing: 24,
                 runSpacing: 12,
                 children:
-                    widget.newDocuments.entries.map((entry) {
+                    widget.person.proSituation.documents.map((documentType) {
                       return CustomFileInput(
-                        label: entry.key.locale(locale),
-                        initialFiles: widget.initialFiles[entry.key] ?? [],
-                        files: entry.value,
+                        initialFiles:
+                            widget.oldPerson.documents
+                                .where(
+                                  (document) => document.type == documentType,
+                                )
+                                .map(
+                                  (document) => File(
+                                    id: document.id,
+                                    name: document.name,
+                                  ),
+                                )
+                                .toList(),
+                        files:
+                            widget.person.documents
+                                .where(
+                                  (document) => document.type == documentType,
+                                )
+                                .map((document) => document.file)
+                                .toList(),
                         onClick: (file) async {
                           final document = await DocumentApi.get(file.id);
                           launchUrl(Uri.parse(document.url));
                         },
                         onAdd:
-                            (file) => setState(() => entry.value.addAll(file)),
+                            (files) => setState(
+                              () => widget.person.documents.addAll(
+                                files.map(
+                                  (file) => CreateDocument(
+                                    type: documentType,
+                                    name: file.name,
+                                    file: file,
+                                  ),
+                                ),
+                              ),
+                            ),
                         onRemove:
                             (file) => setState(
-                              () => entry.value.removeWhere(
-                                (wfile) => wfile.bytes == file.bytes,
+                              () => widget.person.documents.removeWhere(
+                                (document) => document.file.bytes == file.bytes,
                               ),
                             ),
                         onInitialRemove:
                             (file) => setState(() {
-                              widget.rmDocuments?.createAdd(entry.key, file);
+                              widget.person.removedDocumentIds.add(file.id);
+                              widget.oldPerson.documents.removeWhere(
+                                (document) => document.id == file.id,
+                              );
                             }),
                       );
                     }).toList(),

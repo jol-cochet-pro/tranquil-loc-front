@@ -1,6 +1,6 @@
 import 'package:tranquil_loc/shared/enums/home_situation.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/models/document.dart';
+import 'package:tranquil_loc/shared/models/document/document.dart';
 
 class Person {
   String id;
@@ -28,7 +28,12 @@ class Person {
   });
 
   bool get isCompleted {
-    return (email.isNotEmpty && phone.isNotEmpty);
+    return (email.isNotEmpty &&
+        phone.isNotEmpty &&
+        proSituation.documents.every((documentType) {
+          final documentFilledType = documents.map((document) => document.type);
+          return documentFilledType.contains(documentType);
+        }));
   }
 
   bool getInfoCompleted(String info) {
@@ -47,20 +52,4 @@ class Person {
         return false;
     }
   }
-
-  // static Map<String, Object?> toFirestore(Warrantor warrantor) {
-  //   return {
-  //     "firstname": warrantor.firstname,
-  //     "lastname": warrantor.lastname,
-  //     "dateOfBirth": Timestamp.fromDate(warrantor.dateOfBirth),
-  //     "income": warrantor.income,
-  //     "proSituation": warrantor.proSituation.str,
-  //     "homeSituation": warrantor.homeSituation.str,
-  //     "email": warrantor.email,
-  //     "phone": warrantor.phone,
-  //     "documents": warrantor.documents.map(
-  //       (key, values) => MapEntry(key, values.map((value) => value.url)),
-  //     ),
-  //   };
-  // }
 }

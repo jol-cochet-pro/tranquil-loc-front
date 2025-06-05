@@ -6,14 +6,9 @@ import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/components/person/documents_info_form.dart';
 import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/occupants/occupants.dart';
-import 'package:tranquil_loc/shared/enums/document_type.dart';
-import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/extensions.dart';
-import 'package:tranquil_loc/shared/models/document.dart';
-import 'package:tranquil_loc/shared/models/file.dart';
-import 'package:tranquil_loc/shared/models/occupant.dart';
+import 'package:tranquil_loc/shared/models/occupant/create_occupant.dart';
+import 'package:tranquil_loc/shared/models/occupant/occupant.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
@@ -33,55 +28,25 @@ class UpdateOccupant extends StatefulWidget {
 
 class _UpdateOccupantState extends State<UpdateOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Map<DocumentType, List<File>> initialFiles = {};
-  Map<DocumentType, List<PlatformFile>> newDocuments =
-      ProSituation.OTHER.documents;
-  final Map<DocumentType, List<File>> rmDocuments = {};
-  late Future<Occupant?> occupant;
+  late Future<CreateOccupant> createOccupant;
+  late Occupant occupant;
   bool isLoading = false;
+
+  Future<CreateOccupant> _loadOccupant() async {
+    occupant = await OccupantApi.get(widget.occupantId);
+    return CreateOccupant.fromOccupant(occupant);
+  }
 
   @override
   void initState() {
-    occupant = OccupantApi.get(widget.occupantId).then((occupant) {
-      for (Document document in occupant?.documents ?? []) {
-        initialFiles.createAdd(
-          document.type,
-          File(id: document.id, name: document.name),
-        );
-      }
-      return occupant;
-    });
+    createOccupant = _loadOccupant();
     super.initState();
   }
 
   void submit(AppLocalizations locale) async {
-    Occupant? loadedOccupant = await occupant;
-    if (loadedOccupant == null) return;
+    CreateOccupant loadedOccupant = await createOccupant;
     try {
-      setState(() => isLoading = true);
-      // TODO CHANGE THIS
-      // Remove old documents that where removed
-      // for (final document in rmDocuments.entries) {
-      //   await FileApi.remove(document.toPair());
-      //   loadedOccupant.documents[document.key]!.removeWhere(
-      //     (wfile) => document.value.map((file) => file.url).contains(wfile.url),
-      //   );
-      // }
-      // // Remove old documents with pro-situation
-      // for (final document in Map.of(loadedOccupant.documents).entries) {
-      //   if (!loadedOccupant.proSituation.documents.containsKey(document.key)) {
-      //     await FileApi.remove(document.toPair());
-      //     loadedOccupant.documents.remove(document.key);
-      //   }
-      // }
-      // Create new documents
-      // for (final document in newDocuments.entries) {
-      //   List<File> uploadedFiles = await FileApi.add(
-      //     document.toPair(),
-      //     "occupants/${widget.occupantId}",
-      //   );
-      //   loadedOccupant.documents.createAddAll(document.key, uploadedFiles);
-      // }
+      // setState(() => isLoading = true); TODO UNCOMMENT THIS
       await OccupantApi.update(widget.occupantId, loadedOccupant);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Occupants.route);
@@ -137,11 +102,8 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
           ),
           Flexible(
             child: FutureBuilder(
-              future: occupant,
+              future: createOccupant,
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  newDocuments = snapshot.data!.proSituation.documents;
-                }
                 return Form(
                   key: formKey,
                   child:
@@ -152,20 +114,12 @@ class _UpdateOccupantState extends State<UpdateOccupant> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: PersonalInfoForm(
-                                  person: snapshot.data!,
-                                  onSituationUpdate:
-                                      (situation) => setState(
-                                        () =>
-                                            newDocuments = situation.documents,
-                                      ),
-                                ),
+                                child: PersonalInfoForm(person: snapshot.data!),
                               ),
                               Expanded(
                                 child: DocumentsInfoForm(
-                                  initialFiles: initialFiles,
-                                  newDocuments: newDocuments,
-                                  rmDocuments: rmDocuments,
+                                  oldPerson: occupant,
+                                  person: snapshot.data!,
                                 ),
                               ),
                             ],

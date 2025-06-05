@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tranquil_loc/components/person/person_card.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
-import 'package:tranquil_loc/shared/models/person.dart';
+import 'package:tranquil_loc/shared/models/person/person.dart';
 import 'package:tranquil_loc/shared/scroll_controller.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 

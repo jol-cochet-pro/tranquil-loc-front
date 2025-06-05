@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:tranquil_loc/api/auth_api.dart';
 import 'package:tranquil_loc/shared/extensions.dart';
 import 'package:tranquil_loc/shared/models/api_exception.dart';
-import 'package:tranquil_loc/shared/models/document.dart';
+import 'package:tranquil_loc/shared/models/document/document.dart';
 import 'package:http/http.dart' as http;
 
 class DocumentApi {
@@ -13,9 +12,7 @@ class DocumentApi {
       headers: await AuthApi.defaultHeaders,
     );
     if (response.isOK) {
-      return jsonDecode(
-        response.body,
-      ).map<Document>((data) => Document.fromApi(data)).toList();
+      return Document.fromApi(jsonDecode(response.body));
     }
     throw ApiException.fromApi(jsonDecode(response.body));
   }

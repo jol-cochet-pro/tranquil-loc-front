@@ -1,6 +1,6 @@
-import 'package:tranquil_loc/shared/models/occupant.dart';
+import 'package:tranquil_loc/shared/models/occupant/occupant.dart';
 import 'package:tranquil_loc/shared/models/user.dart';
-import 'package:tranquil_loc/shared/models/warrantor.dart';
+import 'package:tranquil_loc/shared/models/warrantor/warrantor.dart';
 
 class SharedInfos {
   final UserContact user;

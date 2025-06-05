@@ -1,17 +1,14 @@
 import 'package:tranquil_loc/api/warrantor_api.dart';
 import 'package:tranquil_loc/components/button.dart';
 import 'package:tranquil_loc/components/loader.dart';
-import 'package:tranquil_loc/components/person/documents_info_form.dart';
-import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
+import 'package:tranquil_loc/components/person/documents_info_form.dart';
+import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
-import 'package:tranquil_loc/shared/enums/document_type.dart';
-import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/models/file.dart';
-import 'package:tranquil_loc/shared/models/warrantor.dart';
+import 'package:tranquil_loc/shared/models/warrantor/create_warrantor.dart';
+import 'package:tranquil_loc/shared/models/warrantor/warrantor.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
@@ -31,47 +28,25 @@ class UpdateWarrantor extends StatefulWidget {
 
 class _UpdateWarrantorState extends State<UpdateWarrantor> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Map<DocumentType, List<File>> initialFiles = {};
-  Map<DocumentType, List<PlatformFile>> newDocuments =
-      ProSituation.OTHER.documents;
-  final Map<DocumentType, List<File>> rmDocuments = {};
-  late Future<Warrantor?> warrantor;
+  late Future<CreateWarrantor> createWarrantor;
+  late Warrantor warrantor;
   bool isLoading = false;
+
+  Future<CreateWarrantor> _loadWarrantor() async {
+    warrantor = await WarrantorApi.get(widget.warrantorId);
+    return CreateWarrantor.fromWarrantor(warrantor);
+  }
 
   @override
   void initState() {
-    warrantor = WarrantorApi.get(widget.warrantorId);
+    createWarrantor = _loadWarrantor();
     super.initState();
   }
 
   void submit(AppLocalizations locale) async {
-    Warrantor? loadedWarrantor = await warrantor;
-    if (loadedWarrantor == null) return;
+    CreateWarrantor loadedWarrantor = await createWarrantor;
     try {
       setState(() => isLoading = true);
-      // TODO CHANGE THIS
-      // Remove old documents that where removed
-      // for (final document in rmDocuments.entries) {
-      //   await FileApi.remove(document.toPair());
-      //   loadedWarrantor.documents[document.key]!.removeWhere(
-      //     (wfile) => document.value.map((file) => file.url).contains(wfile.url),
-      //   );
-      // }
-      // Remove old documents with pro-situation
-      // for (final document in Map.of(loadedWarrantor.documents).entries) {
-      //   if (!loadedWarrantor.proSituation.documents.containsKey(document.key)) {
-      //     await FileApi.remove(document.toPair());
-      //     loadedWarrantor.documents.remove(document.key);
-      //   }
-      // }
-      // Create new documents
-      // for (final document in newDocuments.entries) {
-      //   List<File> uploadedFiles = await FileApi.add(
-      //     document.toPair(),
-      //     "warrantors/${widget.warrantorId}",
-      //   );
-      //   loadedWarrantor.documents.createAddAll(document.key, uploadedFiles);
-      // }
       await WarrantorApi.update(widget.warrantorId, loadedWarrantor);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Warrantors.route);
@@ -127,11 +102,8 @@ class _UpdateWarrantorState extends State<UpdateWarrantor> {
           ),
           Flexible(
             child: FutureBuilder(
-              future: warrantor,
+              future: createWarrantor,
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  newDocuments = snapshot.data!.proSituation.documents;
-                }
                 return Form(
                   key: formKey,
                   child:
@@ -142,20 +114,12 @@ class _UpdateWarrantorState extends State<UpdateWarrantor> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: PersonalInfoForm(
-                                  person: snapshot.data!,
-                                  onSituationUpdate:
-                                      (situation) => setState(
-                                        () =>
-                                            newDocuments = situation.documents,
-                                      ),
-                                ),
+                                child: PersonalInfoForm(person: snapshot.data!),
                               ),
                               Expanded(
                                 child: DocumentsInfoForm(
-                                  initialFiles: initialFiles,
-                                  newDocuments: newDocuments,
-                                  rmDocuments: rmDocuments,
+                                  oldPerson: warrantor,
+                                  person: snapshot.data!,
                                 ),
                               ),
                             ],

@@ -1,10 +1,10 @@
 import 'package:tranquil_loc/shared/enums/home_situation.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/models/document.dart';
-import 'package:tranquil_loc/shared/models/person.dart';
+import 'package:tranquil_loc/shared/models/document/document.dart';
+import 'package:tranquil_loc/shared/models/person/person.dart';
 
-class Occupant extends Person {
-  Occupant({
+class Warrantor extends Person {
+  Warrantor({
     required super.id,
     required super.firstname,
     required super.lastname,
@@ -17,8 +17,8 @@ class Occupant extends Person {
     required super.documents,
   });
 
-  static Occupant get empty {
-    return Occupant(
+  static Warrantor get empty {
+    return Warrantor(
       id: "",
       firstname: "",
       lastname: "",
@@ -32,7 +32,7 @@ class Occupant extends Person {
     );
   }
 
-  factory Occupant.fromApi(Map<String, dynamic> data) {
+  factory Warrantor.fromApi(Map<String, dynamic> data) {
     final documents =
         data["documents"]
             .map<Document>((document) => Document.fromApi(document))
@@ -49,7 +49,7 @@ class Occupant extends Person {
         "dateOfBirth": String dateOfBirth,
         "phone": String phone,
       } =>
-        Occupant(
+        Warrantor(
           id: id,
           firstname: firstname,
           lastname: lastname,
@@ -61,7 +61,7 @@ class Occupant extends Person {
           phone: phone,
           documents: documents,
         ),
-      _ => throw const FormatException("Failed to load Occupant"),
+      _ => throw const FormatException("Failed to load Warrantor"),
     };
   }
 }

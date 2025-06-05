@@ -5,7 +5,7 @@ import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/pages/occupants/add_occupant.dart';
 import 'package:tranquil_loc/components/person/person_card.dart';
-import 'package:tranquil_loc/shared/models/occupant.dart';
+import 'package:tranquil_loc/shared/models/occupant/occupant.dart';
 import 'package:tranquil_loc/shared/scroll_controller.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';

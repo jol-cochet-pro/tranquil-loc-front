@@ -5,7 +5,7 @@ import 'package:tranquil_loc/pages/dashboard/components/dash_card.dart';
 import 'package:tranquil_loc/pages/dashboard/components/dash_state_cell.dart';
 import 'package:tranquil_loc/pages/warrantors/add_warrantor.dart';
 import 'package:tranquil_loc/pages/warrantors/update_warrantor.dart';
-import 'package:tranquil_loc/shared/models/warrantor.dart';
+import 'package:tranquil_loc/shared/models/warrantor/warrantor.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

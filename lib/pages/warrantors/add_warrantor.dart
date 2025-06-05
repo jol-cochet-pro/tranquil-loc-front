@@ -1,16 +1,14 @@
 import 'package:tranquil_loc/api/warrantor_api.dart';
 import 'package:tranquil_loc/components/button.dart';
 import 'package:tranquil_loc/components/loader.dart';
-import 'package:tranquil_loc/components/person/documents_info_form.dart';
-import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
 import 'package:tranquil_loc/layout/page_layout.dart';
+import 'package:tranquil_loc/components/person/documents_info_form.dart';
+import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/warrantors/warrantors.dart';
-import 'package:tranquil_loc/shared/enums/document_type.dart';
-import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/models/warrantor.dart';
+import 'package:tranquil_loc/shared/models/warrantor/create_warrantor.dart';
+import 'package:tranquil_loc/shared/models/warrantor/warrantor.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
@@ -27,23 +25,13 @@ class AddWarrantor extends StatefulWidget {
 
 class _AddWarrantorState extends State<AddWarrantor> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<DocumentType, List<PlatformFile>> documents =
-      ProSituation.OTHER.documents;
-  final Warrantor warrantor = Warrantor.empty;
+  final CreateWarrantor warrantor = CreateWarrantor.empty;
   bool isLoading = false;
 
   void submit(AppLocalizations locale) async {
     try {
       setState(() => isLoading = true);
-      Warrantor newWarrantor = await WarrantorApi.add(warrantor);
-      // TODO CHANGE THIS
-      // for (final document in documents.entries) {
-      //   warrantor.documents[document.key] = await FileApi.add(
-      //     document.toPair(),
-      //     "warrantors/${newWarrantor.id}",
-      //   );
-      // }
-      await WarrantorApi.update(newWarrantor.id, warrantor);
+      await WarrantorApi.add(warrantor);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Warrantors.route);
       });
@@ -104,19 +92,11 @@ class _AddWarrantorState extends State<AddWarrantor> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: PersonalInfoForm(
-                      person: warrantor,
-                      onSituationUpdate:
-                          (situation) =>
-                              setState(() => documents = situation.documents),
-                    ),
-                  ),
+                  Expanded(child: PersonalInfoForm(person: warrantor)),
                   Expanded(
                     child: DocumentsInfoForm(
-                      initialFiles: {},
-                      newDocuments: documents,
-                      rmDocuments: {},
+                      oldPerson: Warrantor.empty,
+                      person: warrantor,
                     ),
                   ),
                 ],

@@ -5,7 +5,7 @@ import 'package:tranquil_loc/components/person/person_info_card.dart';
 import 'package:tranquil_loc/pages/occupants/update_occupant.dart';
 import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/models/person.dart';
+import 'package:tranquil_loc/shared/models/person/person.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -107,8 +107,8 @@ class PersonCard extends StatelessWidget {
                           child: Wrap(
                             runSpacing: 4,
                             children:
-                                person.proSituation.documents.entries.map((
-                                  entry,
+                                person.proSituation.documents.map((
+                                  documentType,
                                 ) {
                                   final filledDocumentsType = person.documents
                                       .map((document) => document.type);
@@ -118,12 +118,15 @@ class PersonCard extends StatelessWidget {
                                       IconWithState(
                                         state:
                                             filledDocumentsType.contains(
-                                                  entry.key,
+                                                  documentType,
                                                 )
                                                 ? IconState.valid
                                                 : IconState.wrong,
                                       ),
-                                      Text(entry.key.locale(locale), style: p3),
+                                      Text(
+                                        documentType.locale(locale),
+                                        style: p3,
+                                      ),
                                     ],
                                   );
                                 }).toList(),

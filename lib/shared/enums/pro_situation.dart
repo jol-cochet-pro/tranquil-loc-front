@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:tranquil_loc/shared/enums/document_type.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 
 enum ProSituation {
@@ -63,39 +62,39 @@ extension ProSituationExtension on ProSituation {
     }
   }
 
-  Map<DocumentType, List<PlatformFile>> get documents {
-    Map<DocumentType, List<PlatformFile>> documents = {
-      DocumentType.IDENTITY_DOCUMENTS: [],
-      DocumentType.PROOF_OF_ADDRESS: [],
-      DocumentType.TAX_NOTICE: [],
-      DocumentType.OTHER: [],
-    };
+  List<DocumentType> get documents {
+    List<DocumentType> documents = [
+      DocumentType.IDENTITY_DOCUMENTS,
+      DocumentType.PROOF_OF_ADDRESS,
+      DocumentType.TAX_NOTICE,
+      DocumentType.OTHER,
+    ];
     switch (this) {
       case ProSituation.CDD:
       case ProSituation.CDI:
-        documents[DocumentType.EMPLOYMENT_CONTRACT] = [];
-        documents[DocumentType.LAST_THREE_PAYSLIPS] = [];
+        documents.add(DocumentType.EMPLOYMENT_CONTRACT);
+        documents.add(DocumentType.LAST_THREE_PAYSLIPS);
         break;
       case ProSituation.RETIRED:
-        documents[DocumentType.PENSION_CERTIFICATE] = [];
+        documents.add(DocumentType.PENSION_CERTIFICATE);
         break;
       case ProSituation.APPRENTICE:
-        documents[DocumentType.APPRENTICESHIP_FORM] = [];
-        documents[DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE] = [];
+        documents.add(DocumentType.APPRENTICESHIP_FORM);
+        documents.add(DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE);
         break;
       case ProSituation.UNEMPLOYED:
-        documents[DocumentType.ARE_CERTIFICATE] = [];
-        documents[DocumentType.JOB_OFFER] = [];
+        documents.add(DocumentType.ARE_CERTIFICATE);
+        documents.add(DocumentType.JOB_OFFER);
         break;
       case ProSituation.STUDENT:
-        documents[DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE] = [];
+        documents.add(DocumentType.SCHOOL_ENROLLMENT_CERTIFICATE);
         break;
       case ProSituation.OFFICIAL:
-        documents[DocumentType.EMPLOYER_CERTIFICATE] = [];
+        documents.add(DocumentType.EMPLOYER_CERTIFICATE);
         break;
       case ProSituation.FREELANCE:
-        documents[DocumentType.REGISTRATION_SIRENE] = [];
-        documents[DocumentType.FINANCIAL_STATEMENT] = [];
+        documents.add(DocumentType.REGISTRATION_SIRENE);
+        documents.add(DocumentType.FINANCIAL_STATEMENT);
         break;
       case ProSituation.OTHER:
         break;

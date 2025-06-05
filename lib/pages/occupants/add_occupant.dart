@@ -6,11 +6,9 @@ import 'package:tranquil_loc/layout/page_layout.dart';
 import 'package:tranquil_loc/components/person/documents_info_form.dart';
 import 'package:tranquil_loc/components/person/personal_infos_form.dart';
 import 'package:tranquil_loc/pages/occupants/occupants.dart';
-import 'package:tranquil_loc/shared/enums/document_type.dart';
-import 'package:tranquil_loc/shared/enums/pro_situation.dart';
-import 'package:tranquil_loc/shared/models/occupant.dart';
+import 'package:tranquil_loc/shared/models/occupant/create_occupant.dart';
+import 'package:tranquil_loc/shared/models/occupant/occupant.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
@@ -27,23 +25,13 @@ class AddOccupant extends StatefulWidget {
 
 class _AddOccupantState extends State<AddOccupant> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Map<DocumentType, List<PlatformFile>> documents =
-      ProSituation.OTHER.documents;
-  final Occupant occupant = Occupant.empty;
+  final CreateOccupant occupant = CreateOccupant.empty;
   bool isLoading = false;
 
   void submit(AppLocalizations locale) async {
     try {
       setState(() => isLoading = true);
-      Occupant newOccupant = await OccupantApi.add(occupant);
-      // TODO ADD FILE API
-      // for (final document in documents.entries) {
-      //   occupant.documents[document.key] = await FileApi.add(
-      //     document.toPair(),
-      //     "occupants/${newOccupant.id}",
-      //   );
-      // }
-      await OccupantApi.update(newOccupant.id, occupant);
+      await OccupantApi.add(occupant);
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.go(Occupants.route);
       });
@@ -104,19 +92,11 @@ class _AddOccupantState extends State<AddOccupant> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: PersonalInfoForm(
-                      person: occupant,
-                      onSituationUpdate:
-                          (situation) =>
-                              setState(() => documents = situation.documents),
-                    ),
-                  ),
+                  Expanded(child: PersonalInfoForm(person: occupant)),
                   Expanded(
                     child: DocumentsInfoForm(
-                      initialFiles: {},
-                      newDocuments: documents,
-                      rmDocuments: {},
+                      oldPerson: Occupant.empty,
+                      person: occupant,
                     ),
                   ),
                 ],

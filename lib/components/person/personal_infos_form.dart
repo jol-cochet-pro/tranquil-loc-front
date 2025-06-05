@@ -6,21 +6,16 @@ import 'package:tranquil_loc/components/text_field.dart';
 import 'package:tranquil_loc/shared/enums/home_situation.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/extensions.dart';
-import 'package:tranquil_loc/shared/models/person.dart';
+import 'package:tranquil_loc/shared/models/person/create_person.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:tranquil_loc/generated/l10n/app_localizations.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
 class PersonalInfoForm extends StatefulWidget {
-  final Person person;
-  final void Function(ProSituation) onSituationUpdate;
+  final CreatePerson person;
 
-  const PersonalInfoForm({
-    super.key,
-    required this.person,
-    required this.onSituationUpdate,
-  });
+  const PersonalInfoForm({super.key, required this.person});
 
   @override
   State<PersonalInfoForm> createState() => _PersonalInfoFormState();
@@ -120,9 +115,16 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               ),
               Flexible(
                 child: CustomPhoneField(
-                  initialValue: PhoneNumber.fromCompleteNumber(
-                    completeNumber: widget.person.phone,
-                  ),
+                  initialValue:
+                      widget.person.phone != ""
+                          ? PhoneNumber.fromCompleteNumber(
+                            completeNumber: widget.person.phone,
+                          )
+                          : PhoneNumber(
+                            countryISOCode: "FR",
+                            countryCode: "+33",
+                            number: "",
+                          ),
                   label: locale.phone,
                   validator: (value) {
                     if (value != null && !value.isValidNumber()) {
@@ -154,10 +156,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           CustomDropDown(
             label: locale.pro_situation,
             initialValue: widget.person.proSituation,
-            onSelected: (value) {
-              widget.onSituationUpdate(value!);
-              setState(() => widget.person.proSituation = value);
-            },
+            onSelected:
+                (value) => setState(() => widget.person.proSituation = value!),
             items:
                 ProSituation.values.map((el) {
                   return DropdownMenuEntry(value: el, label: el.locale(locale));

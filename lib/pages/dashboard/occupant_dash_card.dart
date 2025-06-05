@@ -5,7 +5,7 @@ import 'package:tranquil_loc/pages/dashboard/components/dash_card.dart';
 import 'package:tranquil_loc/pages/dashboard/components/dash_state_cell.dart';
 import 'package:tranquil_loc/pages/occupants/add_occupant.dart';
 import 'package:tranquil_loc/pages/occupants/update_occupant.dart';
-import 'package:tranquil_loc/shared/models/occupant.dart';
+import 'package:tranquil_loc/shared/models/occupant/occupant.dart';
 import 'package:tranquil_loc/shared/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
