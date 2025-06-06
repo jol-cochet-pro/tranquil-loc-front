@@ -127,10 +127,15 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                           ),
                   label: locale.phone,
                   validator: (value) {
-                    if (value != null && !value.isValidNumber()) {
+                    try {
+                      if (value == null) {
+                        throw Error();
+                      }
+                      value.isValidNumber();
+                      return null;
+                    } catch (_) {
                       return locale.invalid_phone_number;
                     }
-                    return null;
                   },
                   onChanged:
                       (newValue) => setState(
@@ -157,7 +162,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             label: locale.pro_situation,
             initialValue: widget.person.proSituation,
             onSelected:
-                (value) => setState(() => widget.person.proSituation = value!),
+                (value) => setState(() => widget.person.setProSituation(value!)),
             items:
                 ProSituation.values.map((el) {
                   return DropdownMenuEntry(value: el, label: el.locale(locale));

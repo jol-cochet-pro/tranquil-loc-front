@@ -1,6 +1,7 @@
 import 'package:tranquil_loc/api/document_api.dart';
 import 'package:tranquil_loc/components/file_input.dart';
 import 'package:tranquil_loc/components/shadow_container.dart';
+import 'package:tranquil_loc/shared/enums/document_type.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/models/document/create_document.dart';
 import 'package:tranquil_loc/shared/models/file.dart';
@@ -26,6 +27,7 @@ class DocumentsInfoForm extends StatefulWidget {
 }
 
 class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
+    
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
@@ -43,62 +45,66 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              child: Wrap(
-                spacing: 24,
-                runSpacing: 12,
-                children:
-                    widget.person.proSituation.documents.map((documentType) {
-                      return CustomFileInput(
-                        initialFiles:
-                            widget.oldPerson.documents
-                                .where(
-                                  (document) => document.type == documentType,
-                                )
-                                .map(
-                                  (document) => File(
-                                    id: document.id,
-                                    name: document.name,
-                                  ),
-                                )
-                                .toList(),
-                        files:
-                            widget.person.documents
-                                .where(
-                                  (document) => document.type == documentType,
-                                )
-                                .map((document) => document.file)
-                                .toList(),
-                        onClick: (file) async {
-                          final document = await DocumentApi.get(file.id);
-                          launchUrl(Uri.parse(document.url));
-                        },
-                        onAdd:
-                            (files) => setState(
-                              () => widget.person.documents.addAll(
-                                files.map(
-                                  (file) => CreateDocument(
-                                    type: documentType,
-                                    name: file.name,
-                                    file: file,
+              child: AnimatedBuilder(
+                animation: widget.person,
+                builder: (context, _) => Wrap(
+                  spacing: 24,
+                  runSpacing: 12,
+                  children:
+                      widget.person.proSituation.documents.map((documentType) {
+                        return CustomFileInput(
+                          label: documentType.locale(locale),
+                          initialFiles:
+                              widget.oldPerson.documents
+                                  .where(
+                                    (document) => document.type == documentType,
+                                  )
+                                  .map(
+                                    (document) => File(
+                                      id: document.id,
+                                      name: document.name,
+                                    ),
+                                  )
+                                  .toList(),
+                          files:
+                              widget.person.documents
+                                  .where(
+                                    (document) => document.type == documentType,
+                                  )
+                                  .map((document) => document.file)
+                                  .toList(),
+                          onClick: (file) async {
+                            final document = await DocumentApi.get(file.id);
+                            launchUrl(Uri.parse(document.url));
+                          },
+                          onAdd:
+                              (files) => setState(
+                                () => widget.person.documents.addAll(
+                                  files.map(
+                                    (file) => CreateDocument(
+                                      type: documentType,
+                                      name: file.name,
+                                      file: file,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                        onRemove:
-                            (file) => setState(
-                              () => widget.person.documents.removeWhere(
-                                (document) => document.file.bytes == file.bytes,
+                          onRemove:
+                              (file) => setState(
+                                () => widget.person.documents.removeWhere(
+                                  (document) => document.file.bytes == file.bytes,
+                                ),
                               ),
-                            ),
-                        onInitialRemove:
-                            (file) => setState(() {
-                              widget.person.removedDocumentIds.add(file.id);
-                              widget.oldPerson.documents.removeWhere(
-                                (document) => document.id == file.id,
-                              );
-                            }),
-                      );
-                    }).toList(),
+                          onInitialRemove:
+                              (file) => setState(() {
+                                widget.person.removedDocumentIds.add(file.id);
+                                widget.oldPerson.documents.removeWhere(
+                                  (document) => document.id == file.id,
+                                );
+                              }),
+                        );
+                      }).toList(),
+                ),
               ),
             ),
           ),

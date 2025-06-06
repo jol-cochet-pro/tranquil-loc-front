@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:tranquil_loc/shared/enums/home_situation.dart';
 import 'package:tranquil_loc/shared/enums/pro_situation.dart';
 import 'package:tranquil_loc/shared/models/document/create_document.dart';
 
-class CreatePerson {
+class CreatePerson extends ChangeNotifier {
   String firstname;
   String lastname;
   String email;
@@ -26,4 +27,9 @@ class CreatePerson {
     required this.documents,
     required this.removedDocumentIds,
   });
+
+  void setProSituation(ProSituation newProSituation) {
+    proSituation = newProSituation;
+    notifyListeners();
+  }
 }

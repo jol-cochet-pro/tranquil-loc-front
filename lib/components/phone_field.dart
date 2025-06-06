@@ -65,8 +65,11 @@ class CustomPhoneField extends FormField<PhoneNumber> {
                  initialValue: field.value?.number,
                  decoration: decoration,
                  onChanged: (newValue) {
+                  try {
+                   newValue.isValidNumber();
                    field.didChange(newValue);
                    onChanged(newValue);
+                  } catch (_) {}
                  },
                  initialCountryCode: field.value?.countryISOCode ?? "FR",
                  invalidNumberMessage: locale.invalid_phone_number,
