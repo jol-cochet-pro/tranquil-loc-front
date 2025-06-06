@@ -23,7 +23,7 @@ class ShareApi {
     http.Response response = await http.post(
       Uri.parse('http://localhost:3000/shares'),
       headers: await AuthApi.defaultHeaders,
-      body: jsonEncode(Share.toApi(share)),
+      body: jsonEncode(share),
     );
     if (response.isOK) {
       return Share.fromApi(jsonDecode(response.body));

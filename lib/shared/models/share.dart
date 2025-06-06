@@ -75,14 +75,14 @@ class Share {
     };
   }
 
-  static Map<String, dynamic> toApi(Share share) {
+  Map<String, dynamic> toJson() {
     return {
-      "description": share.description,
-      "email": share.email,
-      "durationNum": share.durationNum,
-      "durationPeriod": share.durationPeriod.str,
-      "occupantPermission": share.occupantPermission.str,
-      "warrantorPermission": share.warrantorPermission.str,
+      "description": description,
+      "email": email,
+      "durationNum": durationNum,
+      "durationPeriod": durationPeriod.str,
+      "occupantPermission": occupantPermission.str,
+      "warrantorPermission": warrantorPermission.str,
     };
   }
 }

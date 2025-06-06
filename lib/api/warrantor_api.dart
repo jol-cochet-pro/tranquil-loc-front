@@ -11,7 +11,7 @@ class WarrantorApi {
     http.Response response = await http.post(
       Uri.parse("http://localhost/warrantors"),
       headers: await AuthApi.defaultHeaders,
-      body: jsonEncode(CreateWarrantor.toApi(warrantor)),
+      body: jsonEncode(warrantor),
     );
     if (response.isOK) {
       return Warrantor.fromApi(jsonDecode(response.body));
@@ -23,7 +23,7 @@ class WarrantorApi {
     http.Response response = await http.patch(
       Uri.parse("http://localhost/warrantors/$id"),
       headers: await AuthApi.defaultHeaders,
-      body: jsonEncode(CreateWarrantor.toApi(warrantor)),
+      body: jsonEncode(warrantor),
     );
     if (response.isOK) {
       return Warrantor.fromApi(jsonDecode(response.body));

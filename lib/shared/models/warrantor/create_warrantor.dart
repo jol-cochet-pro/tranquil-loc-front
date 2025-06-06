@@ -47,18 +47,18 @@ class CreateWarrantor extends CreatePerson {
     );
   }
 
-  static Map<String, dynamic> toApi(CreateWarrantor warrantor) {
+  Map<String, dynamic> toJson() {
     return {
-      "firstname": warrantor.firstname,
-      "lastname": warrantor.lastname,
-      "dateOfBirth": warrantor.dateOfBirth,
-      "income": warrantor.income,
-      "proSituation": warrantor.proSituation.str,
-      "homeSituation": warrantor.homeSituation.str,
-      "email": warrantor.email,
-      "phone": warrantor.phone,
-      "documents": warrantor.documents,
-      "removedDocumentIds": warrantor.removedDocumentIds,
+      "firstname": firstname,
+      "lastname": lastname,
+      "dateOfBirth": dateOfBirth,
+      "income": income,
+      "proSituation": proSituation.str,
+      "homeSituation": homeSituation.str,
+      "email": email,
+      "phone": phone,
+      "documents": documents,
+      "removedDocumentIds": removedDocumentIds,
     };
   }
 }

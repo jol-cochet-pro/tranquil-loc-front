@@ -7,7 +7,7 @@ class Otp {
     return Otp(code: -1);
   }
 
-  static Map<String, String> toApi(Otp otp) {
-    return {"code": otp.code.toString()};
+  Map<String, dynamic> toJson() {
+    return {"code": code};
   }
 }

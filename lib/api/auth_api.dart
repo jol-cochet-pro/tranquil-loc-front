@@ -27,8 +27,8 @@ class AuthApi {
   static Future<User> register(User user) async {
     http.Response response = await http.post(
       Uri.parse("http://localhost:3000/auth/register"),
-      body: User.toApi(user),
       headers: await AuthApi.defaultHeaders,
+      body: jsonEncode(user),
     );
     if (response.isOK) {
       return User.fromApi(jsonDecode(response.body));
@@ -39,7 +39,7 @@ class AuthApi {
   static Future<void> preRegister(Credentials credentials) async {
     http.Response response = await http.post(
       Uri.parse("http://localhost:3000/auth/pre-register"),
-      body: Credentials.toApi(credentials),
+      body: jsonEncode(credentials),
     );
     if (response.isOK) {
       final userJwt = UserJwt.fromApi(jsonDecode(response.body));
@@ -58,7 +58,7 @@ class AuthApi {
   static Future<void> signIn(Credentials credentials) async {
     http.Response response = await http.post(
       Uri.parse("http://localhost:3000/auth/sign-in"),
-      body: Credentials.toApi(credentials),
+      body: jsonEncode(credentials),
     );
     if (response.isOK) {
       final userJwt = UserJwt.fromApi(jsonDecode(response.body));
@@ -72,8 +72,8 @@ class AuthApi {
   static Future<void> checkEmail(Otp otp) async {
     http.Response response = await http.post(
       Uri.parse("http://localhost:3000/auth/check-email"),
-      body: Otp.toApi(otp),
       headers: await AuthApi.defaultHeaders,
+      body: jsonEncode(otp),
     );
     if (response.isOK) {
       return;

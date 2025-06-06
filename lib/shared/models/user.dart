@@ -80,15 +80,15 @@ class User {
     };
   }
 
-  static Map<String, String> toApi(User user) {
+  Map<String, dynamic> toJson() {
     return {
-      "firstname": user.firstname,
-      "lastname": user.lastname,
-      "phone": user.phone,
-      "dateOfBirth": user.dateOfBirth.toIso8601String(),
-      "opennedMail": user.opennedEmail.toString(),
-      "searchState": user.type.str,
-      "type": user.type.str,
+      "firstname": firstname,
+      "lastname": lastname,
+      "phone": phone,
+      "dateOfBirth": dateOfBirth.toIso8601String(),
+      "opennedMail": opennedEmail,
+      "searchState": type.str,
+      "type": type.str,
     };
   }
 }

@@ -8,7 +8,7 @@ class Credentials {
     return Credentials(email: "", password: "");
   }
 
-  static Map<String, String> toApi(Credentials cred) {
-    return {"email": cred.email, "password": cred.password};
+  Map<String, dynamic> toJson() {
+    return {"email": email, "password": password};
   }
 }
