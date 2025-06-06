@@ -24,7 +24,7 @@ class DocumentApi {
       'PUT',
       Uri.parse('http://localhost:3000/documents/$id/file'),
     );
-    request.headers.addAll(headers!);
+    request.headers.addAll(headers);
     http.MultipartFile file = http.MultipartFile.fromBytes(
       'file',
       document.file.bytes!,

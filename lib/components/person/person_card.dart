@@ -98,7 +98,6 @@ class PersonCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text("${locale.documents}:", style: h4),
-                  if (person.documents.isNotEmpty)
                     Expanded(
                       child: ShadowContainer(
                         padding: EdgeInsets.all(10),

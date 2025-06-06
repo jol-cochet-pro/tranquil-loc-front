@@ -74,8 +74,12 @@ class _DocumentsInfoFormState extends State<DocumentsInfoForm> {
                                   .map((document) => document.file)
                                   .toList(),
                           onClick: (file) async {
-                            final document = await DocumentApi.get(file.id);
-                            launchUrl(Uri.parse(document.url));
+                            try {
+                              final document = await DocumentApi.get(file.id);
+                              launchUrl(Uri.parse(document.url));
+                            } catch (_) {
+                              // TODO DO THIS
+                            }
                           },
                           onAdd:
                               (files) => setState(

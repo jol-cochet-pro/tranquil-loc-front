@@ -12,11 +12,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthApi {
   static User? user;
 
-  static Future<Map<String, String>?> get defaultHeaders async {
+  static Future<Map<String, String>> get defaultHeaders async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("accessToken");
     if (token == null) {
-      return null;
+      return {HttpHeaders.contentTypeHeader: 'application/json'};
     }
     return {
       HttpHeaders.authorizationHeader: 'Bearer $token',
@@ -39,6 +39,7 @@ class AuthApi {
   static Future<void> preRegister(Credentials credentials) async {
     http.Response response = await http.post(
       Uri.parse("http://localhost:3000/auth/pre-register"),
+      headers: await AuthApi.defaultHeaders,
       body: jsonEncode(credentials),
     );
     if (response.isOK) {
@@ -58,6 +59,7 @@ class AuthApi {
   static Future<void> signIn(Credentials credentials) async {
     http.Response response = await http.post(
       Uri.parse("http://localhost:3000/auth/sign-in"),
+      headers: await AuthApi.defaultHeaders,
       body: jsonEncode(credentials),
     );
     if (response.isOK) {
@@ -82,13 +84,9 @@ class AuthApi {
   }
 
   static Future<User> getMe() async {
-    final headers = await AuthApi.defaultHeaders;
-    if (headers == null) {
-      throw Exception("headers not found");
-    }
     http.Response response = await http.get(
       Uri.parse("http://localhost:3000/auth/me"),
-      headers: headers,
+      headers: await AuthApi.defaultHeaders,
     );
     if (response.isOK) {
       return User.fromApi(jsonDecode(response.body));
