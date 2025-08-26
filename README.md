@@ -1,16 +1,4 @@
-# dossier_locataire
+# Tranquil'loc
 
-A new Flutter project.
+Tranquil-loc est une application web permettant aux personnes en recherche d'appartement de pouvoir centralisé leur dossier locatif à un seul et même endroit.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
